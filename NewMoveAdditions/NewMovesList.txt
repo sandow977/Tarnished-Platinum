@@ -19,7 +19,7 @@ Coil
 ##Acid Spray##
 Foul Play
 Simple Beam
-Clear Smog
+##Clear Smog##
 Stored Power
 Ally Switch
 ##Shell Smash##
