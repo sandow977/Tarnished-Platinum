@@ -1,4 +1,4 @@
-Here are the list of moves I wish to create. This will be updated/filtered with moves that have been completed.
+Here are the list of moves I wish to create. This will be updated/filtered with moves that have been completed. Some of these simply require damage calc modifications, and others are duplicates of existing effects.
 
 Psyshock
 Venoshock
@@ -8,6 +8,7 @@ Magic Room
 Storm Throw
 Flame Burst
 Sludge Wave
+Dragon Tail
 Quiver Dance
 Heavy Slam
 Electro Ball
