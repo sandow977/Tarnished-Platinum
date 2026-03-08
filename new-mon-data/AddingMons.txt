@@ -1,7 +1,7 @@
 Use this workflow for adding **one new species** in this repo.
 
 1. Pick an ID strategy first.
-- Add your new enum in [species.txt](/C:/Users/tinle/Downloads/pokeplatinum/generated/species.txt).
+- Add your new enum in [species.txt](pokeplatinum/generated/species.txt).
 - Safest place: insert **before** `SPECIES_EGG` so existing real species IDs stay stable.
 
 2. Create the species asset folder.
@@ -18,7 +18,7 @@ Use this workflow for adding **one new species** in this repo.
 - `icon.png`
 - `footprint.png`
 - `meson.build` (same pattern as existing species)
-- Reference example folder: [res/pokemon/abra](/C:/Users/tinle/Downloads/pokeplatinum/res/pokemon/abra)
+- Reference example folder: [res/pokemon/abra](pokeplatinum/res/pokemon/abra)
 
 4. Set species gameplay data.
 - Edit your new `data.json` using an existing mon as template.
@@ -28,10 +28,10 @@ Use this workflow for adding **one new species** in this repo.
 - Edit your new `sprite_data.json` for front/back animation and offsets.
 
 6. If you want forms, register them.
-- Edit [form_registry.json](/C:/Users/tinle/Downloads/pokeplatinum/res/pokemon/form_registry.json) (only for alternate forms).
+- Edit [form_registry.json](pokeplatinum/res/pokemon/form_registry.json) (only for alternate forms).
 
 7. If you want it in Sinnoh Dex, add it there.
-- Edit [sinnoh_pokedex.json](/C:/Users/tinle/Downloads/pokeplatinum/res/pokemon/sinnoh_pokedex.json).
+- Edit [sinnoh_pokedex.json](pokeplatinum/res/pokemon/sinnoh_pokedex.json).
 
 8. Build (regenerates enums/tables/NARCs).
 ```bash
@@ -54,5 +54,6 @@ make -j1
 
 12. Save compatibility warning.
 - Changing species enum order breaks compatibility with prior saves/tools expecting old species IDs.
+
 
 If you want, I can give you a concrete starter patch for `SPECIES_FAKEMON` (exact text/json skeletons) so you can paste and fill values.
