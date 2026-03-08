@@ -4,24 +4,24 @@ Example move behavior:
 
 1. Add the new enums  
 Edit these files:
-- [moves.txt](/C:/Users/tinle/Downloads/pokeplatinum/generated/moves.txt): add `MOVE_PLASMA_BURST` before `MAX_MOVES`
-- [battle_move_effects.txt](/C:/Users/tinle/Downloads/pokeplatinum/generated/battle_move_effects.txt): add `BATTLE_EFFECT_PLASMA_BURST`
-- [battle_subscripts.txt](/C:/Users/tinle/Downloads/pokeplatinum/generated/battle_subscripts.txt): add `BATTLE_SUBSCRIPT_PLASMA_BURST`
-- [battle_move_subscript_ptrs.txt](/C:/Users/tinle/Downloads/pokeplatinum/generated/battle_move_subscript_ptrs.txt): add `MOVE_SUBSCRIPT_PTR_PLASMA_BURST`
+- [moves.txt](pokeplatinum/generated/moves.txt): add `MOVE_PLASMA_BURST` before `MAX_MOVES`
+- [battle_move_effects.txt](pokeplatinum/generated/battle_move_effects.txt): add `BATTLE_EFFECT_PLASMA_BURST`
+- [battle_subscripts.txt](pokeplatinum/generated/battle_subscripts.txt): add `BATTLE_SUBSCRIPT_PLASMA_BURST`
+- [battle_move_subscript_ptrs.txt](pokeplatinum/generated/battle_move_subscript_ptrs.txt): add `MOVE_SUBSCRIPT_PTR_PLASMA_BURST`
 
 2. Add move data + animation folder  
 Create folder:
-`C:\Users\tinle\Downloads\pokeplatinum\res\battle\moves\plasma_burst`  
+`pokeplatinum\res\battle\moves\plasma_burst`  
 Copy from a similar move (like `dark_pulse`), then edit:
-- [plasma_burst/data.json](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/moves/plasma_burst/data.json)
-- [plasma_burst/anim.s](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/moves/plasma_burst/anim.s)
+- [plasma_burst/data.json](pokeplatinum/res/battle/moves/plasma_burst/data.json)
+- [plasma_burst/anim.s](pokeplatinum/res/battle/moves/plasma_burst/anim.s)
 
 In `data.json`, set:
-- `"effect.type": "BATTLE_EFFECT_PLASMA_BURST"`
-- `"effect.chance": 30` (or your chosen chance)
+- "effect.type": "BATTLE_EFFECT_PLASMA_BURST"
+- "effect.chance": 30
 
 3. Create a new effect script file  
-In [res/battle/scripts/effects](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/scripts/effects), add next numbered file (example `effect_script_0264.s`):
+In [res/battle/scripts/effects], add next numbered file (example `effect_script_0264.s`):
 
 ```asm
 #include "macros/btlcmd.inc"
@@ -35,10 +35,10 @@ _000:
 
 4. Register effect script in build list  
 Add that filename to:
-- [effects/meson.build](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/scripts/effects/meson.build)
+- [effects/meson.build]
 
 5. Create/attach move script entry for this effect index  
-In [res/battle/scripts/moves](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/scripts/moves), add next numbered move script (same new index pattern, example `move_script_0264.s`):
+In [res/battle/scripts/moves], add next numbered move script (same new index pattern, example `move_script_0264.s`):
 
 ```asm
 #include "macros/btlcmd.inc"
@@ -52,33 +52,17 @@ Register it in:
 
 6. Create the new battle subscript  
 Add file:
-- [subscript_plasma_burst.s](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/scripts/subscripts/subscript_plasma_burst.s)
+- [subscript_plasma_burst.s](/res/battle/scripts/subscripts/subscript_plasma_burst.s)
 
-Start by copying [subscript_target_atk_and_def_down_1_stage.s](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/scripts/subscripts/subscript_target_atk_and_def_down_1_stage.s), then change the second stat from Defense to Sp. Def:
+Start by copying [subscript_target_atk_and_def_down_1_stage.s](res/battle/scripts/subscripts/subscript_target_atk_and_def_down_1_stage.s), then change the second stat from Defense to Sp. Def:
 - `BATTLEMON_DEFENSE_STAGE` -> `BATTLEMON_SP_DEFENSE_STAGE`
 - `MOVE_SUBSCRIPT_PTR_DEFENSE_DOWN_1_STAGE` -> `MOVE_SUBSCRIPT_PTR_SP_DEFENSE_DOWN_1_STAGE`
 
 7. Register subscript  
 Add the new subscript to:
-- [subscripts/meson.build](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/scripts/subscripts/meson.build)
-- [sub_seq.order](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/scripts/subscripts/sub_seq.order) as `subscript_plasma_burst` (no `.s`)
+- [subscripts/meson.build](pokeplatinum/res/battle/scripts/subscripts/meson.build)
+- [sub_seq.order](pokeplatinum/res/battle/scripts/subscripts/sub_seq.order) as `subscript_plasma_burst` (no `.s`)
 
 8. Build only what changed  
-```bash
-ninja -C build res/battle/moves/pl_waza_tbl.narc
-ninja -C build res/battle/moves/anim_scripts.narc
-ninja -C build res/battle/scripts/be_seq.narc
-ninja -C build res/battle/scripts/waza_seq.narc
-ninja -C build res/battle/scripts/sub_seq.narc
-ninja -C build pokeplatinum.us.nds
-```
 
-9. Test in game  
-Check:
-- Move executes
-- Animation plays
-- Damage happens
-- Side effect lowers Atk + SpDef at the correct chance
-- No crash on miss/protect/substitute
-
-If you want, I can next give you a ready-to-paste `plasma_burst/data.json` template too.
+9. Test in game!!!
