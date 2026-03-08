@@ -156,7 +156,7 @@ Order Up
 ##Jet Punch##
 Spicy Extract
 Glaive Rush
-Mortal Spin
+##Mortal Spin##
 Fillet Away
 Kowtow Cleave
 Flower Trick
