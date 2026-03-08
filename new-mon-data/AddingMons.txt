@@ -1,13 +1,12 @@
-Use this workflow for adding **one new species** in this repo.
+Use this workflow for adding species to the game.
 
 1. Pick an ID strategy first.
 - Add your new enum in [species.txt](pokeplatinum/generated/species.txt).
-- Safest place: insert **before** `SPECIES_EGG` so existing real species IDs stay stable.
+- Insert **before** `SPECIES_EGG` so existing real species IDs stay stable.
 
 2. Create the species asset folder.
 - Folder name must be enum name lowercased without `SPECIES_`.
-- Example `SPECIES_FAKEMON` -> `res/pokemon/fakemon`.
-- Easiest: copy an existing species folder (including `.key` files) and edit it.
+- Copy an existing species folder and edit it
 
 3. Required files inside that folder.
 - `data.json` (stats/types/learnset/evo/pokedex fields)
@@ -21,21 +20,24 @@ Use this workflow for adding **one new species** in this repo.
 - Reference example folder: [res/pokemon/abra](pokeplatinum/res/pokemon/abra)
 
 4. Set species gameplay data.
-- Edit your new `data.json` using an existing mon as template.
+- Edit  `data.json` using an existing mon as template.
 - This includes base stats, abilities, evolutions, moves, egg groups, dex text, etc.
 
 5. Set sprite behavior.
-- Edit your new `sprite_data.json` for front/back animation and offsets.
+- Edit  `sprite_data.json` for front/back animation and offsets.
 
-6. If you want forms, register them.
+6. Register forms
 - Edit [form_registry.json](pokeplatinum/res/pokemon/form_registry.json) (only for alternate forms).
 
-7. If you want it in Sinnoh Dex, add it there.
+7. Add to Sinnoh Regional Dex
 - Edit [sinnoh_pokedex.json](pokeplatinum/res/pokemon/sinnoh_pokedex.json).
+
+
+#IGNORE THIS (This section is for storage)
 
 8. Build (regenerates enums/tables/NARCs).
 ```bash
-cd ~/pokeplatinum   # preferred, inside WSL filesystem
+cd ~/pokeplatinum
 make -j1
 ```
 
@@ -43,17 +45,9 @@ make -j1
 - `build/generated/species.h` should include your `SPECIES_FAKEMON`.
 - `build/res/pokemon/*.narc` should rebuild without errors.
 
-10. Add usage hooks (optional but typical).
-- Wild encounters
-- Trainer parties
-- Gifts/static encounters
-- Scripts that reference species constants
+10. Add usage hooks for wild encounters, trainer parties, scripts
 
 11. Test in-game.
 - Spawn it (wild or trainer), check sprite/icon/cry/learnset/evolution/pokedex.
 
-12. Save compatibility warning.
-- Changing species enum order breaks compatibility with prior saves/tools expecting old species IDs.
 
-
-If you want, I can give you a concrete starter patch for `SPECIES_FAKEMON` (exact text/json skeletons) so you can paste and fill values.
