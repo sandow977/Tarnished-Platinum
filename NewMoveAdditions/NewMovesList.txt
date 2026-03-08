@@ -154,14 +154,13 @@ Take Heart
 Silk Trap
 Order Up
 ##Jet Punch##
-Spicy Extract
-Glaive Rush
+##Spicy Extract##
 ##Mortal Spin##
 Fillet Away
-Kowtow Cleave
+##Kowtow Cleave##
 Flower Trick
 ##Torch Song##
-Aqua Step
+##Aqua Step##
 Raging Bull
 Psyblade
 Steam Eruption
