@@ -1,0 +1,96 @@
+**Add New Move in `pokeplatinum` (Beginner-Friendly, with Paths)**
+
+Move Scripting System Documentation (can be used as a guide for Platinum): https://github.com/BluRosie/hg-engine/wiki/Move-Scripting-Systems-Documentation
+
+**A) Easiest path first: new move that reuses existing effect logic**
+
+1. Add the new move ID  
+Path: [moves.txt](/C:/Users/tinle/Downloads/pokeplatinum/generated/moves.txt)  
+Action: add `MOVE_PLASMA_BURST` right before `MAX_MOVES`.
+
+2. Make a folder for the move  
+Path: `C:\Users\tinle\Downloads\pokeplatinum\res\battle\moves\plasma_burst`  
+Action: copy a similar move folder (example: `thunderbolt`) and rename to `plasma_burst`.
+
+3. Edit move stats/data  
+Path: [plasma_burst/data.json](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/moves/plasma_burst/data.json)  
+Action: set name, type, power, accuracy, pp, flags, etc.  
+Important: for now, use an existing effect in:
+- `"effect": { "type": "BATTLE_EFFECT_...", "chance": ... }`
+
+4. Edit animation script  
+Path: [plasma_burst/anim.s](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/moves/plasma_burst/anim.s)  
+Action: copy/tweak animation commands from a similar move.
+
+5. Build just move data + animation  
+Run from repo root:
+```bash
+ninja -C build res/battle/moves/pl_waza_tbl.narc
+ninja -C build res/battle/moves/anim_scripts.narc
+ninja -C build pokeplatinum.us.nds
+```
+
+---
+
+**B) Only if you need brand-new move behavior: add a new effect script**
+
+6. Add a new effect enum name  
+Path: [battle_move_effects.txt](/C:/Users/tinle/Downloads/pokeplatinum/generated/battle_move_effects.txt)  
+Action: append `BATTLE_EFFECT_PLASMA_BURST`.
+
+7. Create the new effect script file  
+Path: `C:\Users\tinle\Downloads\pokeplatinum\res\battle\scripts\effects\effect_script_0259.s` (use next free number)  
+Reference: [effect_script_0001.s](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/scripts/effects/effect_script_0001.s)
+
+8. Register that new effect script in build file  
+Path: [effects/meson.build](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/scripts/effects/meson.build)  
+Action: add `effect_script_0259.s` to `effect_script_files`.
+
+9. Point your move at this new effect  
+Path: [plasma_burst/data.json](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/moves/plasma_burst/data.json)  
+Action: set `"effect.type": "BATTLE_EFFECT_PLASMA_BURST"`.
+
+10. Rebuild effect script archives
+```bash
+ninja -C build res/battle/scripts/be_seq.narc
+ninja -C build res/battle/scripts/waza_seq.narc
+ninja -C build pokeplatinum.us.nds
+```
+
+---
+
+**C) Only if needed: create a brand-new subscript**
+
+11. Add subscript enum  
+Path: [battle_subscripts.txt](/C:/Users/tinle/Downloads/pokeplatinum/generated/battle_subscripts.txt)  
+Action: append `BATTLE_SUBSCRIPT_PLASMA_BURST`.
+
+12. Create subscript file  
+Path: `C:\Users\tinle\Downloads\pokeplatinum\res\battle\scripts\subscripts\subscript_plasma_burst.s`
+
+13. Register subscript in build list  
+Path: [subscripts/meson.build](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/scripts/subscripts/meson.build)  
+Action: add `subscript_plasma_burst.s` to `subscript_files`.
+
+14. Register subscript order  
+Path: [sub_seq.order](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/scripts/subscripts/sub_seq.order)  
+Action: add `subscript_plasma_burst` (no `.s`).
+
+15. If your effect uses `MOVE_SUBSCRIPT_PTR_*`, add pointer enum  
+Path: [battle_move_subscript_ptrs.txt](/C:/Users/tinle/Downloads/pokeplatinum/generated/battle_move_subscript_ptrs.txt)  
+Action: append `MOVE_SUBSCRIPT_PTR_PLASMA_BURST`, then reference it in your effect script.
+
+16. Rebuild subscript archive
+```bash
+ninja -C build res/battle/scripts/sub_seq.narc
+ninja -C build pokeplatinum.us.nds
+```
+
+---
+
+**Final test checklist**
+- Move appears in game menus
+- Move animation plays
+- Effect behavior works
+- No crash on miss/protect/faint cases
+
