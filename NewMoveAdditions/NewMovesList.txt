@@ -1,4 +1,4 @@
-Here are the list of moves I wish to create. This will be updated/filtered with moves that have been completed. Some of these simply require damage calc modifications, and others are duplicates of existing effects. ## will be used to denote that this has an effect script already in the repo, or completed by me
+Here are the list of moves I wish to create. This will be updated/filtered with moves that have effect scripts completed. Some of these simply require damage calc modifications, and others are duplicates of existing effects. ## will be used to denote that this has an effect script already in the repo, or completed by me
 
 Psyshock
 ##Venoshock##
@@ -13,75 +13,75 @@ Quiver Dance
 Heavy Slam
 Electro Ball
 Soak
-Flame Charge
+##Flame Charge##
 Coil
-Low Sweep
-Acid Spray
+##Low Sweep##
+##Acid Spray##
 Foul Play
 Simple Beam
 Clear Smog
 Stored Power
 Ally Switch
-shell Smash
+##Shell Smash##
 Incinerate
 Acrobatics
 Retaliate
 Final Gambit
-Inferno
-Volt Switch
-Struggle Bug
-Bulldoze
+##Inferno##
+##Volt Switch##
+##Struggle Bug##
+##Bulldoze##
 Frost Breath
 Work Up
 Dragon Tail
-Electroweb
-Wild Charge
-Drill Run
-Dual Chop
-Horn Leech
+##Electroweb##
+##Wild Charge##
+##Drill Run##
+##Dual Chop##
+##Horn Leech##
 Sacred Sword
-Razor Shell
+##Razor Shell##
 Heat Crash
-Leaf Tornado
-Steamroller
+##Leaf Tornado##
+##Steamroller##
 Psystrike
 Hurricane
-Head Charge
+##Head Charge##
 Searing Shot
 Techno Blast
 Secret Sword
-Icicle Crash
+##Icicle Crash##
 V-Create
 Belch
 Sticky Web
 Fell Stinger
 Trick or Treat
-Parabolic Charge
+##Parabolic Charge##
 Parting Shot
 Topsy Turvy
-Draining Kiss
-Play Rough
-Moonblast
-Boomburst
+##Draining Kiss##
+##Play Rough##
+##Moonblast##
+##Boomburst##
 Fairy Lock
 Diamond Storm
 Water Shrukin
-Mystical Fire
+##Mystical Fire##
 Spiky Shield
 Eerie Impulse
 Venom Drench
 Powder
 Geomancy
-Dazzling Gleam
-Baby Doll Eyes
-Nuzzle
-Infestation
-Power Up Punch
+##Dazzling Gleam##
+##Baby Doll Eyes##
+##Nuzzle##
+##Infestation##
+##Power Up Punch##
 Thousand Arrows
 Land's Wrath
 Light of Ruin
 Origin Pulse
-First Impresion
+##First Impresion##
 Baneful Bunker
 Spirit Shackle
 DArkest Lariat
@@ -89,32 +89,32 @@ Sparkling Aria
 Ice Hammer
 High Horsepower
 Strength Sap
-Solar Blade
+##Solar Blade##
 Toxic Thread
 Laser Focus
 Pollen Puff
-Lunge
-Fire Lash
+##Lunge##
+##Fire Lash##
 Power Trip
 Burn Up
-Smart Strike
-Trop Kick
+##Smart Strike##
+##Trop Kick##
 Instruct
 Beak Blast
 Clanging Scales
-Dragon Hammer
-Aurora Veil
+##Dragon Hammer##
+##Aurora Veil##
 Brutal Swing
 Shell Trap
-Psychic Fangs
+##Psychic Fangs##
 Stomp Tantrum
 Shadow Bone
-Accelerock
-Liquidation
+##Accelerock##
+##Liquidation##
 Multi Attack
 Mind Blown
 Plasma Fists
-Snipe Shot
+##Snipe Shot##
 Jaw Lock
 Stuff Cheeks
 Magic Powder
@@ -122,28 +122,28 @@ Bolt Beak
 Body Press
 Coaching
 Snap Trap
-Breaking Swipe
+##Breaking Swipe##
 Overdrive
-Apple Acid
-Grav Apple
+##Apple Acid##
+##Grav Apple##
 Spirit Break
 Obstruct
 Steel Beam
 Scale Shot
-Misty Explosion
+##Misty Explosion##
 Lash Out
-Flip Turn
+##Flip Turn##
 Corrosive Gas
-Dual Wingbeat
-Scorch Sands
-Thunder Cage
+##Dual Wingbeat##
+##Scorch Sands##
+##Thunder Cage##
 Fiery Wrath
 Dire Claw
 Mystical Power
-Wave Crash
+##Wave Crash##
 Clhoroblast
 Mountain Gale
-Headlong Rush
+##Headlong Rush##
 Barb Barrage
 Esper Wing
 Bitter Malice
@@ -153,30 +153,29 @@ Ceaseless Edge
 Take Heart
 Silk Trap
 Order Up
-Jet Punch
+##Jet Punch##
 Spicy Extract
 Glaive Rush
 Mortal Spin
 Fillet Away
 Kowtow Cleave
 Flower Trick
-Torch Song
+##Torch Song##
 Aqua Step
-RAging Bull
+Raging Bull
 Psyblade
 Steam Eruption
 Shed Tail
 Chilly Reception
-Pounce
-Trailblaze
-Twin Beam
+##Pounce##
+##Trailblaze##
+##Twin Beam##
 Armor Cannon
 Gigaton Hammer
-Bitter Blade
-Gigaton Hammer
+##Bitter Blade##
 Double Shock
 Fickle Beam
-Thunderclap
+##Thunderclap##
 Upper Hand
 Tidy Up
 Hard Press
