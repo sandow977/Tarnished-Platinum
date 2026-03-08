@@ -45,7 +45,7 @@ Heat Crash
 ##Leaf Tornado##
 ##Steamroller##
 Psystrike
-Hurricane
+Hurricane (Effect Script done, but needs AI check)
 ##Head Charge##
 Searing Shot
 Techno Blast
