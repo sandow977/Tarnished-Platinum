@@ -1,4 +1,4 @@
-Here are the list of moves I wish to create. This will be updated/filtered with moves that have been completed. Some of these simply require damage calc modifications, and others are duplicates of existing effects. ## will be used to denote done items
+Here are the list of moves I wish to create. This will be updated/filtered with moves that have been completed. Some of these simply require damage calc modifications, and others are duplicates of existing effects. ## will be used to denote that this has an effect script already in the repo, or completed by me
 
 Psyshock
 ##Venoshock##
@@ -7,7 +7,7 @@ Automotize
 Magic Room
 Storm Throw
 Flame Burst
-Sludge Wave
+##Sludge Wave##
 Dragon Tail
 Quiver Dance
 Heavy Slam
