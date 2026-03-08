@@ -1,0 +1,58 @@
+Use this workflow for adding **one new species** in this repo.
+
+1. Pick an ID strategy first.
+- Add your new enum in [species.txt](/C:/Users/tinle/Downloads/pokeplatinum/generated/species.txt).
+- Safest place: insert **before** `SPECIES_EGG` so existing real species IDs stay stable.
+
+2. Create the species asset folder.
+- Folder name must be enum name lowercased without `SPECIES_`.
+- Example `SPECIES_FAKEMON` -> `res/pokemon/fakemon`.
+- Easiest: copy an existing species folder (including `.key` files) and edit it.
+
+3. Required files inside that folder.
+- `data.json` (stats/types/learnset/evo/pokedex fields)
+- `sprite_data.json` (animation/y-offset/shadow)
+- `male_front.png`, `male_back.png`, `female_front.png`, `female_back.png`
+- matching `.png.key` files
+- `normal.pal`, `shiny.pal`
+- `icon.png`
+- `footprint.png`
+- `meson.build` (same pattern as existing species)
+- Reference example folder: [res/pokemon/abra](/C:/Users/tinle/Downloads/pokeplatinum/res/pokemon/abra)
+
+4. Set species gameplay data.
+- Edit your new `data.json` using an existing mon as template.
+- This includes base stats, abilities, evolutions, moves, egg groups, dex text, etc.
+
+5. Set sprite behavior.
+- Edit your new `sprite_data.json` for front/back animation and offsets.
+
+6. If you want forms, register them.
+- Edit [form_registry.json](/C:/Users/tinle/Downloads/pokeplatinum/res/pokemon/form_registry.json) (only for alternate forms).
+
+7. If you want it in Sinnoh Dex, add it there.
+- Edit [sinnoh_pokedex.json](/C:/Users/tinle/Downloads/pokeplatinum/res/pokemon/sinnoh_pokedex.json).
+
+8. Build (regenerates enums/tables/NARCs).
+```bash
+cd ~/pokeplatinum   # preferred, inside WSL filesystem
+make -j1
+```
+
+9. Validate generated outputs.
+- `build/generated/species.h` should include your `SPECIES_FAKEMON`.
+- `build/res/pokemon/*.narc` should rebuild without errors.
+
+10. Add usage hooks (optional but typical).
+- Wild encounters
+- Trainer parties
+- Gifts/static encounters
+- Scripts that reference species constants
+
+11. Test in-game.
+- Spawn it (wild or trainer), check sprite/icon/cry/learnset/evolution/pokedex.
+
+12. Save compatibility warning.
+- Changing species enum order breaks compatibility with prior saves/tools expecting old species IDs.
+
+If you want, I can give you a concrete starter patch for `SPECIES_FAKEMON` (exact text/json skeletons) so you can paste and fill values.
