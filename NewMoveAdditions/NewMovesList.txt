@@ -147,10 +147,8 @@ Barb Barrage
 Esper Wing
 Bitter Malice
 Triple Arrow
-Infernal Parade
 ##Ceaseless Edge##
 Silk Trap
-Order Up
 ##Jet Punch##
 ##Spicy Extract##
 ##Mortal Spin##
@@ -159,9 +157,7 @@ Order Up
 Flower Trick
 ##Torch Song##
 ##Aqua Step##
-Raging Bull
-Psyblade
-Steam Eruption
+##Raging Bull##
 Shed Tail
 Chilly Reception
 ##Pounce##
@@ -174,7 +170,7 @@ Double Shock
 Fickle Beam
 ##Thunderclap##
 ##Upper Hand##
-Tidy Up
+##Tidy Up##
 Hard Press
 Temper Flare
 Hex
