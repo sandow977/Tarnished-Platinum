@@ -2,7 +2,7 @@ Here are the list of moves I wish to create. This will be updated/filtered with 
 
 Psyshock
 ##Venoshock##
-Automotize
+##Automotize##
 ##Rage Powder##
 Magic Room
 Storm Throw
