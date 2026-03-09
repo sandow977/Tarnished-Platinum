@@ -9,7 +9,7 @@ Storm Throw
 Flame Burst
 ##Sludge Wave##
 Dragon Tail
-Quiver Dance
+##Quiver Dance##
 Heavy Slam
 Soak
 ##Flame Charge##
