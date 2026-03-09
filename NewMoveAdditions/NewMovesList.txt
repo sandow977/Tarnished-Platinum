@@ -148,8 +148,7 @@ Esper Wing
 Bitter Malice
 Triple Arrow
 Infernal Parade
-Ceaseless Edge
-Take Heart
+##Ceaseless Edge##
 Silk Trap
 Order Up
 ##Jet Punch##
