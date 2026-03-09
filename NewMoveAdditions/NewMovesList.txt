@@ -120,7 +120,7 @@ Magic Powder
 Bolt Beak
 Body Press
 Coaching
-Snap Trap
+##Snap Trap##
 ##Breaking Swipe##
 Overdrive
 ##Apple Acid##
