@@ -11,10 +11,9 @@ Flame Burst
 Dragon Tail
 Quiver Dance
 Heavy Slam
-Electro Ball
 Soak
 ##Flame Charge##
-Coil
+##Coil##
 ##Low Sweep##
 ##Acid Spray##
 Foul Play
@@ -156,7 +155,7 @@ Order Up
 ##Jet Punch##
 ##Spicy Extract##
 ##Mortal Spin##
-Fillet Away
+##Fillet Away##
 ##Kowtow Cleave##
 Flower Trick
 ##Torch Song##
@@ -175,7 +174,7 @@ Gigaton Hammer
 Double Shock
 Fickle Beam
 ##Thunderclap##
-Upper Hand
+##Upper Hand##
 Tidy Up
 Hard Press
 Temper Flare
