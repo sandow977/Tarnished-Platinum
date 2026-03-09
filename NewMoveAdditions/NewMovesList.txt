@@ -8,7 +8,7 @@ Magic Room
 Storm Throw
 Flame Burst
 ##Sludge Wave##
-Dragon Tail
+##Dragon Tail##(handled in BattleController)
 ##Quiver Dance##
 Heavy Slam
 Soak
