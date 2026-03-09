@@ -15,7 +15,7 @@ _000:
 _078:
     CheckBlackOut BTLSCR_DEFENDER, _248
     TryReplaceFaintedMon BTLSCR_ATTACKER, TRUE, _248
-    TriggerAbilityOnHit _010
+    TriggerAbilityOnHit _086
     CallFromVar BTLVAR_SCRIPT_TEMP
 
 _086:
@@ -26,7 +26,7 @@ _155:
    UpdateVarFromVar OPCODE_GET, BTLVAR_FAINTED_MON, BTLVAR_LAST_BATTLER_ID
     UpdateVarFromVar OPCODE_SET, BTLVAR_FAINTED_MON, BTLVAR_DEFENDER
     CompareMonDataToValue OPCODE_NEQ, BTLSCR_DEFENDER, BATTLEMON_CUR_HP, 0, _179
-    TryGrudge _103
+    TryGrudge _179
     // {0}’s {1} lost all its PP due to the grudge!
     PrintMessage BattleStrings_Text_PokemonsMoveLostAllItsPPDueToTheGrudge_Ally, TAG_NICKNAME_MOVE, BTLSCR_ATTACKER, BTLSCR_MSG_TEMP
     Wait 
