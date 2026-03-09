@@ -146,7 +146,7 @@ Mountain Gale
 Barb Barrage
 Esper Wing
 Bitter Malice
-Triple Arrow
+##Triple Arrow## (NOTE: does not have seperate chances for def drop/flinch, but I'm fine since its only 20% diff)
 ##Ceaseless Edge##
 Silk Trap
 ##Jet Punch##
