@@ -1,16 +1,12 @@
 Here are the list of moves I wish to create. This will be updated/filtered with moves that have effect scripts completed. Some of these simply require damage calc modifications, and others are duplicates of existing effects. ## will be used to denote that this has an effect script already in the repo, or completed by me
 
-Psyshock
 ##Venoshock##
 ##Automotize##
 ##Rage Powder##
-Magic Room
-Storm Throw
 Flame Burst
 ##Sludge Wave##
 ##Dragon Tail##(handled in BattleController)
 ##Quiver Dance##
-Heavy Slam
 Soak
 ##Flame Charge##
 ##Coil##
@@ -20,7 +16,6 @@ Foul Play
 ##Simple Beam##
 ##Clear Smog##
 Stored Power
-Ally Switch
 ##Shell Smash##
 Incinerate
 Acrobatics
@@ -136,16 +131,16 @@ Corrosive Gas
 ##Dual Wingbeat##
 ##Scorch Sands##
 ##Thunder Cage##
-Fiery Wrath
-Dire Claw
-Mystical Power
+##Fiery Wrath##
+##Dire Claw##
 ##Wave Crash##
 Chloroblast
+Poltergeist
+
 Mountain Gale
 ##Headlong Rush##
-Barb Barrage
-Esper Wing
-Bitter Malice
+##Esper Wing##
+##Bitter Malice##
 ##Triple Arrow## (NOTE: does not have seperate chances for def drop/flinch, but I'm fine since its only 20% diff)
 ##Ceaseless Edge##
 Silk Trap
@@ -154,23 +149,36 @@ Silk Trap
 ##Mortal Spin##
 ##Fillet Away##
 ##Kowtow Cleave##
-Flower Trick
 ##Torch Song##
 ##Aqua Step##
 ##Raging Bull##
 Shed Tail
-Chilly Reception
+##Chilly Reception##
 ##Pounce##
 ##Trailblaze##
 ##Twin Beam##
 ##Armor Cannon##
-Gigaton Hammer
 ##Bitter Blade##
 Double Shock
 Fickle Beam
 ##Thunderclap##
 ##Upper Hand##
 ##Tidy Up##
-Hard Press
 Temper Flare
-Hex
+##Hex##
+
+Custom Behavior Needed:
+    Heavy Slam
+    Hard Press 
+    Flower Trick    
+    Silk Trap
+    Double Shock
+    Burn Up
+    Flower Trick
+    Gigaton Hammer
+    Storm Throw
+    Mystical Power
+    Acrobatics
+    Psyshock
+    Stored Power
+    
