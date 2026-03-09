@@ -18,7 +18,7 @@ Coil
 ##Low Sweep##
 ##Acid Spray##
 Foul Play
-Simple Beam
+##Simple Beam##
 ##Clear Smog##
 Stored Power
 Ally Switch
@@ -141,7 +141,7 @@ Fiery Wrath
 Dire Claw
 Mystical Power
 ##Wave Crash##
-Clhoroblast
+Chloroblast
 Mountain Gale
 ##Headlong Rush##
 Barb Barrage
@@ -169,7 +169,7 @@ Chilly Reception
 ##Pounce##
 ##Trailblaze##
 ##Twin Beam##
-Armor Cannon
+##Armor Cannon##
 Gigaton Hammer
 ##Bitter Blade##
 Double Shock
