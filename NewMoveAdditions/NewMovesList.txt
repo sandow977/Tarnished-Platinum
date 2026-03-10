@@ -12,43 +12,31 @@ Soak
 ##Coil##
 ##Low Sweep##
 ##Acid Spray##
-Foul Play
 ##Simple Beam##
 ##Clear Smog##
 Stored Power
 ##Shell Smash##
-Incinerate
-Acrobatics
-Retaliate
 Final Gambit
 ##Inferno##
 ##Volt Switch##
 ##Struggle Bug##
 ##Bulldoze##
-Frost Breath
 Work Up
-Dragon Tail
 ##Electroweb##
 ##Wild Charge##
 ##Drill Run##
 ##Dual Chop##
 ##Horn Leech##
-Sacred Sword
 ##Razor Shell##
-Heat Crash
 ##Leaf Tornado##
 ##Steamroller##
-Psystrike
 Hurricane (Effect Script done, but needs AI check)
 ##Head Charge##
 Searing Shot
 Techno Blast
-Secret Sword
 ##Icicle Crash##
 V-Create
 Belch
-Sticky Web
-Fell Stinger
 Trick or Treat
 ##Parabolic Charge##
 ##Parting Shot##
@@ -57,7 +45,6 @@ Topsy Turvy
 ##Play Rough##
 ##Moonblast##
 ##Boomburst##
-Fairy Lock
 Diamond Storm
 Water Shrukin
 ##Mystical Fire##
@@ -72,16 +59,11 @@ Geomancy
 ##Infestation##
 ##Power Up Punch##
 Thousand Arrows
-Land's Wrath
-Light of Ruin
-Origin Pulse
 ##First Impresion##
 Baneful Bunker
-Spirit Shackle
-DArkest Lariat
 Sparkling Aria
-Ice Hammer
-High Horsepower
+##Ice Hammer##
+##High Horsepower##
 Strength Sap
 ##Solar Blade##
 Toxic Thread
@@ -89,27 +71,20 @@ Laser Focus
 Pollen Puff
 ##Lunge##
 ##Fire Lash##
-Power Trip
 Burn Up
 ##Smart Strike##
 ##Trop Kick##
-Instruct
 Beak Blast
-Clanging Scales
+##Clanging Scales##
 ##Dragon Hammer##
 ##Aurora Veil##
-Brutal Swing
-Shell Trap
+##Brutal Swing##
 ##Psychic Fangs##
-Stomp Tantrum
-Shadow Bone
+##Shadow Bone##
 ##Accelerock##
 ##Liquidation##
-Multi Attack
 Mind Blown
-Plasma Fists
 ##Snipe Shot##
-Jaw Lock
 Stuff Cheeks
 Magic Powder
 Bolt Beak
@@ -125,7 +100,6 @@ Obstruct
 Steel Beam
 Scale Shot
 ##Misty Explosion##
-Lash Out
 ##Flip Turn##
 Corrosive Gas
 ##Dual Wingbeat##
@@ -135,15 +109,11 @@ Corrosive Gas
 ##Dire Claw##
 ##Wave Crash##
 Chloroblast
-Poltergeist
-
-Mountain Gale
 ##Headlong Rush##
 ##Esper Wing##
 ##Bitter Malice##
 ##Triple Arrow## (NOTE: does not have seperate chances for def drop/flinch, but I'm fine since its only 20% diff)
 ##Ceaseless Edge##
-Silk Trap
 ##Jet Punch##
 ##Spicy Extract##
 ##Mortal Spin##
@@ -159,8 +129,6 @@ Shed Tail
 ##Twin Beam##
 ##Armor Cannon##
 ##Bitter Blade##
-Double Shock
-Fickle Beam
 ##Thunderclap##
 ##Upper Hand##
 ##Tidy Up##
@@ -169,16 +137,36 @@ Temper Flare
 
 Custom Behavior Needed:
     Heavy Slam
+    Stomping Tantrum
     Hard Press 
-    Flower Trick    
+    Incinerate
+    Retaliate
+    Flower Trick  
+    Darkest Lariat
+    Temper Flare
+    Double Shock
     Silk Trap
     Double Shock
+    Lash Out
     Burn Up
     Flower Trick
     Gigaton Hammer
     Storm Throw
     Mystical Power
+    Fell Stinger
+    Poltergeist
+    Power Trip
     Acrobatics
+    Dragon Tail
+    Spirit Shackle (auto crit)
     Psyshock
-    Stored Power
+    Stored Power   
+    Sacred Sword
+    Secret Sword
+    Heat Crash
+    Psystrike
+    Foul Play
+    Sticky Web
+    Frost Breath
+    Multi Attack (grab judgement power calculation)
     
