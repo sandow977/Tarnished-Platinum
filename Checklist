@@ -1,0 +1,95 @@
+Here I will jot down all of the features/changes that I am working on/will work on.
+
+
+Add Pokemon (once decided which Pokemon I want, mon data should be added)
+Add custom AI behavior for the moves whose effects occur in battle.lib.c
+add moves, including their animations.
+General data jumping like encounter rates/trainer data
+Add new sprites to the game
+
+Abilities:
+Slush Rush
+Friend Guard (Partially implemented)
+Strong Jaw
+Analytic
+Cursed Body?? (jellicent)
+Defiant or Justified (funny AI)
+Harvest
+Imposter
+Moody
+Multiscale???
+Mummy
+Poison Touch
+Pickpocket (only if AI mon needs it, player def not getting this)
+Sand Force/Sand Rush
+Sap Sipper (half implemented)
+Unnerve
+Weak Armor
+Cheek Pouch
+Competitive/Defiant
+Fur Coat/Fluffy
+Mega Launcher (for Mega Blastoise)
+Pixilate
+Refridgerate (Aurorus would like this)
+Protean
+Parental Bond (if Mega Kanga)
+Gooey (Goodra)
+Dazzling
+Emergency Exit
+Liquid Voice (for Primarina)
+RKS System
+Receiver 
+Water Bubble
+Tangling Hair
+Stamina
+Triage
+Shields Down (if minor)
+Soul Heart (manaphy backlot)
+Queenly Majesty (dazzling rewrite)
+Galvanize (Normalize rewrite)
+Mirror Armor (if corv)
+Pastel Veil (just rename immunity)
+Libero (if cinderace)
+Cud Chew
+Earth Eater (if orthworm)
+Lingering Aroma
+Protosynthesis
+Quark Drive
+Sharpness
+Thermal Exchange
+Fix dry skin/Storm Drain
+
+
+Mechanics updates:
+Electric type cannot be paralyzed
+grass types immune to spore moves
+
+Item additions:
+Eject Button
+Eject Pack
+Loaded Dice
+Punching Glove
+Rocky Helmet
+Throat Spray
+Eviolite
+Assault Vest
+Weakness Policy
+Blunder Policy
+Air Balloon
+Binding Band
+Booster Energy
+Covert Cloak
+Clear Amulet
+
+
+QOL:
+Chain rare candy (done)
+Infinite repellant (done)
+Maximize IVS script (WIP)
+Debug menu (Pokesync)
+Menu options (Game Modes)
+Script writes
+E4 needs to have a choice of single/double battles again (use DSPRE as reference)
+Shop added to E4 Menu
+
+
