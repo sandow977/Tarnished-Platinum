@@ -88,3 +88,7 @@ ninja -C build pokeplatinum.us.nds
 - Effect behavior works
 - No crash on protect or miss/enemy is dead
 
+
+For adding to the game fully:
+Be sure all steps are followed
+
