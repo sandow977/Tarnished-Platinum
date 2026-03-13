@@ -10,6 +10,8 @@ Action: add `MOVE_PLASMA_BURST` right before `MAX_MOVES`.
 Path: `C:\Users\tinle\Downloads\pokeplatinum\res\battle\moves\plasma_burst`  
 Action: copy a similar move folder (example: `thunderbolt`) and rename to `plasma_burst`.
 
+Use this to find the battle effects: https://github.com/sandow977/Tarnished-Platinum/edit/main/generated/battle_move_effects.txt
+
 3. Edit move stats/data  
 Path: [plasma_burst/data.json](/C:/Users/tinle/Downloads/pokeplatinum/res/battle/moves/plasma_burst/data.json)  
 Action: set name, type, power, accuracy, pp, flags, etc.  
