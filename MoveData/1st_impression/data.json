@@ -1,16 +1,16 @@
 {
-    "name": "Superpower",
+    "name": "1st Impression",
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_FIGHTING",
+    "type": "TYPE_BUG",
     "power": 120,
     "accuracy": 100,
     "pp": 5,
     "effect": {
-        "type": "BATTLE_EFFECT_LOWER_OWN_ATK_AND_DEF",
+        "type": "BATTLE_EFFECT_ALWAYS_FLINCH_FIRST_TURN_ONLY",
         "chance": 0
     },
     "range": "RANGE_SINGLE_TARGET",
-    "priority": 0,
+    "priority": 2,
     "flags": [
         "MOVE_FLAG_MAKES_CONTACT",
         "MOVE_FLAG_CAN_PROTECT",
