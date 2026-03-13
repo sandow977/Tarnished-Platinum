@@ -2,9 +2,9 @@
     "name": "1st Impression",
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_BUG",
-    "power": 120,
+    "power": 90,
     "accuracy": 100,
-    "pp": 5,
+    "pp": 2,
     "effect": {
         "type": "BATTLE_EFFECT_ALWAYS_FLINCH_FIRST_TURN_ONLY",
         "chance": 0
