@@ -65,6 +65,7 @@
     ScriptEntry CommonScript_SetLookerBGM @ 0x807
     ScriptEntry CommonScript_FadeToDefaultMusic @ 0x808
     ScriptEntry CommonScript_GriseousOrbCouldNotBeRemoved @ 0x809
+    ScriptEntry CommonScript_DebugMenu @ 0x80A
     ScriptEntryEnd
 
 CommonScript_EmptyScript1:
@@ -1112,6 +1113,7 @@ _0F62:
 
 _0F70:
     CloseMessage
+    GoToIfSet FLAG_UNK_0x00EC, CommonScript_PortablePC_Exit
     PlayFanfare SEQ_SE_DP_PC_LOGOFF
     Call _0C11
     ReleaseAll
@@ -1424,11 +1426,35 @@ _1361:
 _138C:
     PlayFanfare SEQ_SE_CONFIRM
     LockAll
+    CheckItem VAR_LAST_USED_REPEL, 1, VAR_RESULT
+    GoToIfEq VAR_RESULT, TRUE, CommonScript_UseRepelPrompt
     Message pl_msg_00000213_00079
     WaitABPress
     CloseMessage
     ReleaseAll
     End
+
+CommonScript_UseRepelPrompt:
+    Message CommonScript_Text_UseAnotherRepel
+    ShowYesNoMenu VAR_RESULT
+    GoToIfEq VAR_RESULT, MENU_YES, CommonScript_UseRepel
+    CloseMessage
+    ReleaseAll
+    End
+
+CommonScript_UseRepel:
+    CloseMessage
+    PlayFanfare SEQ_SE_DP_CARD2
+    SetRepelSteps VAR_LAST_USED_REPEL
+    RemoveItem VAR_LAST_USED_REPEL, 1, VAR_RESULT
+    BufferPlayerName 0
+    BufferItemName 1, VAR_LAST_USED_REPEL
+    Message CommonScript_Text_UsedRepel
+    WaitABPress
+    CloseMessage
+    ReleaseAll
+    End
+
 
 _139D:
     PlayFanfare SEQ_SE_CONFIRM
@@ -1676,3 +1702,448 @@ CommonScript_GriseousOrbCouldNotBeRemoved:
     End
 
     .balign 4, 0
+
+
+    CommonScript_DebugMenu:
+    LockAll
+    InitLocalTextListMenu 1, 1, 0, VAR_RESULT
+    AddListMenuEntry CommonStrings_Text_DebugMenuOption1, 0
+    AddListMenuEntry CommonStrings_Text_DebugMenuOption2, 1
+    AddListMenuEntry CommonStrings_Text_DebugMenuOption3, 2
+    AddListMenuEntry CommonStrings_Text_DebugMenuOption4, 3
+    AddListMenuEntry CommonStrings_Text_DebugMenuOption5, 4
+    AddListMenuEntry CommonStrings_Text_DebugMenuOption6, 5
+    ShowListMenu
+    GoToIfEq VAR_RESULT, 0, CommonScript_DebugMenu_OpenPC
+    GoToIfEq VAR_RESULT, 1, CommonScript_DebugMenu_HealFunction
+    GoToIfEq VAR_RESULT, 2, CommonScript_DebugMenu_StatusTest
+    GoToIfEq VAR_RESULT, 3, CommonScript_DebugMenu_SetIVs
+    GoToIfEq VAR_RESULT, 4, CommonScript_DebugMenu_LearnMoves
+    GoToIfEq VAR_RESULT, 5, CommonScript_DebugMenu_RenameMons
+    GoTo CommonScript_DebugMenu_Exit
+
+
+CommonScript_DebugMenu_OpenPC:
+    BufferPlayerName 0
+    SetFlag FLAG_UNK_0x00EC
+    PlayFanfare SEQ_SE_DP_PC_ON
+    Message pl_msg_00000213_00032
+    GoTo _0C1C
+
+CommonScript_DebugMenu_HealFunction:
+    HealParty
+    PlaySound SEQ_ASA
+    WaitSound
+    Message CommonStrings_Text_DebugMenuHealedParty
+    WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+CommonScript_DebugMenu_Exit:
+    ReleaseAll
+    End
+
+CommonScript_PortablePC_Exit:
+    ClearFlag FLAG_UNK_0x00EC
+    PlayFanfare SEQ_SE_DP_PC_LOGOFF
+    ReleaseAll
+    End
+
+CommonScript_DebugMenu_StatusTest:
+    GoTo CommonScript_DebugMenu_StatusPickType
+
+
+CommonScript_DebugMenu_StatusPickType:
+    InitLocalTextListMenu 1, 1, 0, VAR_RESULT
+    AddListMenuEntry CommonStrings_Text_StatusSleep, 0
+    AddListMenuEntry CommonStrings_Text_StatusPoison, 1
+    AddListMenuEntry CommonStrings_Text_StatusBurn, 2
+    AddListMenuEntry CommonStrings_Text_StatusFreeze, 3
+    AddListMenuEntry CommonStrings_Text_StatusParalysis, 4
+    AddListMenuEntry CommonStrings_Text_StatusToxic, 5
+    AddListMenuEntry CommonStrings_Text_SleepParty, 6
+    ShowListMenu
+    GoToIfEq VAR_RESULT, 0, CommonScript_ApplySleep
+    GoToIfEq VAR_RESULT, 1, CommonScript_ApplyPoison
+    GoToIfEq VAR_RESULT, 2, CommonScript_ApplyBurn
+    GoToIfEq VAR_RESULT, 3, CommonScript_ApplyFreeze
+    GoToIfEq VAR_RESULT, 4, CommonScript_ApplyParalysis
+    GoToIfEq VAR_RESULT, 5, CommonScript_ApplyToxic
+    GoToIfEq VAR_RESULT, 6, CommonScript_ApplySleepParty
+    GoTo CommonScript_DebugMenu_Exit
+
+CommonScript_ApplySleep:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+    SetPartyMonStatusUnsafe VAR_0x8004, 1
+    ReleaseAll
+    End
+
+CommonScript_ApplyPoison:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+    SetPartyMonStatusUnsafe VAR_0x8004, 2
+    ReleaseAll
+    End
+
+CommonScript_ApplyBurn:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+    SetPartyMonStatusUnsafe VAR_0x8004, 3
+    ReleaseAll
+    End
+
+CommonScript_ApplyFreeze:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+    SetPartyMonStatusUnsafe VAR_0x8004, 4
+    ReleaseAll
+    End
+
+CommonScript_ApplyParalysis:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+    SetPartyMonStatusUnsafe VAR_0x8004, 5
+    ReleaseAll
+    End
+
+CommonScript_ApplyToxic:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+    SetPartyMonStatusUnsafe VAR_0x8004, 6
+    ReleaseAll
+    End
+
+
+CommonScript_ApplySleepParty:
+    GetPartyCount VAR_RESULT
+    GoToIfLt VAR_RESULT, 6, CommonScript_FailApplySleep
+    SetPartyMonStatusUnsafe 0, 1
+    SetPartyMonStatusUnsafe 1, 1
+    SetPartyMonStatusUnsafe 2, 1
+    SetPartyMonStatusUnsafe 3, 1
+    SetPartyMonStatusUnsafe 4, 1
+    SetPartyMonStatusUnsafe 5, 1
+    ReleaseAll
+    End
+
+CommonScript_FailApplySleep:
+    Message CommonScript_Text_FailedSleep
+    WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+
+CommonScript_StatusCancel:
+    ReleaseAll
+    End
+
+CommonScript_DebugMenu_SetIVs:
+    PlayFanfare SEQ_SE_CONFIRM
+    Message TwinleafTown_Text_IVIntro
+    InitLocalTextListMenu 1, 1, 0, VAR_RESULT
+    AddListMenuEntry TwinleafTown_Text_IVHP, 0
+    AddListMenuEntry TwinleafTown_Text_IVAtk, 1
+    AddListMenuEntry TwinleafTown_Text_IVDef, 2
+    AddListMenuEntry TwinleafTown_Text_IVSpAtk, 3
+    AddListMenuEntry TwinleafTown_Text_IVSpDef, 4
+    AddListMenuEntry TwinleafTown_Text_IVSpeed, 5
+    ShowListMenu
+    GoToIfEq VAR_RESULT, 0, TwinleafTown_GuitaristMaxHP
+    GoToIfEq VAR_RESULT, 1, TwinleafTown_GuitaristMaxAtk
+    GoToIfEq VAR_RESULT, 2, TwinleafTown_GuitaristMaxDef
+    GoToIfEq VAR_RESULT, 3, TwinleafTown_GuitaristMaxSpAtk
+    GoToIfEq VAR_RESULT, 4, TwinleafTown_GuitaristMaxSpDef
+    GoToIfEq VAR_RESULT, 5, TwinleafTown_GuitaristMaxSpeed
+    GoTo TwinleafTown_GuitaristCancel
+
+TwinleafTown_GuitaristMaxHP:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+    CheckItem ITEM_HEART_SCALE, 1, VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, CommonScript_MissingScales
+    SetPartyMonIVPerfect VAR_0x8004, 0, 0
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristMaxAtk:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+    CheckItem ITEM_HEART_SCALE, 1, VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, CommonScript_MissingScales
+    SetPartyMonIVPerfect VAR_0x8004, 0, 1
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristMaxDef:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+     CheckItem ITEM_HEART_SCALE, 1, VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, CommonScript_MissingScales
+    SetPartyMonIVPerfect VAR_0x8004, 0, 2
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristMaxSpeed:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+    CheckItem ITEM_HEART_SCALE, 1, VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, CommonScript_MissingScales
+    SetPartyMonIVPerfect VAR_0x8004, 0, 3
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristMaxSpAtk:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+    CheckItem ITEM_HEART_SCALE, 1, VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, CommonScript_MissingScales
+    SetPartyMonIVPerfect VAR_0x8004, 0, 4
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristMaxSpDef:
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8004
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8004, 0xFF, CommonScript_StatusCancel
+    CloseMessage
+    CheckItem ITEM_HEART_SCALE, 1, VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, CommonScript_MissingScales
+    SetPartyMonIVPerfect VAR_0x8004, 0, 5
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristCheckResult:
+    GoToIfEq VAR_0x8004, FALSE, TwinleafTown_GuitaristAlreadyPerfect
+    Message TwinleafTown_Text_IVSuccess
+    WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+TwinleafTown_GuitaristAlreadyPerfect:
+    Message TwinleafTown_Text_IVAlreadyPerfect
+    WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+TwinleafTown_GuitaristCancel:
+    CloseMessage
+    ReleaseAll
+    End
+
+CommonScript_MissingScales:
+    Message TwinleafTown_Text_MissingScales
+    WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+CommonScript_DebugMenu_LearnMoves:
+    SetFlag FLAG_UNK_0x00E9
+    GoToIfUnset FLAG_UNK_0x00E9, CommonScript_NotUnlocked
+    CheckItem ITEM_HEART_SCALE, 1, VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, CommonScript_MissingScales
+    GoTo _006A
+
+_003D:
+    SetFlag FLAG_UNK_0x00E9
+    GoToIfUnset FLAG_UNK_0x00E9, CommonScript_NotUnlocked
+    Message 0
+    CheckItem ITEM_HEART_SCALE, 1, VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, CommonScript_MissingScales
+    GoTo _006A
+
+
+CommonScript_NotUnlocked:
+    Message CommonScript_Text_NotUnlocked
+    WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+
+_005F:
+    ReleaseAll
+    End
+
+_006A:
+    Message CommonScript_Text_LearnMoves
+    WaitABXPadPress
+    CloseMessage
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8005
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_0x8005, 0xFF, _005F
+    GetPartyMonSpecies VAR_0x8005, VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, _011A
+    CheckHasLearnableReminderMoves VAR_RESULT, VAR_0x8005
+    GoToIfEq VAR_RESULT, FALSE, CommonScript_MonCantLearn
+    FadeScreenOut
+    WaitFadeScreen
+    OpenMoveReminderMenu VAR_0x8005
+    CheckLearnedReminderMove VAR_RESULT
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_RESULT, 0xFF, _005F
+    RemoveItem ITEM_HEART_SCALE, 1, VAR_RESULT
+    BufferPlayerName 3
+    ReleaseAll
+    End
+
+CommonScript_MonCantLearn:
+    Message CommonScript_Text_MonCantLearn
+    WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+_011A:
+    Message CommonScript_Text_EggsCantLearn
+    WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+
+CommonScript_DebugMenu_RenameMons:
+    Message CommonScript_Text_NameRater
+    WaitABXPadPress
+    CloseMessage
+    FadeScreenOut
+    WaitFadeScreen
+    SelectMoveTutorPokemon
+    GetSelectedPartySlot VAR_0x8005
+    GoToIfEq VAR_0x8005, 0xFF, CommonScript_DebugMenu_CancelOut
+    GetPartyMonSpecies VAR_0x8005, VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, CommonScript_DebugMenu_EggMon
+    BufferPartyMonNickname 0, VAR_0x8005
+    OpenPokemonNamingScreen VAR_0x8005, VAR_RESULT
+    FadeScreenIn
+    WaitFadeScreen
+    GoToIfEq VAR_RESULT, 1, CommonScript_DebugMenu_UnchangedName
+    ScrCmd_2B8 VAR_0x8005
+    IncrementGameRecord RECORD_POKEMON_NICKNAMED
+    BufferPartyMonNickname 0, VAR_0x8005
+    Message CommonScript_Text_NameChanged
+    WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+
+CommonScript_DebugMenu_CancelOut:
+    ReturnToField 
+    FadeScreenIn
+    WaitFadeScreen
+    GoTo _005F
+
+CommonScript_DebugMenu_EggMon:
+    ReturnToField
+    FadeScreenIn
+    WaitFadeScreen
+    GoTo _011A
+
+CommonScript_DebugMenu_UnchangedName:
+    BufferPartyMonNickname 0, VAR_0x8005
+    Message CommonScript_Text_NameKept
+    WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+
+
+    
+
+
+
+
+
+
+
+

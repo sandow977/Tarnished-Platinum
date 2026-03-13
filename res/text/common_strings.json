@@ -867,12 +867,271 @@
       ]
     },
     {
+      "id": "CommonStrings_Text_DebugMenuIntro",
+      "en_US": [
+        "Debug Menu\r"
+      ]
+    },
+    {
+      "id": "CommonStrings_Text_DebugMenuOption1",
+      "en_US": [
+        "Portable PC"
+      ]
+    },
+    {
+      "id": "CommonStrings_Text_DebugMenuOption2",
+      "en_US": [
+        "Heal Party"
+      ]
+    },
+    {
+      "id": "CommonStrings_Text_DebugMenuOption3",
+      "en_US": [
+        "Apply Status"
+      ]
+    },
+    {
+      "id": "CommonStrings_Text_DebugMenuOption4",
+      "en_US": [
+        "Maximize IV"
+      ]
+    },
+    {
+      "id": "CommonStrings_Text_DebugMenuOption5",
+      "en_US": [
+        "Learn Moves"
+      ]
+    },
+    {
+      "id": "CommonStrings_Text_DebugMenuOption6",
+      "en_US": [
+        "Rename Pokémon"
+      ]
+    },
+    {
+      "id": "CommonStrings_Text_DebugMenuExit",
+      "en_US": [
+        "Exit"
+      ]
+    },
+    {
+      "id": "CommonStrings_Text_DebugMenuDidOption1",
+      "en_US": [
+        "Ran debug option 1.\r"
+      ]
+    },
+    {
+      "id": "CommonStrings_Text_DebugMenuDidOption2",
+      "en_US": [
+        "Ran debug option 2.\r"
+      ]
+    },
+    {
+      "id": "CommonStrings_Text_DebugMenuHealedParty",
+      "en_US": [
+        "Your party was healed!"
+      ]
+    },
+    {
       "id": "pl_msg_00000213_00131",
       "en_US": [
         "Your Hall of Fame data is corrupted.\r",
         "It will be fixed if you enter the\n",
         "Hall of Fame again.\r"
       ]
-    }
+   },
+   {
+     "id": "CommonScript_Text_UseAnotherRepel",
+     "en_US": [
+       "Repel’s effect wore off...\n",
+       "Use another?\r"
+     ]
+   },
+   {
+     "id": "CommonScript_Text_UsedRepel",
+     "en_US": [
+       "{STRVAR_1 3, 0, 0} used the\n",
+       "{STRVAR_1 8, 1, 0}."
+     ]
+    },
+    {
+    "id": "CommonStrings_Text_StatusMenuIntro",
+    "en_US": [
+      "Choose a status.\r"
+    ]
+  },
+  {
+    "id": "CommonStrings_Text_StatusClear",
+    "en_US": [
+     "Clear Status"
+    ]
+  },
+  {
+    "id": "CommonStrings_Text_StatusSleep",
+    "en_US": [
+      "Sleep"
+    ]
+  },
+  {
+    "id": "CommonStrings_Text_StatusPoison",
+    "en_US": [
+      "Poison"
+    ]
+  },
+  {
+    "id": "CommonStrings_Text_StatusBurn",
+    "en_US": [
+      "Burn"
+    ]
+  },
+  {
+    "id": "CommonStrings_Text_StatusFreeze",
+    "en_US": [
+      "Freeze"
+    ]
+  },
+  {
+    "id": "CommonStrings_Text_StatusParalysis",
+    "en_US": [
+      "Paralysis"
+    ]
+  },
+  {
+    "id": "CommonStrings_Text_StatusToxic",
+    "en_US": [
+      "Toxic"
+    ]
+  },
+  {
+    "id": "CommonStrings_Text_SleepParty",
+    "en_US": [
+      "Sleep Party"
+    ]
+  },  
+  {
+    "id": "CommonStrings_Text_SleepPartyFail",
+    "en_US": [
+      "Your party is not full!"
+    ]
+  }, 
+  {
+    "id": "TwinleafTown_Text_IVIntro",
+    "en_US": [
+      "Which IV should be maxed?"
+    ]
+  },
+  {
+    "id": "TwinleafTown_Text_IVHP",
+    "en_US": [
+      "HP"
+    ]
+  },
+  {
+    "id": "TwinleafTown_Text_IVAtk",
+    "en_US": [
+      "Attack"
+    ]
+  },
+  {
+    "id": "TwinleafTown_Text_IVDef",
+    "en_US": [
+      "Def"
+    ]
+  },
+  {
+    "id": "TwinleafTown_Text_IVSpeed",
+    "en_US": [
+      "Speed"
+    ]
+  },
+  {
+    "id": "TwinleafTown_Text_IVSpAtk",
+    "en_US": [
+      "Special Attack"
+    ]
+  },
+  {
+    "id": "TwinleafTown_Text_IVSpDef",
+    "en_US": [
+      "Special Defense"
+    ]
+  },
+  {
+    "id": "TwinleafTown_Text_IVSuccess",
+    "en_US": [
+      "IVs were maximized!"
+    ]
+  },
+  {
+    "id": "CommonScript_Text_FailedSleep",
+    "en_US": [
+      "You don’t have a full party!"
+    ]
+  },
+  {
+    "id": "CommonScript_Text_NotUnlocked",
+    "en_US": [
+      "This feature hasn’t been unlocked\n",
+      "yet."
+    ]
+  },
+  {
+  "id": "CommonScript_Text_LearnMoves",
+  "en_US": [
+      "Which Pokémon needs tutoring?"
+    ]
+  },
+  {
+  "id": "CommonScript_Text_ExchangeScales",
+  "en_US": [
+      "{STRVAR_1 3, 3, 0} handed over\n",
+      "{STRVAR_1 8, 4, 0} in exchange."
+    ]
+  },
+  {
+  "id": "CommonScript_Text_EggsCantLearn",
+  "en_US": [
+      "That’s an egg."
+    ]
+  },
+  {
+  "id": "CommonScript_Text_MonCantLearn",
+  "en_US": [
+      "That Pokémon can’t learn any moves."
+    ]
+  },
+  {
+  "id": "TwinleafTown_Text_MissingScales",
+  "en_US": [
+      "You don’t have any Heart Scales."
+    ]
+  },
+  {
+  "id": "CommonScript_Text_NameRater",
+  "en_US": [
+      "Which Pokémon should be renamed?"
+    ]
+  },
+  {
+  "id": "CommonScript_Text_NameKept",
+  "en_US": [
+      "You decided not to rename {STRVAR_1 1, 0, 0}."
+    ]
+  },
+  {
+  "id": "CommonScript_Text_NameChanged",
+  "en_US": [
+      "{STRVAR_1 1, 0, 0}’s nickname was\n",
+      "changed."
+    ]
+  },
+  {
+    "id": "TwinleafTown_Text_IVAlreadyPerfect",
+    "en_US": [
+      "This IV is already maximized!"
+    ]
+  }
   ]
 }
+
+

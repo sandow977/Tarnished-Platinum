@@ -1605,6 +1605,9 @@ const ScrCmdFunc Unk_020EAC58[] = {
     ScrCmd_BufferBallSealNamePlural,
     ScrCmd_CapitalizeFirstLetter,
     ScrCmd_BufferFloorNumber,
+    ScrCmd_SetPartyMonIVPerfect,
+    ScrCmd_SetRepelSteps,
+    ScrCmd_SetPartyMonStatusUnsafe,
 };
 
 const u32 Unk_020EAB80 = NELEMS(Unk_020EAC58);

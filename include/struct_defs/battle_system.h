@@ -60,6 +60,7 @@ struct BattleSystem {
     BagCursor *bagCursor;
     Pokedex *pokedex;
     PCBoxes *pcBoxes;
+    SaveData *saveData;
     Party *parties[MAX_BATTLERS];
     ChatotCry *chatotCries[MAX_BATTLERS];
     PokemonSpriteManager *monSpriteMan;

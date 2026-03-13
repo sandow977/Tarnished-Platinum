@@ -13,6 +13,7 @@
 
 void sub_020852B8(PartyMenuApplication *param0);
 int sub_02085348(void *param0);
+int RareCandy_FailStayInParty(void *param0);
 BOOL CheckItemSacredAsh(u16 param0);
 int sub_02085804(PartyMenuApplication *param0);
 int sub_02085EF4(PartyMenuApplication *param0);

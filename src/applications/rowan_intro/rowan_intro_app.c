@@ -2086,7 +2086,7 @@ static BOOL RowanIntro_Run(RowanIntro *manager)
         break;
     case RI_STATE_MOVE_ROWAN_RIGHT_FOR_INFO:
         if (RowanIntro_MoveBgLayer(manager, BG_LAYER_MAIN_1, MBL_CASE_MOVE_RIGHT) == TRUE) {
-            manager->state = RI_STATE_INFO_CHOICE_BOX;
+            manager->state = RI_STATE_DIALOGUE_WIDELY_INHABITED;
         }
         break;
     case RI_STATE_INFO_CHOICE_BOX:
@@ -2388,7 +2388,7 @@ static BOOL RowanIntro_Run(RowanIntro *manager)
         break;
     case RI_STATE_DIALOGUE_WIDELY_INHABITED:
         if (RowanIntro_DisplayMessage(manager, RowanIntro_Text_WidelyInhabited, TRUE) == TRUE) {
-            manager->state = RI_STATE_PKBL_FADE_START;
+            manager->state = RI_STATE_DIALOGUE_ABOUT_YOURSELF;
         }
         break;
     case RI_STATE_PKBL_FADE_START:

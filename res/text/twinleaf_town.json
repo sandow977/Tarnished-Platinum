@@ -103,6 +103,60 @@
       ]
     },
     {
+      "id": "TwinleafTown_Text_IVIntro",
+      "en_US": [
+        "Which IV should I max out?"
+      ]
+    },
+    {
+      "id": "TwinleafTown_Text_IVHP",
+      "en_US": [
+        "HP"
+      ]
+    },
+    {
+      "id": "TwinleafTown_Text_IVAtk",
+      "en_US": [
+        "Attack"
+      ]
+    },
+    {
+      "id": "TwinleafTown_Text_IVDef",
+      "en_US": [
+        "Def"
+      ]
+    },
+    {
+      "id": "TwinleafTown_Text_IVSpeed",
+      "en_US": [
+        "Speed"
+      ]
+    },
+    {
+      "id": "TwinleafTown_Text_IVSpAtk",
+      "en_US": [
+        "Special Attack"
+      ]
+    },
+    {
+      "id": "TwinleafTown_Text_IVSpDef",
+      "en_US": [
+        "Special Defense"
+      ]
+    },
+    {
+      "id": "TwinleafTown_Text_IVSuccess",
+      "en_US": [
+        "IVs were maximized!"
+      ]
+    },
+    {
+      "id": "TwinleafTown_Text_IVAlreadyPerfect",
+      "en_US": [
+        "This IV is already maximized!"
+      ]
+    },
+    {
       "id": "TwinleafTown_Text_MapSign",
       "en_US": [
         "Twinleaf Town\n",

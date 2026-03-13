@@ -4982,6 +4982,24 @@
     .byte \floor
     .endm
 
+    .macro SetPartyMonIVPerfect resultVar, slot, stat
+    .short 840
+    .short \resultVar
+    .short \slot
+    .short \stat
+    .endm
+
+    .macro SetRepelSteps itemVar
+    .short 841
+    .short \itemVar
+    .endm
+
+    .macro SetPartyMonStatusUnsafe slot, statusKind
+    .short 842
+    .short \slot
+    .short \statusKind
+    .endm
+
 
 
     .macro GoToIfLt varID, valueOrVarID, offset

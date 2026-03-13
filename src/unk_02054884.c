@@ -29,6 +29,46 @@ BOOL Pokemon_CanBattle(Pokemon *mon)
     return !Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL);
 }
 
+static void GiveStarterThreePerfectIVs(Pokemon *mon)
+{
+    u8 chosen[3];
+    int count = 0;
+    int i;
+    u32 perfect = 31;
+
+    while (count < 3) {
+        u8 stat = LCRNG_Next() % 6;
+        BOOL duplicate = FALSE;
+
+        for (int i = 0; i < count; i++) {
+            if (chosen[i] == stat) {
+                duplicate = TRUE;
+                break;
+            }
+        }
+
+        if (duplicate) {
+            continue;
+        }
+
+        chosen[count++] = stat;
+    }
+
+    for (int i = 0; i < 3; i++) {
+        switch (chosen[i]) {
+        case 0: Pokemon_SetValue(mon, MON_DATA_HP_IV, &perfect); break;
+        case 1: Pokemon_SetValue(mon, MON_DATA_ATK_IV, &perfect); break;
+        case 2: Pokemon_SetValue(mon, MON_DATA_DEF_IV, &perfect); break;
+        case 3: Pokemon_SetValue(mon, MON_DATA_SPEED_IV, &perfect); break;
+        case 4: Pokemon_SetValue(mon, MON_DATA_SPATK_IV, &perfect); break;
+        case 5: Pokemon_SetValue(mon, MON_DATA_SPDEF_IV, &perfect); break;
+        }
+    }
+
+    Pokemon_CalcLevelAndStats(mon);
+}
+
+
 BOOL Pokemon_GiveMonFromScript(enum HeapID heapID, SaveData *saveData, u16 species, u8 level, u16 heldItem, int metLocation, int metTerrain)
 {
     BOOL result;
@@ -42,6 +82,10 @@ BOOL Pokemon_GiveMonFromScript(enum HeapID heapID, SaveData *saveData, u16 speci
 
     Pokemon_Init(mon);
     Pokemon_InitWith(mon, species, level, INIT_IVS_RANDOM, FALSE, 0, OTID_NOT_SET, 0);
+    if ((species == SPECIES_NIDORAN_M || species == SPECIES_SHINX || species == SPECIES_PIPLUP)
+    && Party_GetCurrentCount(party) == 0) {
+    GiveStarterThreePerfectIVs(mon);
+}
     Pokemon_SetCatchData(mon, trainerInfo, ITEM_POKE_BALL, metLocation, metTerrain, heapID);
 
     item = heldItem;

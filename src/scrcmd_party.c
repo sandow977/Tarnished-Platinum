@@ -25,6 +25,8 @@
 #include "unk_02017038.h"
 #include "unk_02054884.h"
 #include "unk_0205DFC4.h"
+#include "party.h"
+#include "constants/battle/condition.h"
 
 BOOL ScrCmd_GivePokemon(ScriptContext *ctx)
 {
@@ -213,6 +215,70 @@ BOOL ScrCmd_GetPartyMonLevel(ScriptContext *ctx)
         *destVar = Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
     }
 
+    return FALSE;
+}
+
+BOOL ScrCmd_SetPartyMonIVPerfect(ScriptContext *ctx)
+{
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+    u16 *destVar = ScriptContext_GetVarPointer(ctx);
+    u16 slot = ScriptContext_GetVar(ctx);
+    u16 stat = ScriptContext_GetVar(ctx);
+    u32 perfect = 31;
+    u32 currentIV;
+    Pokemon *mon = Party_GetPokemonBySlotIndex(SaveData_GetParty(fieldSystem->saveData), slot);
+
+     *destVar = FALSE;
+
+    switch (stat) {
+    case 0:
+        currentIV = Pokemon_GetValue(mon, MON_DATA_HP_IV, NULL);
+        if (currentIV >= 31) {
+            return FALSE;
+        }
+        Pokemon_SetValue(mon, MON_DATA_HP_IV, &perfect);
+        break;
+    case 1:
+        currentIV = Pokemon_GetValue(mon, MON_DATA_ATK_IV, NULL);
+        if (currentIV >= 31) {
+            return FALSE;
+        }
+        Pokemon_SetValue(mon, MON_DATA_ATK_IV, &perfect);
+        break;
+    case 2:
+        currentIV = Pokemon_GetValue(mon, MON_DATA_DEF_IV, NULL);
+        if (currentIV >= 31) {
+            return FALSE;
+        }
+        Pokemon_SetValue(mon, MON_DATA_DEF_IV, &perfect);
+        break;
+    case 3:
+        currentIV = Pokemon_GetValue(mon, MON_DATA_SPEED_IV, NULL);
+        if (currentIV >= 31) {
+            return FALSE;
+        }
+        Pokemon_SetValue(mon, MON_DATA_SPEED_IV, &perfect);
+        break;
+    case 4:
+        currentIV = Pokemon_GetValue(mon, MON_DATA_SPATK_IV, NULL);
+        if (currentIV >= 31) {
+            return FALSE;
+        }
+        Pokemon_SetValue(mon, MON_DATA_SPATK_IV, &perfect);
+        break;
+    case 5:
+        currentIV = Pokemon_GetValue(mon, MON_DATA_SPDEF_IV, NULL);
+        if (currentIV >= 31) {
+            return FALSE;
+        }
+        Pokemon_SetValue(mon, MON_DATA_SPDEF_IV, &perfect);
+        break;
+    default:
+        return FALSE;
+    }
+
+    Pokemon_CalcLevelAndStats(mon);
+    *destVar = TRUE;
     return FALSE;
 }
 
@@ -823,5 +889,44 @@ BOOL ScrCmd_CheckPartyHasHeldItem(ScriptContext *ctx)
         }
     }
 
+    return FALSE;
+}
+
+BOOL ScrCmd_SetPartyMonStatusUnsafe(ScriptContext *ctx)
+{
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+    u16 partySlot = ScriptContext_GetVar(ctx);
+    u16 statusKind = ScriptContext_GetVar(ctx);
+    Party *party = SaveData_GetParty(fieldSystem->saveData);
+    Pokemon *mon = Party_GetPokemonBySlotIndex(party, partySlot);
+    u32 status = MON_CONDITION_NONE;
+
+    switch (statusKind) {
+    case 0:
+        status = MON_CONDITION_NONE;
+        break;
+    case 1:
+        status = MON_CONDITION_SLEEP_0;
+        break;
+    case 2:
+        status = MON_CONDITION_POISON;
+        break;
+    case 3:
+        status = MON_CONDITION_BURN;
+        break;
+    case 4:
+        status = MON_CONDITION_FREEZE;
+        break;
+    case 5:
+        status = MON_CONDITION_PARALYSIS;
+        break;
+    case 6:
+        status = MON_CONDITION_TOXIC | MON_CONDITION_TOXIC_COUNTER_0;
+        break;
+    default:
+        return FALSE;
+    }
+
+    Pokemon_SetValue(mon, MON_DATA_STATUS, &status);
     return FALSE;
 }

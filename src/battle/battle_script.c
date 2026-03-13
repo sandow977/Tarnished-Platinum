@@ -77,6 +77,8 @@
 #include "res/battle/scripts/sub_seq.naix"
 #include "res/text/bank/battle_strings.h"
 
+#include "vars_flags.h"
+
 typedef BOOL (*BtlCmd)(BattleSystem *, BattleContext *);
 
 typedef struct BattleMessageParams {
@@ -343,6 +345,9 @@ static void BattleAI_SetAbility(BattleContext *battleCtx, u8 battler, u8 ability
 static void BattleAI_SetHeldItem(BattleContext *battleCtx, u8 battler, u16 item);
 static void BattleScript_GetExpTask(SysTask *task, void *inData);
 static void BattleScript_CatchMonTask(SysTask *task, void *inData);
+
+static int GetCurrentLevelCapFromBattle(BattleSystem *battleSys);
+static BOOL Battle_HasAnyMonThatCanGainExp(BattleSystem *battleSys, BattleContext *battleCtx);
 
 static const BtlCmd sBattleCommands[] = {
     BtlCmd_PlayEncounterAnimation,
@@ -2538,6 +2543,11 @@ enum GetExpTaskDataIndex {
 static BOOL BtlCmd_StartGetExpTask(BattleSystem *battleSys, BattleContext *battleCtx)
 {
     BattleScript_Iter(battleCtx, 1);
+
+    if (Battle_HasAnyMonThatCanGainExp(battleSys, battleCtx) == FALSE) {
+        battleCtx->taskData = NULL;
+        return FALSE;
+    }
 
     battleCtx->taskData = Heap_Alloc(HEAP_ID_BATTLE, sizeof(BattleScriptTaskData));
     battleCtx->taskData->battleSys = battleSys;
@@ -9961,6 +9971,13 @@ static void BattleScript_GetExpTask(SysTask *task, void *inData)
         msg.id = BattleStrings_Text_PokemonGainedExpPoints; // "{0} gained {1} Exp. Points!"
 
         if (Pokemon_GetValue(mon, MON_DATA_HP, NULL) && Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL) != MAX_POKEMON_LEVEL) {
+            int level = Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
+            int levelCap = GetCurrentLevelCapFromBattle(data->battleSys);
+
+            if (level >= levelCap) {
+                data->seqNum = SEQ_GET_EXP_CHECK_DONE;
+                break;
+            }
             if (data->battleCtx->sideGetExpMask[battler] & FlagIndex(slot)) {
                 totalExp = data->battleCtx->gainedExp;
             }
@@ -9987,10 +10004,21 @@ static void BattleScript_GetExpTask(SysTask *task, void *inData)
                 msg.id = BattleStrings_Text_PokemonGainedABoostedExpPoints; // "{0} gained a boosted {1} Exp. Points!"
             }
 
-            u32 newExp = Pokemon_GetValue(mon, MON_DATA_EXPERIENCE, NULL);
-            data->tmpData[GET_EXP_NEW_EXP] = newExp - Pokemon_GetCurrentLevelBaseExp(mon);
-            newExp += totalExp;
+              u16 species = Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL);
+              u32 newExp = Pokemon_GetValue(mon, MON_DATA_EXPERIENCE, NULL);
+              u32 capExp = Pokemon_GetSpeciesBaseExpAt(species, levelCap);
 
+              if (newExp >= capExp) {
+                  data->seqNum = SEQ_GET_EXP_CHECK_DONE;
+                  break;
+              }
+
+              if (newExp + totalExp > capExp) {
+                  totalExp = capExp - newExp;
+              }
+
+              data->tmpData[GET_EXP_NEW_EXP] = newExp - Pokemon_GetCurrentLevelBaseExp(mon);
+              newExp += totalExp;
             if (slot == data->battleCtx->selectedPartySlot[expBattler]) {
                 data->battleCtx->battleMons[expBattler].exp = newExp;
             }
@@ -12144,6 +12172,68 @@ static int BattleMessage_TrainerClassTag(BattleSystem *battleSys, BattleContext 
 static int BattleMessage_TrainerNameTag(BattleSystem *battleSys, BattleContext *battleCtx, int battlerIn)
 {
     return BattleScript_Battler(battleSys, battleCtx, battlerIn);
+}
+
+static BOOL Battle_HasAnyMonThatCanGainExp(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    int battler;
+    int expBattler;
+    int slot;
+    int levelCap;
+    u32 battleType;
+    Pokemon *mon;
+    int item;
+    int itemEffect;
+
+    battler = battleCtx->faintedMon >> 1 & 1;
+    expBattler = 0;
+    levelCap = GetCurrentLevelCapFromBattle(battleSys);
+    battleType = BattleSystem_GetBattleType(battleSys);
+
+    for (slot = 0; slot < BattleSystem_GetPartyCount(battleSys, expBattler); slot++) {
+        mon = BattleSystem_GetPartyPokemon(battleSys, expBattler, slot);
+        item = Pokemon_GetValue(mon, MON_DATA_HELD_ITEM, NULL);
+        itemEffect = Item_LoadParam(item, ITEM_PARAM_HOLD_EFFECT, HEAP_ID_BATTLE);
+
+        if ((itemEffect == HOLD_EFFECT_EXP_SHARE || (battleCtx->sideGetExpMask[battler] & FlagIndex(slot))) == FALSE) {
+            continue;
+        }
+
+        if ((battleType & BATTLE_TYPE_DOUBLES)
+            && (battleType & BATTLE_TYPE_AI) == FALSE
+            && battleCtx->selectedPartySlot[2] == slot) {
+            expBattler = 2;
+            mon = BattleSystem_GetPartyPokemon(battleSys, expBattler, slot);
+        }
+
+        if (Pokemon_GetValue(mon, MON_DATA_HP, NULL) == 0) {
+            continue;
+        }
+
+        if (Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL) >= MAX_POKEMON_LEVEL) {
+            continue;
+        }
+
+        if (Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL) >= levelCap) {
+            continue;
+        }
+
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+static int GetCurrentLevelCapFromBattle(BattleSystem *battleSys)
+{
+    VarsFlags *varsFlags = SaveData_GetVarsFlags(battleSys->saveData);
+    u16 *cap = VarsFlags_GetVarAddress(varsFlags, VAR_LEVEL_CAP);
+
+    if (*cap == 0) {
+        return 100;
+    }
+
+    return *cap;
 }
 
 static const SpriteTemplate sSpriteTemplate_Unk_ov16_0226E6C4 = {

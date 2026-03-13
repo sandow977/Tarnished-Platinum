@@ -7,7 +7,8 @@
         "Mom: {STRVAR_1 3, 0, 0}!\r",
         "{STRVAR_1 3, 1, 0} already left.\r",
         "I don’t know what it was about, but\n",
-        "he sure was in a hurry!\r"
+        "he sure was in a hurry!\r",
+        "Here, you should take these.\r"
       ]
     },
     {
@@ -196,10 +197,10 @@
       ]
     },
     {
-      "id": "TwinleafTownPlayerHouse1F_Text_AskIsRivalHere",
+      "id": "TwinleafTownPlayerHouse1F_Text_GiveItems",
       "en_US": [
-        "{STRVAR_1 3, 1, 0}’s mom: Excuse me.\n",
-        "Is my little {STRVAR_1 3, 1, 0} here?\r"
+        "{STRVAR_1 3, 0, 0} received the {COLOR 1}Running Shoes{COLOR 0}\n",
+        "and the {COLOR 1}Starting Pack{COLOR 0}.\r"
       ]
     },
     {
@@ -340,8 +341,7 @@
         "Mom: {STRVAR_1 3, 0, 0}!\r",
         "{STRVAR_1 3, 1, 0} came looking for you\n",
         "a little while ago.\r",
-        "I don’t know what it was about, but\n",
-        "he was shouting about you needing\f",
+        "He was shouting about you needing\n",
         "to get on a ship at Snowpoint City.\r",
         "You know how impatient he is.\n",
         "He was gone before I could ask."

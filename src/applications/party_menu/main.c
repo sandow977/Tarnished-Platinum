@@ -67,6 +67,8 @@
 #include "res/graphics/party_menu/party_menu_graphics.naix"
 #include "res/text/bank/party_menu.h"
 
+#include "vars_flags.h"
+
 FS_EXTERN_OVERLAY(party_menu_form_change);
 
 typedef struct MemberPanelTemplate {
@@ -169,6 +171,7 @@ u8 PartyMenu_CheckBattleHallEligibility(PartyMenuApplication *application, u8 pa
 u8 PartyMenu_CheckBattleCastleEligibility(PartyMenuApplication *application, u8 param1);
 static u8 CheckPokemonCondition(PartyMenuApplication *application);
 static BOOL UpdatePokemonStatus(PartyMenuApplication *application, u8 param1, s8 param2);
+static int GetCurrentLevelCap(FieldSystem *fieldSystem);
 
 const ApplicationManagerTemplate gPokemonPartyAppTemplate = {
     .init = PartyMenu_Init,
@@ -2654,8 +2657,25 @@ static int ApplyItemEffectOnPokemon(PartyMenuApplication *app)
         return 6;
     }
 
+    if (app->partyMenu->usedItemID == ITEM_RARE_CANDY) {
+        Pokemon *mon = Party_GetPokemonBySlotIndex(app->partyMenu->party, app->currPartySlot);
+      
+        int level = Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
+        int levelCap = GetCurrentLevelCap(app->partyMenu->fieldSystem);
+
+        if (level >= levelCap) {
+            PartyMenu_PrintLongMessage(app, pl_msg_00000453_00105, TRUE);
+            app->unk_B00 = RareCandy_FailStayInParty;
+            Heap_Free(itemData);
+            return 5;
+        }
+    }
+
     if (Party_CheckItemEffectsOnMember(app->partyMenu->party, app->partyMenu->usedItemID, app->currPartySlot, 0, HEAP_ID_PARTY_MENU) == 1) {
+        if (app->partyMenu->usedItemID != ITEM_RARE_CANDY) {
         Bag_TryRemoveItem(app->partyMenu->bag, app->partyMenu->usedItemID, 1, HEAP_ID_PARTY_MENU);
+    }
+
 
         if (Item_Get(itemData, ITEM_PARAM_EVOLVE) != 0) {
             Pokemon *mon = Party_GetPokemonBySlotIndex(app->partyMenu->party, app->currPartySlot);
@@ -2672,12 +2692,16 @@ static int ApplyItemEffectOnPokemon(PartyMenuApplication *app)
         }
 
         sub_020852B8(app);
+} else {
+    PartyMenu_PrintLongMessage(app, pl_msg_00000453_00105, TRUE);
+
+    if (app->partyMenu->usedItemID == ITEM_RARE_CANDY) {
+        app->unk_B00 = RareCandy_FailStayInParty;
     } else {
-        PartyMenu_PrintLongMessage(app, pl_msg_00000453_00105, TRUE);
         app->currPartySlot = 7;
         app->unk_B00 = sub_02085348;
     }
-
+}
     Heap_Free(itemData);
     return 5;
 }
@@ -2956,6 +2980,19 @@ static int CheckForItemApplication(PartyMenuApplication *application)
     application->unk_B04.unk_04 = sub_02083AA4;
     application->unk_B0E = 26;
     return 24;
+}
+
+
+static int GetCurrentLevelCap(FieldSystem *fieldSystem)
+{
+    VarsFlags *varsFlags = SaveData_GetVarsFlags(fieldSystem->saveData);
+    u16 *cap = VarsFlags_GetVarAddress(varsFlags, VAR_LEVEL_CAP);
+
+    if (*cap == 0) {
+        return 100;
+    }
+
+    return *cap;
 }
 
 static BOOL ShouldShowSubscreen(PartyMenuApplication *application)

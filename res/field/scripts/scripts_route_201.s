@@ -143,9 +143,7 @@ Route201_GoIntoTallGrass:
     ApplyMovement LOCALID_PROF_ROWAN, Route201_Movement_ProfRowanWalkBack
     WaitMovement
     Message Route201_Text_YouTrulyLovePokemonDoYou
-    ShowYesNoMenu VAR_RESULT
-    GoToIfEq VAR_RESULT, MENU_YES, Route201_WeLovePokemon
-    GoToIfEq VAR_RESULT, MENU_NO, Route201_WeDontLovePokemon
+    GoTo Route201_TheAnswerWillNeverChangeRight
     End
 
 Route201_WeDontLovePokemon:
@@ -156,19 +154,11 @@ Route201_WeDontLovePokemon:
     CloseMessage
     ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalWalkOnSpotNormalLeft
     WaitMovement
-    Message Route201_Text_IDidntQuiteCatchThat
-    ShowYesNoMenu VAR_RESULT
-    GoToIfEq VAR_RESULT, MENU_YES, Route201_WeLovePokemon
-    GoToIfEq VAR_RESULT, MENU_NO, Route201_WeDontLovePokemon
     End
 
 Route201_WeLovePokemon:
     ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalWalkOnSpotNormalLeft
     WaitMovement
-    BufferRivalName 0
-    Message Route201_Text_ILovePokemonToo
-    Message Route201_Text_IWillAskOnceAgain
-    GoTo Route201_TheAnswerWillNeverChangeRight
     End
 
 Route201_TheAnswerWillNeverChangeRight:
@@ -182,24 +172,14 @@ Route201_TheAnswerWillNeverChangeRight:
     WaitMovement
     BufferPlayerName 1
     Message Route201_Text_RightPlayer
-    ShowYesNoMenu VAR_RESULT
-    GoToIfEq VAR_RESULT, MENU_YES, Route201_WeStillLovePokemon
-    GoToIfEq VAR_RESULT, MENU_NO, Route201_ThatJokesGettingOld
-    End
-
-Route201_ThatJokesGettingOld:
-    BufferRivalName 0
-    Message Route201_Text_ThatJokesGettingOld
-    GoTo Route201_TheAnswerWillNeverChangeRight
+    GoTo Route201_WeStillLovePokemon
     End
 
 Route201_WeStillLovePokemon:
-    Message Route201_Text_ItWorriesMeWhatPeopleWouldDo
     ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalWalkOnSpotFastLeft
     ApplyMovement LOCALID_PLAYER, Route201_Movement_PlayerFaceProfRowanWest
     WaitMovement
     BufferRivalName 0
-    Message Route201_Text_GiveAPokemonToMyFriendHere
     Message Route201_Text_IWillEntrustYouWithPokemon
     CloseMessage
     ApplyMovement LOCALID_PROF_ROWAN, Route201_Movement_ProfRowanLookAround
@@ -226,9 +206,6 @@ Route201_DawnBringBriefcase:
     WaitTime 15, VAR_RESULT
     Message Route201_Text_OhIsSomethingWrongHere
     Message Route201_Text_ThereItIsNiceWorkDawn
-    ApplyMovement LOCALID_COUNTERPART, Route201_Movement_CounterpartWalkOnSpotEast
-    WaitMovement
-    Message Route201_Text_DawnThosePokemonAreHardToReplace
     GoTo Route201_GoOnChoosePokemon
     End
 
@@ -242,31 +219,18 @@ Route201_LucasBringBriefcase:
     WaitTime 15, VAR_RESULT
     Message Route201_Text_IsSomethingWrongHere
     Message Route201_Text_ThereItIsNiceWorkLucas
-    ApplyMovement LOCALID_COUNTERPART, Route201_Movement_CounterpartWalkOnSpotEast
-    WaitMovement
-    Message Route201_Text_LucasThosePokemonAreCrucial
     GoTo Route201_GoOnChoosePokemon
     End
 
 Route201_GoOnChoosePokemon:
-    Message Route201_Text_PeopleShouldMeetPokemon
-    CloseMessage
     ApplyMovement LOCALID_PROF_ROWAN, Route201_Movement_ProfRowanFacePlayerEast
     WaitMovement
     WaitTime 15, VAR_RESULT
     Message Route201_Text_GoOnChooseAPokemon
-    ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalFacePlayerICantBelieveIt
-    WaitMovement
-    BufferRivalName 0
-    Message Route201_Text_ICantBelieveIt
-    ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalWalkOnSpotSouth
-    WaitMovement
     BufferPlayerName 1
     Message Route201_Text_YouCanChooseFirst
-    WaitABXPadPress
     CloseMessage
     Common_FadeToDefaultMusic
-    SetObjectEventMovementType LOCALID_RIVAL, MOVEMENT_TYPE_LOOK_WEST
     SetVar VAR_FOLLOWER_RIVAL_STATE, 1
     ReleaseAll
     End
@@ -289,8 +253,6 @@ Route201_Briefcase:
     ApplyMovement LOCALID_PLAYER, Route201_Movement_PlayerFaceProfRowanNorth
     WaitMovement
     BufferRivalName 0
-    BufferRivalStarterSpeciesName 2
-    Message Route201_Text_ImPickingThisStarter
     Message Route201_Text_IHopeYoullDoWellTogether
     Message Route201_Text_ComeSeeMeInSandgemTown
     CloseMessage
@@ -340,48 +302,15 @@ Route201_CounterpartLeave:
     ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalRunToPlayerForBattle
     ApplyMovement LOCALID_PLAYER, Route201_Movement_PlayerFaceRivalForBattle
     WaitMovement
-    GoTo Route201_AskUpForABattle
-    End
-
-Route201_AskUpForABattle:
-    BufferPlayerName 1
-    Message Route201_Text_OnlyOneThingToDo
-    ShowYesNoMenu VAR_RESULT
-    GoToIfEq VAR_RESULT, MENU_YES, Route201_StartRivalBattle
-    GoToIfEq VAR_RESULT, MENU_NO, Route201_DontBeThatWay
-    End
-
-Route201_StartRivalBattle:
-    BufferRivalName 0
-    BufferPlayerName 1
-    Message Route201_Text_IChallengeYouToABattle
-    CloseMessage
-    SetMovementType LOCALID_RIVAL, MOVEMENT_TYPE_LOOK_SOUTH
-    GetPlayerStarterSpecies VAR_RESULT
-    GoToIfEq VAR_RESULT, SPECIES_TURTWIG, Route201_StartFirstBattleTurtwig
-    GoToIfEq VAR_RESULT, SPECIES_CHIMCHAR, Route201_StartFirstBattleChimchar
-    GoTo Route201_StartFirstBattlePiplup
-    End
-
-Route201_StartFirstBattlePiplup:
-    StartFirstBattle TRAINER_RIVAL_ROUTE_201_PIPLUP
     GoTo Route201_HandleRivalBattleEnd
-
-Route201_StartFirstBattleTurtwig:
-    StartFirstBattle TRAINER_RIVAL_ROUTE_201_TURTWIG
-    GoTo Route201_HandleRivalBattleEnd
-
-Route201_StartFirstBattleChimchar:
-    StartFirstBattle TRAINER_RIVAL_ROUTE_201_CHIMCHAR
-    GoTo Route201_HandleRivalBattleEnd
+    End
 
 Route201_HandleRivalBattleEnd:
-    CheckWonBattle VAR_RESULT
-    GoToIfEq VAR_RESULT, FALSE, Route201_RivalWonLetsGoHome
-    LockObject LOCALID_RIVAL
     BufferRivalName 0
     BufferPlayerName 1
     Message Route201_Text_WhewLetsGoHome
+    SetFlag FLAG_HIDE_LAKE_VERITY_LOW_WATER_RIVAL
+    SetFlag FLAG_HIDE_LAKE_VERITY_LOW_WATER_STARLY
     GoTo Route201_EndChooseStarterSequenceAndWarpHome
     End
 
@@ -393,17 +322,22 @@ Route201_RivalWonLetsGoHome:
     BufferRivalName 0
     BufferPlayerName 1
     Message Route201_Text_IWonLetsGoHome
+    SetVar VAR_VISITED_LAKE_VERITY_WITH_RIVAL, 1
     GoTo Route201_EndChooseStarterSequenceAndWarpHome
     End
 
 Route201_EndChooseStarterSequenceAndWarpHome:
     CloseMessage
     SetVar VAR_FOLLOWER_RIVAL_STATE, 2
-    SetVar VAR_PLAYER_HOUSE_STATE, 3
+    SetVar VAR_PLAYER_HOUSE_STATE, 4
+    SetVar VAR_VISITED_LAKE_VERITY_WITH_RIVAL, 1
+    SetFlag FLAG_HIDE_ROUTE_201_RIVAL
     WaitTime 30, VAR_RESULT
     FadeScreenOut FADE_SCREEN_SPEED_MEDIUM
     WaitFadeScreen
     HealParty
+    SetObjectFlagIsPersistent LOCALID_RIVAL, TRUE
+    SetFlag FLAG_HIDE_ROUTE_201_RIVAL
     Warp MAP_HEADER_TWINLEAF_TOWN_PLAYER_HOUSE_1F, 0, 2, 6, 0
     FadeScreenIn FADE_SCREEN_SPEED_MEDIUM
     WaitFadeScreen
@@ -413,7 +347,6 @@ Route201_EndChooseStarterSequenceAndWarpHome:
 Route201_DontBeThatWay:
     BufferRivalName 0
     Message Route201_Text_DontBeThatWay
-    GoTo Route201_AskUpForABattle
     End
 
     .balign 4, 0
@@ -1192,42 +1125,8 @@ Route201_ProfRowan:
 
 Route201_TriggerLetsCatchThatLegendaryPokemon:
     LockAll
-    ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalNoticePlayer
-    WaitMovement
-    BufferRivalName 0
-    BufferPlayerName 1
-    Message Route201_Text_LetsCatchThatLegendaryPokemon
-    CloseMessage
-    GetPlayerMapPos VAR_0x8004, VAR_0x8005
-    GoToIfEq VAR_0x8004, 110, Route201_RivalRunToPlayerX110
-    GoToIfEq VAR_0x8004, 111, Route201_RivalRunToPlayerX111
-    GoToIfEq VAR_0x8004, 112, Route201_RivalRunToPlayerX112
-    GoToIfEq VAR_0x8004, 113, Route201_RivalRunToPlayerX113
     End
 
-Route201_RivalRunToPlayerX110:
-    ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalRunToPlayerX110
-    WaitMovement
-    GoTo Route201_SetRivalPartner
-    End
-
-Route201_RivalRunToPlayerX111:
-    ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalRunToPlayerX111
-    WaitMovement
-    GoTo Route201_SetRivalPartner
-    End
-
-Route201_RivalRunToPlayerX112:
-    ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalRunToPlayerX112
-    WaitMovement
-    GoTo Route201_SetRivalPartner
-    End
-
-Route201_RivalRunToPlayerX113:
-    ApplyMovement LOCALID_RIVAL, Route201_Movement_RivalRunToPlayerX113
-    WaitMovement
-    GoTo Route201_SetRivalPartner
-    End
 
 Route201_SetRivalPartner:
     BufferRivalName 0
@@ -1238,8 +1137,6 @@ Route201_SetRivalPartner:
     SetStepFlag
     SetHasPartner
     SetMovementType LOCALID_RIVAL, MOVEMENT_TYPE_FOLLOW_PLAYER
-    SetObjectFlagIsPersistent LOCALID_RIVAL, TRUE
-    SetFlag FLAG_HIDE_ROUTE_201_RIVAL
     ReleaseAll
     End
 

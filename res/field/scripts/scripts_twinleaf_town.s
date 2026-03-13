@@ -33,16 +33,70 @@ TwinleafTown_SetPlayerHouseState5:
     Return
 
 TwinleafTown_Guitarist:
-    PlayFanfare SEQ_SE_CONFIRM
     LockAll
     FacePlayer
-    GoToIfSet FLAG_HAS_POKEDEX, TwinleafTown_EveryoneGoesOnAdventures
-    GoToIfGe VAR_VISITED_LAKE_VERITY_WITH_RIVAL, 1, TwinleafTown_RivalWentTearingOffOuch
-    GoToIfSet FLAG_RIVAL_LEFT_HOME, TwinleafTown_RivalWentTearingOff
-    BufferPlayerName 0
-    BufferRivalName 1
-    Message TwinleafTown_Text_RivalWasLookingForYou2
+    PlayFanfare SEQ_SE_CONFIRM
+    AddItem ITEM_RARE_CANDY, 1, VAR_RESULT
+    SetVar VAR_LEVEL_CAP, 17
+    AddItem ITEM_HEART_SCALE, 1, VAR_RESULT
+    Message TwinleafTown_Text_IVIntro
+    InitLocalTextListMenu 1, 1, 0, VAR_RESULT
+    AddListMenuEntry TwinleafTown_Text_IVHP, 0
+    AddListMenuEntry TwinleafTown_Text_IVAtk, 1
+    AddListMenuEntry TwinleafTown_Text_IVDef, 2
+    AddListMenuEntry TwinleafTown_Text_IVSpeed, 3
+    AddListMenuEntry TwinleafTown_Text_IVSpAtk, 4
+    AddListMenuEntry TwinleafTown_Text_IVSpDef, 5
+    ShowListMenu
+    GoToIfEq VAR_RESULT, 0, TwinleafTown_GuitaristMaxHP
+    GoToIfEq VAR_RESULT, 1, TwinleafTown_GuitaristMaxAtk
+    GoToIfEq VAR_RESULT, 2, TwinleafTown_GuitaristMaxDef
+    GoToIfEq VAR_RESULT, 3, TwinleafTown_GuitaristMaxSpeed
+    GoToIfEq VAR_RESULT, 4, TwinleafTown_GuitaristMaxSpAtk
+    GoToIfEq VAR_RESULT, 5, TwinleafTown_GuitaristMaxSpDef
+    GoTo TwinleafTown_GuitaristCancel
+
+TwinleafTown_GuitaristMaxHP:
+    SetPartyMonIVPerfect VAR_RESULT, 0, 0
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristMaxAtk:
+    SetPartyMonIVPerfect VAR_RESULT, 0, 1
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristMaxDef:
+    SetPartyMonIVPerfect VAR_RESULT, 0, 2
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristMaxSpeed:
+    SetPartyMonIVPerfect VAR_RESULT, 0, 3
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristMaxSpAtk:
+    SetPartyMonIVPerfect VAR_RESULT, 0, 4
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristMaxSpDef:
+    SetPartyMonIVPerfect VAR_RESULT, 0, 5
+    GoTo TwinleafTown_GuitaristCheckResult
+
+TwinleafTown_GuitaristCheckResult:
+    GoToIfEq VAR_RESULT, FALSE, TwinleafTown_GuitaristAlreadyPerfect
+    Message TwinleafTown_Text_IVSuccess
     WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+TwinleafTown_GuitaristAlreadyPerfect:
+    CloseMessage
+    Message TwinleafTown_Text_IVAlreadyPerfect
+    WaitABXPadPress
+    CloseMessage
+    ReleaseAll
+    End
+
+TwinleafTown_GuitaristCancel:
     CloseMessage
     ReleaseAll
     End

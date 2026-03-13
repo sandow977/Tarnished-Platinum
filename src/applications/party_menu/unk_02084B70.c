@@ -419,6 +419,25 @@ int sub_02085348(void *param0)
     return 5;
 }
 
+int RareCandy_FailStayInParty(void *param0)
+{
+    PartyMenuApplication *application = (PartyMenuApplication *)param0;
+
+    if (Text_IsPrinterActive(application->textPrinterID) != 0) {
+        return 5;
+    }
+
+    if (gSystem.pressedKeys & PAD_BUTTON_A) {
+        Sound_PlayEffect(SEQ_SE_CONFIRM);
+        application->partyMenu->usedItemID = ITEM_RARE_CANDY;
+        Window_EraseMessageBox(&application->windows[34], 1);
+        PartyMenu_PrintShortMessage(application, PartyMenu_Text_ChooseAPokemon, TRUE);
+        return 4;
+    }
+
+    return 5;
+}
+
 static int sub_02085384(void *param0)
 {
     PartyMenuApplication *application = (PartyMenuApplication *)param0;
@@ -724,11 +743,9 @@ static int sub_02085C50(void *applicationPtr)
     switch (application->unk_B13) {
     case 0:
         if (Text_IsPrinterActive(application->textPrinterID) == 0) {
-            if (gSystem.pressedKeys & (PAD_BUTTON_A | PAD_BUTTON_B)) {
-                Sound_PlayEffect(SEQ_SE_CONFIRM);
-                PartyMenu_DrawLevelUpStatIncreases(application);
-                application->unk_B13 = 1;
-            }
+                application->partyMenu->unk_34 = 0;
+                application->unk_B13 = 3;
+            
         }
         break;
     case 1:
@@ -817,11 +834,12 @@ static int sub_02085C50(void *applicationPtr)
 
         if (application->partyMenu->evoTargetSpecies != 0) {
             application->partyMenu->menuSelectionResult = PARTY_MENU_EXIT_CODE_EVOLVE_BY_LEVEL;
-        } else {
-            application->partyMenu->menuSelectionResult = PARTY_MENU_EXIT_CODE_DONE;
-        }
+             return 32;
+        } 
+        application->partyMenu->usedItemID = ITEM_RARE_CANDY;
+        Window_EraseMessageBox(&application->windows[34], 1);
+        return 4;
     }
-        return 32;
     }
 
     return 5;
@@ -1121,7 +1139,8 @@ static void TeachMove(PartyMenuApplication *application, Pokemon *mon, u32 moveS
     tempVar = MoveTable_CalcMaxPP(application->partyMenu->learnedMove, 0);
     Pokemon_SetValue(mon, MON_DATA_MOVE1_PP + moveSlot, &tempVar);
 
-    if (application->partyMenu->usedItemID != ITEM_NONE) {
+    if (application->partyMenu->usedItemID != ITEM_NONE
+        && application->partyMenu->usedItemID != ITEM_RARE_CANDY) {
         if (Item_IsHMMove(application->partyMenu->learnedMove) == FALSE) {
             Bag_TryRemoveItem(application->partyMenu->bag, application->partyMenu->usedItemID, 1, HEAP_ID_PARTY_MENU);
         }

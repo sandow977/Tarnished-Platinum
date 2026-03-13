@@ -14,11 +14,7 @@
       "en_US": [
         "My name is Rowan.\r",
         "However, everyone just calls me\n",
-        "the Pokémon Professor.\r",
-        "Before I go any further, is this\n",
-        "your first adventure?\r",
-        "If you need advice, I’m certainly\n",
-        "capable of giving it.\r"
+        "the Pokémon Professor.\r"
       ]
     },
     {
@@ -245,13 +241,6 @@
       "en_US": [
         "All right, {STRVAR_1 3, 0, 0}, the time\n",
         "has come.\r",
-        "Your very own tale of grand\n",
-        "adventure is about to unfold.\r",
-        "On your journey, you will meet\n",
-        "countless Pokémon and people.\r",
-        "I’m sure that along the way you will\n",
-        "discover many things, perhaps even\f",
-        "something about yourself.\r",
         "Now, go on, leap into the world of\n",
         "Pokémon!\r"
       ]

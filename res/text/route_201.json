@@ -21,22 +21,12 @@
         "Don’t go into the grass, right?\f",
         "No worries! No problem!\r",
         "It doesn’t matter that we don’t have\n",
-        "any Pokémon.\r",
-        "Trust me on this one.\n",
-        "I’ve got an idea!\r",
-        "Now listen. You know how wild Pokémon\n",
-        "jump out when you go into tall grass?\r"
+        "any Pokémon.\r"
       ]
     },
     {
       "id": "Route201_Text_ScootOverBeforeWildPokemonCanAppear",
       "en_US": [
-        "So, what you do is, you scoot over to\n",
-        "the next patch of grass before any\f",
-        "wild Pokémon can appear!\r",
-        "If we just keep dashing, we can get to\n",
-        "Sandgem Town without running into\f",
-        "wild Pokémon!\r",
         "OK, stick with me!\r"
       ]
     },
@@ -54,7 +44,7 @@
     {
       "id": "Route201_Text_YouTwoDontHaveAnyPokemon",
       "en_US": [
-        "Professor: You two don’t seem to have\n",
+        "Professor: You two do not seem to have\n",
         "any Pokémon between you?\r",
         "Then, what is the meaning of going into\n",
         "the tall grass?!\r"
@@ -93,27 +83,21 @@
         "They tried to go into the tall grass\n",
         "because they wanted Pokémon...\r",
         "Hmm...\n",
-        "What to do...?\r",
-        "Their world would surely change if\n",
-        "they were to meet Pokémon...\r",
-        "Is it right for me to put them on that\n",
-        "path...?\r",
-        "...\n",
-        "...\r"
+        "What to do...?\r"
       ]
     },
     {
       "id": "Route201_Text_YouTrulyLovePokemonDoYou",
       "en_US": [
         "You two.\n",
-        "You truly love Pokémon, do you?"
+        "You truly love Pokémon, do you?\r"
       ]
     },
     {
       "id": "Route201_Text_YoureNotMakingAnySense",
       "en_US": [
         "{STRVAR_1 3, 0, 0}: Whoa, hold up!\n",
-        "You’re not making any sense here!\r"
+        "Of course we do!\r"
       ]
     },
     {
@@ -146,14 +130,12 @@
       "en_US": [
         "{STRVAR_1 3, 0, 0}: What?!\n",
         "You can ask a hundred times!\f",
-        "The answer will never change!\r",
-        "We’ll both answer a hundred times,\n",
-        "we love Pokémon!\r"
+        "The answer will never change!\r"
       ]
     },
     {
       "id": "Route201_Text_RightPlayer",
-      "en_US": "Right, {STRVAR_1 3, 1, 0}?"
+      "en_US": "Right, {STRVAR_1 3, 1, 0}?\r"
     },
     {
       "id": "Route201_Text_ThatJokesGettingOld",
@@ -189,14 +171,8 @@
       "id": "Route201_Text_IWillEntrustYouWithPokemon",
       "en_US": [
         "Professor: !\r",
-        "How big of you...\r",
         "Very well, then!\n",
         "I will entrust you two with Pokémon!\r",
-        "I apologize for putting you through\n",
-        "that exercise.\r",
-        "However!\r",
-        "You must promise me that you will never\n",
-        "recklessly endanger yourselves again.\r",
         "Now, then...\r",
         "Hm?\n",
         "Now, where...?\r"
@@ -268,11 +244,7 @@
         "Rowan: Hm!\r",
         "We exist side by side with Pokémon.\r",
         "There comes a time when people should\n",
-        "meet Pokémon.\r",
-        "There is a world that should be\n",
-        "explored together.\r",
-        "For them, today is that time.\n",
-        "The place, right here.\r"
+        "meet Pokémon.\r"
       ]
     },
     {
@@ -302,9 +274,7 @@
       "id": "Route201_Text_YouCanChooseFirst",
       "en_US": [
         "Hey, {STRVAR_1 3, 1, 0}.\n",
-        "You can choose first.\r",
-        "Hey, I’m practically a grown-up.\n",
-        "I have to show some class here."
+        "You can choose first.\r"
       ]
     },
     {
@@ -325,14 +295,7 @@
       "id": "Route201_Text_IHopeYoullDoWellTogether",
       "en_US": [
         "Rowan: Very well! Both of you have\n",
-        "chosen a good Pokémon, it seems.\r",
-        "Now, listen well!\r",
-        "The Pokémon you have been entrusted\n",
-        "with are unfamiliar with the world.\r",
-        "In that regard, they’re much\n",
-        "like you.\r",
-        "As fellow newcomers to the world,\n",
-        "I hope you’ll do well together.\r"
+        "chosen a good Pokémon, it seems.\r"
       ]
     },
     {
@@ -380,9 +343,7 @@
       "id": "Route201_Text_OnlyOneThingToDo",
       "en_US": [
         "Heheh, {STRVAR_1 3, 1, 0}!\n",
-        "We’ve both got Pokémon now.\r",
-        "There’s only one thing to do, right?\n",
-        "Are you up for this?\r"
+        "We’ve both got Pokémon now.\r"
       ]
     },
     {
@@ -411,8 +372,8 @@
       "en_US": [
         "{STRVAR_1 3, 0, 0}: Whew!\n",
         "Let’s go home.\r",
-        "I’m beat after that battle.\n",
-        "My Pokémon needs rest, too.\r",
+        "I’d love to battle but\n",
+        "I am exhausted!\r",
         "See ya, {STRVAR_1 3, 1, 0}!\r"
       ]
     },

@@ -1068,6 +1068,7 @@ static void ov16_0223C2C0(BattleSystem *battleSys, FieldBattleDTO *dto)
     Pokedex_Copy(dto->pokedex, battleSys->pokedex);
 
     battleSys->pcBoxes = dto->pcBoxes;
+    battleSys->saveData = dto->saveData;
     battleSys->options = dto->options;
     battleSys->palPad = dto->palPad;
     battleSys->bagCursor = dto->bagCursor;

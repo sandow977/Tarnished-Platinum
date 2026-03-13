@@ -40,6 +40,25 @@ TwinleafTownPlayerHouse1F_OnFrame_RivalAlreadyLeft:
     BufferPlayerName 0
     BufferRivalName 1
     Message TwinleafTownPlayerHouse1F_Text_RivalAlreadyLeft
+    PlaySound SEQ_FANFA4
+    WaitSound
+    Message TwinleafTownPlayerHouse1F_Text_GiveItems
+    GiveRunningShoes
+    SetVar VAR_0x8004, ITEM_JOURNAL
+    SetVar VAR_0x8005, 1
+    Common_GiveItemQuantity
+    SetVar VAR_0x8004, ITEM_PARCEL
+    SetVar VAR_0x8005, 1
+    Common_GiveItemQuantity
+    AddItem ITEM_QUICK_BALL, 999, VAR_RESULT
+    AddItem ITEM_HONEY, 999, VAR_RESULT
+    AddItem ITEM_MAX_REPEL, 999, VAR_RESULT
+    AddItem ITEM_ORAN_BERRY, 999, VAR_RESULT
+    AddItem ITEM_CHERI_BERRY, 999, VAR_RESULT
+    AddItem ITEM_PERSIM_BERRY, 999, VAR_RESULT
+    AddItem ITEM_RAWST_BERRY, 999, VAR_RESULT
+    AddItem ITEM_ASPEAR_BERRY, 999, VAR_RESULT
+    AddItem ITEM_CHESTO_BERRY, 999, VAR_RESULT
     CloseMessage
     WaitTime 15, VAR_RESULT
     ApplyMovement LOCALID_MOM, TwinleafTownPlayerHouse1F_Movement_MomWalkFromPlayerToCouch
@@ -297,7 +316,6 @@ TwinleafTownPlayerHouse1F_RivalsMomEnters:
     WaitMovement
     CallIfEq VAR_0x8007, DIR_NORTH, TwinleafTownPlayerHouse1F_PlayerTurnWestToRivalsMom
     BufferRivalName 1
-    Message TwinleafTownPlayerHouse1F_Text_AskIsRivalHere
     ApplyMovement LOCALID_MOM, TwinleafTownPlayerHouse1F_Movement_MomWalkOnSpotSouth
     WaitMovement
     Message TwinleafTownPlayerHouse1F_Text_NoHesNot

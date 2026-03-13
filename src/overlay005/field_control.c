@@ -105,8 +105,7 @@ static void FieldInput_Clear(FieldInput *input)
     input->sign = FALSE;
     input->mapTransition = FALSE;
     input->movement = FALSE;
-    input->dummy1 = FALSE;
-    input->dummy2 = FALSE;
+    input->debugMenu = FALSE;
     input->dummy3 = FALSE;
     input->dummy4 = FALSE;
     input->dummy5 = FALSE;
@@ -129,6 +128,10 @@ void FieldInput_Update(FieldInput *input, FieldSystem *fieldSystem, u16 pressedK
         if (pressedKeys & PAD_BUTTON_X) {
             input->menu = TRUE;
         }
+
+        if (pressedKeys & PAD_BUTTON_SELECT) {
+             input->debugMenu = TRUE;
+        }   
 
         if (pressedKeys & PAD_BUTTON_Y) {
             input->registeredItem = TRUE;
@@ -174,6 +177,7 @@ void FieldInput_Update(FieldInput *input, FieldSystem *fieldSystem, u16 pressedK
 
 BOOL FieldInput_Process(const FieldInput *input, FieldSystem *fieldSystem)
 {
+
     if (input->dummy5 == FALSE && FieldSystem_RunInitScript(fieldSystem, INIT_SCRIPT_ON_FRAME_TABLE) == TRUE) {
         return TRUE;
     }
@@ -329,11 +333,17 @@ BOOL FieldInput_Process(const FieldInput *input, FieldSystem *fieldSystem)
         return TRUE;
     }
 
+    if (input->debugMenu && sub_0203A9C8(fieldSystem) == TRUE) {
+        Sound_PlayEffect(SEQ_SE_DP_WIN_OPEN);
+        ScriptManager_Set(fieldSystem, SCRIPT_ID(COMMON_SCRIPTS, 58), NULL);
+        return TRUE;
+    }
+
     if (input->menu && sub_0203A9C8(fieldSystem) == TRUE) {
         Sound_PlayEffect(SEQ_SE_DP_WIN_OPEN);
         StartMenu_Init(fieldSystem);
         return TRUE;
-    }
+}
 
     return FALSE;
 }
