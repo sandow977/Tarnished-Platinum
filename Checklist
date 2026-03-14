@@ -6,6 +6,8 @@ Add custom AI behavior for the moves whose effects occur in battle.lib.c
 add moves, including their animations.
 General data jumping like encounter rates/trainer data
 Add new sprites to the game
+Add Fairy
+Make King's Rock not move dependent
 
 Abilities:
 Slush Rush
