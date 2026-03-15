@@ -5,7 +5,7 @@
         "defense": 83,
         "speed": 55,
         "special_attack": 73,
-        "special_defense": 83
+        "special_defense": 20
     },
     "types": [ "TYPE_NORMAL", "TYPE_NORMAL" ],
     "catch_rate": 75,
@@ -34,11 +34,8 @@
     "icon_palette": 2,
     "learnset": {
         "by_level": [
-            [ 1, "MOVE_POUND" ],
-            [ 1, "MOVE_YAWN" ],
-            [ 1, "MOVE_POISON_GAS" ],
-            [ 1, "MOVE_SLUDGE" ],
-            [ 6, "MOVE_YAWN" ],
+            [ 1, "MOVE_ThUNDER_FANG" ],
+            [ 1, "MOVE_SPARK" ],
             [ 9, "MOVE_POISON_GAS" ],
             [ 14, "MOVE_SLUDGE" ],
             [ 17, "MOVE_AMNESIA" ],
