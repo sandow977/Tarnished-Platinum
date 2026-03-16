@@ -82,6 +82,41 @@ ninja -C build res/battle/scripts/sub_seq.narc
 ninja -C build pokeplatinum.us.nds
 ```
 
+
+Here’s the important part: in this repo, the move effect constant value is the script index.
+
+Why:
+
+The move stores .effect as an enum value in the move table, loaded from data.json.
+The battle engine jumps to be_seq.narc using that value directly at battle_script.c:2312.
+be_seq.narc is built from effect_script_files in listed order at res/battle/scripts/meson.build and res/battle/scripts/effects/meson.build:257.
+So the mapping works like this:
+
+BATTLE_EFFECT_HIT is value 0 -> effect_script_0000.s
+value 1 -> effect_script_0001.s
+value 259 -> effect_script_0259.s
+How to add a new one:
+
+Add a new effect script file with the next free number, not an already-used one.
+Add that file to effects/meson.build.
+Add a new BATTLE_EFFECT_* constant to generated/battle_move_effects.txt in the matching slot.
+Set your move’s data.json "effect.type" to that new constant.
+Example:
+
+If your new script is effect_script_0296.s
+Add BATTLE_EFFECT_PLASMA_BURST as the next entry after BATTLE_EFFECT_VENOSHOCK in generated/battle_move_effects.txt:295
+Then in the move JSON:
+"effect": {
+  "type": "BATTLE_EFFECT_PLASMA_BURST",
+  "chance": 0
+}
+Important correction:
+
+effect_script_0259.s is not free in your repo.
+generated/battle_move_effects.txt:260 is BATTLE_EFFECT_TRICK_ROOM, which means value 259 already maps to effect_script_0259.s.
+So if you want a brand-new effect, do not reuse 0259 unless you mean to replace Trick Room’s behavior.
+
+If you want, I can tell you the exact next free effect-script number in your checkout and patch the three files for you.
 ---
 
 ** CHECK THESE IN GAME **
