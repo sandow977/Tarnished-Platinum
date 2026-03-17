@@ -3,15 +3,15 @@
   "messages": [
     {
       "id": "MainMenuOptions_Text_Continue",
-      "en_US": "CONTINUE"
+      "en_US": "Continue"
     },
     {
       "id": "MainMenuOptions_Text_NewGame",
-      "en_US": "NEW GAME"
+      "en_US": "New Game"
     },
     {
       "id": "MainMenuOptions_Text_MysteryGift",
-      "en_US": "MYSTERY GIFT"
+      "en_US": "Mystery Gift"
     },
     {
       "id": "MainMenuOptions_Text_LinkWithPokemonRanger",
@@ -47,23 +47,23 @@
     },
     {
       "id": "MainMenuOptions_Text_NintendoWfcSettings",
-      "en_US": "NINTENDO WFC SETTINGS"
+      "en_US": "Nintendo WFC Settings"
     },
     {
       "id": "MainMenuOptions_Text_Player",
-      "en_US": "PLAYER"
+      "en_US": "Player"
     },
     {
       "id": "MainMenuOptions_Text_Time",
-      "en_US": "TIME"
+      "en_US": "Time"
     },
     {
       "id": "MainMenuOptions_Text_Pokedex",
-      "en_US": "POKéDEX"
+      "en_US": "Pokédex"
     },
     {
       "id": "MainMenuOptions_Text_Badges",
-      "en_US": "BADGES"
+      "en_US": "Badges"
     },
     {
       "id": "MainMenuOptions_Text_PlayerName",
@@ -83,7 +83,7 @@
     },
     {
       "id": "MainMenuOptions_Text_WiiMessageSettings",
-      "en_US": "Wii MESSAGE SETTINGS"
+      "en_US": "Wii Message Settings"
     }
   ]
 }

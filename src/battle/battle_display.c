@@ -178,6 +178,9 @@ static void ov16_02264730(BattleSystem *battleSys);
 static void ov16_0226474C(BattleSystem *battleSys);
 static u8 ov16_02264768(BattleSystem *battleSys, u8 param1, u8 param2);
 
+//Pokeball Overlay
+static BOOL Battle_CanShowBallShortcut(BattleSystem *battleSys);
+
 static const u16 Unk_ov16_0226F1AE[] = {
     0x0,
     0x7297,
@@ -2943,25 +2946,25 @@ static void ov16_022604C8(SysTask *param0, void *param1)
 
         v0->unk_0A = 5;
         break;
-    case 5:
-        if (gSystem.pressedKeys & PAD_BUTTON_START) {
-            BattlerData *battlerData;
-            int i;
+case 5:
+    if (gSystem.pressedKeys & PAD_BUTTON_START) {
+        BattlerData *battlerData;
+        int i;
 
-            for (i = 0; i < BattleSystem_GetMaxBattlers(v0->battleSys); i++) {
-                battlerData = BattleSystem_GetBattlerData(v0->battleSys, i);
-                ov16_0226737C(&battlerData->healthbar);
-            }
+        for (i = 0; i < BattleSystem_GetMaxBattlers(v0->battleSys); i++) {
+            battlerData = BattleSystem_GetBattlerData(v0->battleSys, i);
+            ov16_0226737C(&battlerData->healthbar);
         }
+    }
 
-        v0->unk_0C = BattleSystem_MenuInput(v2);
+    v0->unk_0C = BattleSystem_MenuInput(v2);
 
-        if (v0->unk_0C != 0xffffffff) {
-            v0->unk_0B = 10;
-            Sound_PlayEffect(SEQ_SE_DP_DECIDE);
-            v0->unk_0A = 6;
-        }
-        break;
+    if (v0->unk_0C != 0xffffffff) {
+        v0->unk_0B = 10;
+        Sound_PlayEffect(SEQ_SE_DP_DECIDE);
+        v0->unk_0A = 6;
+    }
+    break;
     case 6:
         if ((ov16_02269348(v2) == 1) || (v0->unk_0C == 1)) {
             switch (v0->unk_0C) {
@@ -3043,6 +3046,46 @@ static void ov16_022604C8(SysTask *param0, void *param1)
         }
         break;
     }
+}
+
+
+
+static void Battle_DrawYBagPrompt(BattleSystem *battleSys)
+{
+    BgConfig *bgl = BattleSystem_GetBgConfig(battleSys);
+    PaletteData *paletteSys = BattleSystem_GetPaletteData(battleSys);
+    MessageLoader *msgLoader = BattleSystem_GetMessageLoader(battleSys);
+    Window *window = BattleSystem_GetWindow(battleSys, 2);
+    String *string;
+
+    LoadStandardWindowTiles(bgl, 2, 1, 0, HEAP_ID_BATTLE);
+    PaletteData_LoadBufferFromFileStart(
+        paletteSys,
+        NARC_INDEX_GRAPHIC__PL_WINFRAME,
+        GetStandardWindowPaletteNARCMember(),
+        HEAP_ID_BATTLE,
+        0,
+        0x20,
+        8 * 0x10
+    );
+
+    Window_Add(bgl, window, 2, 21, 1, 8, 2, 11, 10);
+    Window_FillTilemap(window, 0xFF);
+    Window_DrawStandardFrame(window, 0, 1, 8);
+
+    string = MessageLoader_GetNewString(msgLoader, 1268);
+    Text_AddPrinterWithParamsAndColor(window, FONT_SYSTEM, string, 4, 0, TEXT_SPEED_NO_TRANSFER, TEXT_COLOR(1, 2, 0), NULL);
+    String_Free(string);
+
+    Window_CopyToVRAM(window);
+}
+
+static void Battle_ClearYBagPrompt(BattleSystem *battleSys)
+{
+    Window *window = BattleSystem_GetWindow(battleSys, 2);
+
+    Window_EraseStandardFrame(window, 0);
+    Window_Remove(window);
 }
 
 static void ov16_02260AB4(SysTask *param0, void *param1)
@@ -6156,6 +6199,17 @@ static void ov16_022645B8(u8 *param0, u8 *param1, int param2, int param3, u16 pa
         }
     }
 }
+
+//Pokeball Helpers in action
+
+static BOOL Battle_CanShowBallShortcut(BattleSystem *battleSys)
+{
+    u32 battleType = BattleSystem_GetBattleType(battleSys);
+
+    return ((battleType & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_NO_ITEMS | BATTLE_TYPE_SAFARI | BATTLE_TYPE_PAL_PARK)) == 0);
+}
+
+
 
 static BOOL ov16_02264650(UnkStruct_ov16_02264650_1 *param0, ManagedSprite *param1)
 {

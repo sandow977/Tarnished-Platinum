@@ -1947,12 +1947,7 @@ static void MakeItemActionsMenu(BagController *controller)
     itemActionsIdx = 0;
     currentPocketType = controller->bagCtx->accessiblePockets[controller->bagCtx->currPocketIdx].pocketType;
 
-    if (controller->bagCtx->mode == BAG_MODE_NORMAL) {
-        if (currentPocketType == POCKET_BERRIES) {
-            itemActions[itemActionsIdx] = ITEM_ACTION_CHECK_TAG;
-            itemActionsIdx++;
-        }
-
+ if (controller->bagCtx->mode == BAG_MODE_NORMAL) {
         if (controller->bagCtx->mapLoadType == MAP_LOAD_TYPE_COLOSSEUM
             || controller->bagCtx->mapLoadType == MAP_LOAD_TYPE_UNION) {
             if (controller->bagCtx->accessiblePockets[controller->bagCtx->currPocketIdx].pocketType == POCKET_MAIL) {
@@ -1960,31 +1955,63 @@ static void MakeItemActionsMenu(BagController *controller)
                 itemActionsIdx++;
             }
         } else {
-            if (Item_Get(itemData, ITEM_PARAM_FIELD_USE_FUNC) != ITEM_USE_FUNC_NONE) {
-                if (controller->bagCtx->selectedItem == ITEM_BICYCLE && controller->bagCtx->isCycling == TRUE) {
-                    itemActions[itemActionsIdx] = ITEM_ACTION_WALK;
-                } else if (controller->bagCtx->accessiblePockets[controller->bagCtx->currPocketIdx].pocketType == POCKET_MAIL) {
-                    itemActions[itemActionsIdx] = ITEM_ACTION_CHECK;
-                } else if (controller->bagCtx->selectedItem == ITEM_POFFIN_CASE) {
-                    itemActions[itemActionsIdx] = ITEM_ACTION_OPEN;
-                } else if (controller->bagCtx->accessiblePockets[controller->bagCtx->currPocketIdx].pocketType == POCKET_BERRIES && BerryPatch_IsEmpty(controller->bagCtx->itemUseCtx) == TRUE) {
-                    itemActions[itemActionsIdx] = ITEM_ACTION_PLANT;
-                } else {
-                    itemActions[itemActionsIdx] = ITEM_ACTION_USE;
+            if (currentPocketType == POCKET_BERRIES) {
+                if (Item_Get(itemData, ITEM_PARAM_PREVENT_TOSS) == FALSE) {
+                    itemActions[itemActionsIdx] = ITEM_ACTION_GIVE;
+                    itemActionsIdx++;
                 }
 
-                itemActionsIdx++;
-            }
-        }
-        if (Item_Get(itemData, ITEM_PARAM_PREVENT_TOSS) == FALSE) {
-            itemActions[itemActionsIdx] = ITEM_ACTION_GIVE;
-            itemActionsIdx++;
+                if (Item_Get(itemData, ITEM_PARAM_FIELD_USE_FUNC) != ITEM_USE_FUNC_NONE) {
+                    if (controller->bagCtx->selectedItem == ITEM_BICYCLE && controller->bagCtx->isCycling == TRUE) {
+                        itemActions[itemActionsIdx] = ITEM_ACTION_WALK;
+                    } else if (controller->bagCtx->accessiblePockets[controller->bagCtx->currPocketIdx].pocketType == POCKET_MAIL) {
+                        itemActions[itemActionsIdx] = ITEM_ACTION_CHECK;
+                    } else if (controller->bagCtx->selectedItem == ITEM_POFFIN_CASE) {
+                        itemActions[itemActionsIdx] = ITEM_ACTION_OPEN;
+                    } else if (controller->bagCtx->accessiblePockets[controller->bagCtx->currPocketIdx].pocketType == POCKET_BERRIES
+                        && BerryPatch_IsEmpty(controller->bagCtx->itemUseCtx) == TRUE) {
+                        itemActions[itemActionsIdx] = ITEM_ACTION_PLANT;
+                    } else {
+                        itemActions[itemActionsIdx] = ITEM_ACTION_USE;
+                    }
 
-            if (currentPocketType != POCKET_TMHMS) {
-                itemActions[itemActionsIdx] = ITEM_ACTION_TRASH;
-                itemActionsIdx++;
+                    itemActionsIdx++;
+                }
+
+                if (Item_Get(itemData, ITEM_PARAM_PREVENT_TOSS) == FALSE) {
+                    itemActions[itemActionsIdx] = ITEM_ACTION_TRASH;
+                    itemActionsIdx++;
+                }
+            } else {
+                if (Item_Get(itemData, ITEM_PARAM_FIELD_USE_FUNC) != ITEM_USE_FUNC_NONE) {
+                    if (controller->bagCtx->selectedItem == ITEM_BICYCLE && controller->bagCtx->isCycling == TRUE) {
+                        itemActions[itemActionsIdx] = ITEM_ACTION_WALK;
+                    } else if (controller->bagCtx->accessiblePockets[controller->bagCtx->currPocketIdx].pocketType == POCKET_MAIL) {
+                        itemActions[itemActionsIdx] = ITEM_ACTION_CHECK;
+                    } else if (controller->bagCtx->selectedItem == ITEM_POFFIN_CASE) {
+                        itemActions[itemActionsIdx] = ITEM_ACTION_OPEN;
+                    } else if (controller->bagCtx->accessiblePockets[controller->bagCtx->currPocketIdx].pocketType == POCKET_BERRIES
+                        && BerryPatch_IsEmpty(controller->bagCtx->itemUseCtx) == TRUE) {
+                        itemActions[itemActionsIdx] = ITEM_ACTION_PLANT;
+                    } else {
+                        itemActions[itemActionsIdx] = ITEM_ACTION_USE;
+                    }
+
+                    itemActionsIdx++;
+                }
+
+                if (Item_Get(itemData, ITEM_PARAM_PREVENT_TOSS) == FALSE) {
+                    itemActions[itemActionsIdx] = ITEM_ACTION_GIVE;
+                    itemActionsIdx++;
+
+                    if (currentPocketType != POCKET_TMHMS) {
+                        itemActions[itemActionsIdx] = ITEM_ACTION_TRASH;
+                        itemActionsIdx++;
+                    }
+                }
             }
         }
+
         if (Item_Get(itemData, ITEM_PARAM_IS_SELECTABLE)) {
             if (Bag_GetRegisteredItem(controller->bag) == controller->bagCtx->selectedItem) {
                 itemActions[itemActionsIdx] = ITEM_ACTION_DESELECT;
@@ -1997,8 +2024,6 @@ static void MakeItemActionsMenu(BagController *controller)
     } else if (controller->bagCtx->mode == BAG_MODE_POFFIN_SINGLEPLAYER
         || controller->bagCtx->mode == BAG_MODE_POFFIN_MULTIPLAYER) {
         itemActions[itemActionsIdx] = ITEM_ACTION_CONFIRM;
-        itemActionsIdx++;
-        itemActions[itemActionsIdx] = ITEM_ACTION_CHECK_TAG;
         itemActionsIdx++;
     }
 

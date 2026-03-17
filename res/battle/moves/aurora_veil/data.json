@@ -1,0 +1,22 @@
+{
+    "name": "Aurora Veil",
+    "class": "CLASS_STATUS",
+    "type": "TYPE_ICE",
+    "power": 0,
+    "accuracy": 0,
+    "pp": 20,
+    "effect": {
+        "type": "BATTLE_EFFECT_AURORA_VEIL",
+        "chance": 0
+    },
+    "range": "RANGE_USER_SIDE",
+    "priority": 0,
+    "flags": [
+        "MOVE_FLAG_CAN_SNATCH",
+        "MOVE_FLAG_HIDES_HP_GAUGES"
+    ],
+    "contest": {
+        "effect": "CONTEST_EFFECT_SUPPRESS_VOLTAGE",
+        "type": "CONTEST_TYPE_SMART"
+    }
+}

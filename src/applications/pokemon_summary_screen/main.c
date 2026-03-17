@@ -1791,21 +1791,12 @@ static void UpdateMoveAttributes(PokemonSummaryScreen *summaryScreen)
 
 static void CycleSkillsState(PokemonSummaryScreen *summaryScreen)
 {
-    summaryScreen->skillsState++;
-    if (summaryScreen->skillsState == MAX_SKILLS_STATE) {
-        summaryScreen->skillsState = SKILLS_STATE_STATS;
-    }
-
-    switch (summaryScreen->skillsState) {
-    case SKILLS_STATE_EVS:
-        PokemonSummaryScreen_ClearAndPrintButtonPrompt(summaryScreen, PokemonSummary_Text_EVs);
-        break;
-    case SKILLS_STATE_IVS:
+    if (summaryScreen->skillsState == SKILLS_STATE_STATS) {
+        summaryScreen->skillsState = SKILLS_STATE_IVS;
         PokemonSummaryScreen_ClearAndPrintButtonPrompt(summaryScreen, PokemonSummary_Text_IVs);
-        break;
-    case SKILLS_STATE_STATS:
+    } else {
+        summaryScreen->skillsState = SKILLS_STATE_STATS;
         PokemonSummaryScreen_ClearAndPrintButtonPrompt(summaryScreen, PokemonSummary_Text_Stats);
-        break;
     }
 
     PokemonSummaryScreen_PrintSkillsForCurrentState(summaryScreen);

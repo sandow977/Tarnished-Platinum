@@ -3,11 +3,11 @@
   "messages": [
     {
       "id": "PartyMenu_Text_ConfirmButton",
-      "en_US": "CONFIRM"
+      "en_US": "Confirm"
     },
     {
       "id": "PartyMenu_Text_CancelButton",
-      "en_US": "CANCEL"
+      "en_US": "Cancel"
     },
     {
       "id": "pl_msg_00000453_00002",
@@ -739,35 +739,35 @@
     },
     {
       "id": "PartyMenu_Text_Switch",
-      "en_US": "SWITCH"
+      "en_US": "Switch"
     },
     {
       "id": "PartyMenu_Text_Summary",
-      "en_US": "SUMMARY"
+      "en_US": "Summary"
     },
     {
       "id": "PartyMenu_Text_Item",
-      "en_US": "ITEM"
+      "en_US": "Item"
     },
     {
       "id": "PartyMenu_Text_Mail",
-      "en_US": "MAIL"
+      "en_US": "Mail"
     },
     {
       "id": "PartyMenu_Text_MailRead",
-      "en_US": "READ"
+      "en_US": "Read"
     },
     {
       "id": "PartyMenu_Text_MailTake",
-      "en_US": "TAKE"
+      "en_US": "Take"
     },
     {
       "id": "PartyMenu_Text_MailStore",
-      "en_US": "STORE"
+      "en_US": "Store"
     },
     {
       "id": "PartyMenu_Text_ContextCancel",
-      "en_US": "CANCEL"
+      "en_US": "Cancel"
     },
     {
       "id": "PartyMenu_Text_Separator",
@@ -775,11 +775,11 @@
     },
     {
       "id": "PartyMenu_Text_Enter",
-      "en_US": "ENTER"
+      "en_US": "Enter"
     },
     {
       "id": "PartyMenu_Text_NoEntry",
-      "en_US": "NO ENTRY"
+      "en_US": "No Entry"
     },
     {
       "id": "PartyMenu_Text_FieldMove0",
@@ -799,11 +799,11 @@
     },
     {
       "id": "PartyMenu_Text_ItemGive",
-      "en_US": "GIVE"
+      "en_US": "Give"
     },
     {
       "id": "PartyMenu_Text_ItemTake",
-      "en_US": "TAKE"
+      "en_US": "Take"
     },
     {
       "id": "pl_msg_00000453_00162",
@@ -823,7 +823,7 @@
     },
     {
       "id": "PartyMenu_Text_Set",
-      "en_US": "SET"
+      "en_US": "Set"
     },
     {
       "id": "PartyMenu_Text_NotEntered",
@@ -859,31 +859,31 @@
     },
     {
       "id": "PartyMenu_Text_AbleToLearn",
-      "en_US": "ABLE!"
+      "en_US": "Able!"
     },
     {
       "id": "PartyMenu_Text_UnableToLearn",
-      "en_US": "UNABLE!"
+      "en_US": "Unable!"
     },
     {
       "id": "PartyMenu_Text_AlreadyLearned",
-      "en_US": "LEARNED"
+      "en_US": "Learned"
     },
     {
       "id": "PartyMenu_Text_AbleToEvolve",
-      "en_US": "ABLE!"
+      "en_US": "Able!"
     },
     {
       "id": "PartyMenu_Text_UnableToEvolve",
-      "en_US": "UNABLE!"
+      "en_US": "Unable!"
     },
     {
       "id": "PartyMenu_Text_EligibleForContest",
-      "en_US": "ABLE!"
+      "en_US": "Able!"
     },
     {
       "id": "PartyMenu_Text_IneligibleForContest",
-      "en_US": "UNABLE!"
+      "en_US": "Unable!"
     },
     {
       "id": "pl_msg_00000453_00182",
@@ -980,7 +980,7 @@
     },
     {
       "id": "PartyMenu_Text_ContextConfirm",
-      "en_US": "CONFIRM"
+      "en_US": "Confirm"
     },
     {
       "id": "pl_msg_00000453_00201",

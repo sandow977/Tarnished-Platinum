@@ -3,23 +3,23 @@
   "messages": [
     {
       "id": "pl_msg_00000361_00000",
-      "en_US": "POISONED"
+      "en_US": "Poisoned"
     },
     {
       "id": "pl_msg_00000361_00001",
-      "en_US": "PARALYZED"
+      "en_US": "Paralyzed"
     },
     {
       "id": "pl_msg_00000361_00002",
-      "en_US": "ASLEEP"
+      "en_US": "Asleep"
     },
     {
       "id": "pl_msg_00000361_00003",
-      "en_US": "BURNED"
+      "en_US": "Burned"
     },
     {
       "id": "pl_msg_00000361_00004",
-      "en_US": "FROZEN"
+      "en_US": "Frozen"
     },
     {
       "id": "MenuEntries_Text_Exit",
@@ -27,7 +27,7 @@
     },
     {
       "id": "MenuEntries_Text_SingleBattle",
-      "en_US": "SINGLE BATTLE"
+      "en_US": "Single Battle"
     },
     {
       "id": "MenuEntries_Text_DoubleBattle",
@@ -143,11 +143,11 @@
     },
     {
       "id": "pl_msg_00000361_00035",
-      "en_US": "HALL OF FAME"
+      "en_US": "Hall of Fame"
     },
     {
       "id": "pl_msg_00000361_00036",
-      "en_US": "SWITCH OFF"
+      "en_US": "Switch Off"
     },
     {
       "id": "pl_msg_00000361_00037",
@@ -159,27 +159,27 @@
     },
     {
       "id": "pl_msg_00000361_00039",
-      "en_US": "CONFIRM"
+      "en_US": "Confirm"
     },
     {
       "id": "pl_msg_00000361_00040",
-      "en_US": "RULES"
+      "en_US": "Rules"
     },
     {
       "id": "MenuEntries_Text_Yes",
-      "en_US": "YES"
+      "en_US": "Yes"
     },
     {
       "id": "MenuEntries_Text_No",
-      "en_US": "NO"
+      "en_US": "No"
     },
     {
       "id": "MenuEntries_Text_TrainerAppearancesExit",
-      "en_US": "EXIT"
+      "en_US": "Exit"
     },
     {
       "id": "pl_msg_00000361_00044",
-      "en_US": "CANCEL"
+      "en_US": "Cancel"
     },
     {
       "id": "MenuEntries_Text_TypePreferenceFire",
@@ -235,11 +235,11 @@
     },
     {
       "id": "pl_msg_00000361_00058",
-      "en_US": "SOMEONE’S PC"
+      "en_US": "Someone’s PC"
     },
     {
       "id": "pl_msg_00000361_00059",
-      "en_US": "BEBE’S PC"
+      "en_US": "Bebe’S PC"
     },
     {
       "id": "pl_msg_00000361_00060",
@@ -247,55 +247,55 @@
     },
     {
       "id": "pl_msg_00000361_00061",
-      "en_US": "HALL OF FAME"
+      "en_US": "Hall of Fame"
     },
     {
       "id": "pl_msg_00000361_00062",
-      "en_US": "OAK’S PC"
+      "en_US": "Oak’S PC"
     },
     {
       "id": "pl_msg_00000361_00063",
-      "en_US": "ROWAN’S PC"
+      "en_US": "Rowan’S PC"
     },
     {
       "id": "pl_msg_00000361_00064",
-      "en_US": "SWITCH OFF"
+      "en_US": "Switch Off"
     },
     {
       "id": "MenuEntries_Text_PokemonStorageDepositPokemon",
-      "en_US": "DEPOSIT POKéMON"
+      "en_US": "Deposit Pokémon"
     },
     {
       "id": "MenuEntries_Text_PokemonStorageWithdrawPokemon",
-      "en_US": "WITHDRAW POKéMON"
+      "en_US": "Withdraw Pokémon"
     },
     {
       "id": "MenuEntries_Text_PokemonStorageMovePokemon",
-      "en_US": "MOVE POKéMON"
+      "en_US": "Move Pokémon"
     },
     {
       "id": "MenuEntries_Text_PokemonStorageMoveItems",
-      "en_US": "MOVE ITEMS"
+      "en_US": "Move Items"
     },
     {
       "id": "MenuEntries_Text_PokemonStorageComparePokemon",
-      "en_US": "COMPARE POKéMON"
+      "en_US": "Compare Pokémon"
     },
     {
       "id": "MenuEntries_Text_PokemonStorageSeeYa",
-      "en_US": "SEE YA!"
+      "en_US": "See Ya!"
     },
     {
       "id": "pl_msg_00000361_00071",
-      "en_US": "MAILBOX"
+      "en_US": "Mailbox"
     },
     {
       "id": "pl_msg_00000361_00072",
-      "en_US": "BALL CAPSULES"
+      "en_US": "Ball Capsules"
     },
     {
       "id": "pl_msg_00000361_00073",
-      "en_US": "LOG OUT"
+      "en_US": "Log Out"
     },
     {
       "id": "MenuEntries_Text_PokemonStorageDepositPokemonDescription",
@@ -359,7 +359,7 @@
     },
     {
       "id": "pl_msg_00000361_00083",
-      "en_US": "CANCEL"
+      "en_US": "Cancel"
     },
     {
       "id": "pl_msg_00000361_00084",
@@ -519,11 +519,11 @@
     },
     {
       "id": "pl_msg_00000361_00123",
-      "en_US": "LOOKOUT"
+      "en_US": "Lookout"
     },
     {
       "id": "MenuEntries_Text_ElevatorExit",
-      "en_US": "EXIT"
+      "en_US": "Exit"
     },
     {
       "id": "pl_msg_00000361_00125",
@@ -535,19 +535,19 @@
     },
     {
       "id": "pl_msg_00000361_00127",
-      "en_US": "NO THANKS"
+      "en_US": "No Thanks"
     },
     {
       "id": "pl_msg_00000361_00128",
-      "en_US": "INFO"
+      "en_US": "Info"
     },
     {
       "id": "pl_msg_00000361_00129",
-      "en_US": "TRADE"
+      "en_US": "Trade"
     },
     {
       "id": "pl_msg_00000361_00130",
-      "en_US": "EXIT"
+      "en_US": "E"
     },
     {
       "id": "pl_msg_00000361_00131",

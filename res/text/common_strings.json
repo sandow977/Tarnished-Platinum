@@ -869,7 +869,8 @@
     {
       "id": "CommonStrings_Text_DebugMenuIntro",
       "en_US": [
-        "Debug Menu\r"
+        "Current Cap: {STRVAR_0 0, 2, 0}\n",
+        "What do you want to do?"
       ]
     },
     {

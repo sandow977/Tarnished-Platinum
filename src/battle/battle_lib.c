@@ -6619,6 +6619,12 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     u16 defenseStat;
     u16 spAttackStat;
     u16 spDefenseStat;
+    u16 effectiveDefenseStat;
+    s8  effectiveDefenseStage;
+    u16 effectiveAttackStat;
+    s8  effectiveAttackStage;
+    u16 attackerDefenseStat;
+    s8  attackerDefenseStage;
     s8 attackStage;
     s8 defenseStage;
     s8 spAttackStage;
@@ -6641,6 +6647,8 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     spAttackStage = BattleMon_Get(battleCtx, attacker, BATTLEMON_SP_ATTACK_STAGE, NULL) - DEFAULT_STAT_STAGE;
     spDefenseStage = BattleMon_Get(battleCtx, defender, BATTLEMON_SP_DEFENSE_STAGE, NULL) - DEFAULT_STAT_STAGE;
     attackerLevel = BattleMon_Get(battleCtx, attacker, BATTLEMON_LEVEL, NULL);
+    attackerDefenseStat = BattleMon_Get(battleCtx, attacker, BATTLEMON_DEFENSE, NULL);
+    attackerDefenseStage = BattleMon_Get(battleCtx, attacker, BATTLEMON_DEFENSE_STAGE, NULL) - DEFAULT_STAT_STAGE;
 
     attackerParams.species = BattleMon_Get(battleCtx, attacker, BATTLEMON_SPECIES, NULL);
     defenderParams.species = BattleMon_Get(battleCtx, defender, BATTLEMON_SPECIES, NULL);
@@ -6863,6 +6871,14 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
         if (spAttackStage > MAX_STAT_STAGE - DEFAULT_STAT_STAGE) {
             spAttackStage = MAX_STAT_STAGE - DEFAULT_STAT_STAGE;
         }
+
+        attackerDefenseStage *= 2;
+        if (attackerDefenseStage < MIN_STAT_STAGE - DEFAULT_STAT_STAGE) {
+            attackerDefenseStage = MIN_STAT_STAGE - DEFAULT_STAT_STAGE;
+        }
+        if (attackerDefenseStage > MAX_STAT_STAGE - DEFAULT_STAT_STAGE) {
+            attackerDefenseStage = MAX_STAT_STAGE - DEFAULT_STAT_STAGE;
+        }
     }
 
     if (Battler_IgnorableAbility(battleCtx, attacker, defender, ABILITY_SIMPLE) == TRUE) {
@@ -6886,8 +6902,8 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     if (Battler_IgnorableAbility(battleCtx, attacker, defender, ABILITY_UNAWARE) == TRUE) {
         attackStage = 0;
         spAttackStage = 0;
+        attackerDefenseStage = 0;
     }
-
     if (attackerParams.ability == ABILITY_UNAWARE) {
         defenseStage = 0;
         spDefenseStage = 0;
@@ -6897,6 +6913,7 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     defenseStage += DEFAULT_STAT_STAGE;
     spAttackStage += DEFAULT_STAT_STAGE;
     spDefenseStage += DEFAULT_STAT_STAGE;
+    attackerDefenseStage += DEFAULT_STAT_STAGE;
 
     if (attackerParams.ability == ABILITY_RIVALRY
         && attackerParams.gender == defenderParams.gender
@@ -6945,31 +6962,48 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     }
 
     if (moveClass == CLASS_PHYSICAL) {
+
+        effectiveAttackStat = attackStat;
+        effectiveAttackStage = attackStage;
+
+        if (move == MOVE_BODY_PRESS) {
+            effectiveAttackStat = attackerDefenseStat;
+            effectiveAttackStage = attackerDefenseStage;
+}
+
         if (criticalMul > 1) {
-            if (attackStage > DEFAULT_STAT_STAGE) {
-                damage = attackStat * sStatStageBoosts[attackStage].numerator;
-                damage /= sStatStageBoosts[attackStage].denominator;
+            if (effectiveAttackStage > DEFAULT_STAT_STAGE) {
+                damage = effectiveAttackStat * sStatStageBoosts[effectiveAttackStage].numerator;
+                damage /= sStatStageBoosts[effectiveAttackStage].denominator;
             } else {
-                damage = attackStat;
+                damage = effectiveAttackStat;
             }
         } else {
-            damage = attackStat * sStatStageBoosts[attackStage].numerator;
-            damage /= sStatStageBoosts[attackStage].denominator;
+            damage = effectiveAttackStat * sStatStageBoosts[effectiveAttackStage].numerator;
+            damage /= sStatStageBoosts[effectiveAttackStage].denominator;
         }
 
         damage *= movePower;
         damage *= (attackerLevel * 2 / 5 + 2);
 
+        effectiveDefenseStat = defenseStat;
+        effectiveDefenseStage = defenseStage;
+
+        if (move == MOVE_SECRET_SWORD) {
+            effectiveDefenseStat = spDefenseStat;
+            effectiveDefenseStage = spDefenseStage;
+        }
+
         if (criticalMul > 1) {
-            if (defenseStage < DEFAULT_STAT_STAGE) {
-                stageDivisor = defenseStat * sStatStageBoosts[defenseStage].numerator;
-                stageDivisor /= sStatStageBoosts[defenseStage].denominator;
+            if (effectiveDefenseStage < DEFAULT_STAT_STAGE) {
+                stageDivisor = effectiveDefenseStat * sStatStageBoosts[effectiveDefenseStage].numerator;
+                stageDivisor /= sStatStageBoosts[effectiveDefenseStage].denominator;
             } else {
-                stageDivisor = defenseStat;
+                stageDivisor = effectiveDefenseStat;
             }
         } else {
-            stageDivisor = defenseStat * sStatStageBoosts[defenseStage].numerator;
-            stageDivisor /= sStatStageBoosts[defenseStage].denominator;
+            stageDivisor = effectiveDefenseStat * sStatStageBoosts[effectiveDefenseStage].numerator;
+            stageDivisor /= sStatStageBoosts[effectiveDefenseStage].denominator;
         }
 
         damage /= stageDivisor;
@@ -7005,16 +7039,24 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
         damage *= movePower;
         damage *= (attackerLevel * 2 / 5 + 2);
 
+        effectiveDefenseStat = spDefenseStat;
+        effectiveDefenseStage = spDefenseStage;
+
+        if (move == MOVE_SACRED_SWORD || move == MOVE_PSYSHOCK || move == MOVE_PSYSHOCK) {
+            effectiveDefenseStat = defenseStat;
+            effectiveDefenseStage = defenseStage;
+        }
+
         if (criticalMul > 1) {
-            if (spDefenseStage < DEFAULT_STAT_STAGE) {
-                stageDivisor = spDefenseStat * sStatStageBoosts[spDefenseStage].numerator;
-                stageDivisor /= sStatStageBoosts[spDefenseStage].denominator;
+            if (effectiveDefenseStage < DEFAULT_STAT_STAGE) {
+                stageDivisor = effectiveDefenseStat * sStatStageBoosts[effectiveDefenseStage].numerator;
+                stageDivisor /= sStatStageBoosts[effectiveDefenseStage].denominator;
             } else {
-                stageDivisor = spDefenseStat;
+                stageDivisor = effectiveDefenseStat;
             }
         } else {
-            stageDivisor = spDefenseStat * sStatStageBoosts[spDefenseStage].numerator;
-            stageDivisor /= sStatStageBoosts[spDefenseStage].denominator;
+            stageDivisor = effectiveDefenseStat * sStatStageBoosts[effectiveDefenseStage].numerator;
+            stageDivisor /= sStatStageBoosts[effectiveDefenseStage].denominator;
         }
 
         damage /= stageDivisor;
@@ -7131,14 +7173,16 @@ int BattleSystem_CalcCriticalMulti(BattleSystem *battleSys, BattleContext *battl
         effectiveCritStage = 4;
     }
 
-    if (BattleSystem_RandNext(battleSys) % sCriticalStageRates[effectiveCritStage] == 0
+    // Auto Crit Moves
+
+    if (criticalMul == 1
+        && BattleSystem_RandNext(battleSys) % sCriticalStageRates[effectiveCritStage] == 0
         && Battler_IgnorableAbility(battleCtx, attacker, defender, ABILITY_BATTLE_ARMOR) == FALSE
         && Battler_IgnorableAbility(battleCtx, attacker, defender, ABILITY_SHELL_ARMOR) == FALSE
         && (sideConditions & SIDE_CONDITION_LUCKY_CHANT) == FALSE
         && (defenderMoveEffects & MOVE_EFFECT_NO_CRITICAL) == FALSE) {
         criticalMul = 2;
     }
-
     if (criticalMul == 2 && Battler_Ability(battleCtx, attacker) == ABILITY_SNIPER) {
         criticalMul = 3;
     }

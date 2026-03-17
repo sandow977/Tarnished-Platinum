@@ -1,0 +1,21 @@
+#include "macros/btlcmd.inc"
+
+_000:
+    PrintAttackMessage
+    Wait
+    WaitButtonABTime 30
+    PrintMessage BattleStrings_Text_PokemonProtectedItself_Ally, TAG_NICKNAME, BTLSCR_DEFENDER
+    Wait
+    WaitButtonABTime 30
+    CheckAbility CHECK_HAVE, BTLSCR_ATTACKER, ABILITY_MAGIC_GUARD, _030
+    UpdateMonDataFromVar OPCODE_GET, BTLSCR_ATTACKER, BATTLEMON_MAX_HP, BTLVAR_HP_CALC_TEMP
+    DivideVarByValue BTLVAR_HP_CALC_TEMP, 8
+    UpdateVar OPCODE_MUL, BTLVAR_HP_CALC_TEMP, -1
+    UpdateVarFromVar OPCODE_SET, BTLVAR_MSG_BATTLER_TEMP, BTLVAR_ATTACKER
+    UpdateVar OPCODE_FLAG_ON, BTLVAR_BATTLE_CTX_STATUS, SYSCTL_SKIP_SPRITE_BLINK
+    Call BATTLE_SUBSCRIPT_UPDATE_HP
+
+_030:
+    UnlockMoveChoice BTLSCR_ATTACKER
+    Call BATTLE_SUBSCRIPT_CRASH_ON_MISS
+    End

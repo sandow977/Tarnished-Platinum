@@ -1,0 +1,19 @@
+{
+    "name": "CHILLY_RECEPTION",
+    "class": "CLASS_STATUS",
+    "type": "TYPE_ICE",
+    "power": 120,
+    "accuracy": 100,
+    "pp": 5,
+    "effect": {
+        "type": "BATTLE_EFFECT_CHILLY_RECEPTION",
+        "chance": 100
+    },
+    "range": "RANGE_USER",
+    "priority": 0,
+    "flags": [],
+    "contest": {
+        "effect": "CONTEST_EFFECT_FINAL_PERFORMANCE_ADVANTAGE",
+        "type": "CONTEST_TYPE_TOUGH"
+    }
+}

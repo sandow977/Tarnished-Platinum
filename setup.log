@@ -1,0 +1,335 @@
+The Meson build system
+Version: 1.7.0
+Source dir: /mnt/c/Users/tinle/Downloads/pokeplatinum
+Build dir: /mnt/c/Users/tinle/Downloads/pokeplatinum/build
+Build type: cross build
+Project name: pokeplatinum
+Project version: 1.0
+Nasm compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwasmarm -wrap:sdk 2.0/sp2p2 (mwasmarm 3.0.4)
+Nasm linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+C++ compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+C++ linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+Compiler for language nasm for the build machine not found.
+C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+C linker for the build machine: gcc ld.bfd 2.42
+C++ compiler for the build machine: g++ (gcc 13.3.0 "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+C++ linker for the build machine: g++ ld.bfd 2.42
+Build machine cpu family: x86_64
+Build machine cpu: x86_64
+Host machine cpu family: arm
+Host machine cpu: arm
+Target machine cpu family: arm
+Target machine cpu: arm
+Found pkg-config: NO
+Found CMake: NO
+Run-time dependency nitrosdk found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency NitroSDK
+
+Executing subproject NitroSDK 
+
+NitroSDK| Project name: NitroSDK
+NitroSDK| Project version: 4.2.30001
+NitroSDK| C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+NitroSDK| C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+NitroSDK| C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+NitroSDK| C linker for the build machine: gcc ld.bfd 2.42
+NitroSDK| Program gen_fx_const.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/NitroSDK-4.2.30001/gen/nitro/fx/gen_fx_const.py)
+NitroSDK| Program flex found: YES (/usr/bin/flex)
+NitroSDK| Program bison found: YES (/usr/bin/bison)
+NitroSDK| Build targets in project: 31
+NitroSDK| Subproject NitroSDK finished.
+
+Dependency NitroSDK found: YES 4.2.30001 (overridden)
+Run-time dependency nitrosystem found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency NitroSystem
+
+Executing subproject NitroSystem 
+
+NitroSystem| Project name: NitroSystem
+NitroSystem| Project version: 071126.1
+NitroSystem| C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+NitroSystem| C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+NitroSystem| C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+NitroSystem| C linker for the build machine: gcc ld.bfd 2.42
+NitroSystem| Dependency NitroSDK found: YES 4.2.30001 (overridden)
+NitroSystem| Build targets in project: 37
+NitroSystem| Subproject NitroSystem finished.
+
+Dependency NitroSystem found: YES 071126.1 (overridden)
+Run-time dependency nitrowifi found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency NitroWiFi
+
+Executing subproject NitroWiFi 
+
+NitroWiFi| Project name: NitroWiFi
+NitroWiFi| Project version: 2.1.30003
+NitroWiFi| C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+NitroWiFi| C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+NitroWiFi| C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+NitroWiFi| C linker for the build machine: gcc ld.bfd 2.42
+NitroWiFi| Dependency NitroSDK found: YES 4.2.30001 (overridden)
+NitroWiFi| Build targets in project: 44
+NitroWiFi| Subproject NitroWiFi finished.
+
+Dependency NitroWiFi found: YES 2.1.30003 (overridden)
+Run-time dependency nitrodwc found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency NitroDWC
+
+Executing subproject NitroDWC 
+
+NitroDWC| Project name: NitroDWC
+NitroDWC| Project version: 2.2.30008
+NitroDWC| C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+NitroDWC| C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+NitroDWC| C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+NitroDWC| C linker for the build machine: gcc ld.bfd 2.42
+NitroDWC| Dependency NitroSDK found: YES 4.2.30001 (overridden)
+NitroDWC| Dependency NitroSystem found: YES 071126.1 (overridden)
+NitroDWC| Dependency NitroWiFi found: YES 2.1.30003 (overridden)
+NitroDWC| Build targets in project: 64
+NitroDWC| Subproject NitroDWC finished.
+
+Dependency NitroDWC found: YES 2.2.30008 (overridden)
+Run-time dependency libvct found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency libvct
+
+Executing subproject libvct 
+
+libvct| Project name: libvct
+libvct| Project version: 1.3.1
+libvct| C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+libvct| C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+libvct| C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+libvct| C linker for the build machine: gcc ld.bfd 2.42
+libvct| Dependency NitroSDK found: YES 4.2.30001 (overridden)
+libvct| Build targets in project: 65
+libvct| Subproject libvct finished.
+
+Dependency libvct found: YES 1.3.1 (overridden)
+Run-time dependency libcrypto found: NO (tried pkgconfig, system and cmake)
+Looking for a fallback subproject for the dependency libcrypto
+
+Executing subproject libcrypto 
+
+libcrypto| Project name: libcrypto
+libcrypto| Project version: undefined
+libcrypto| Nasm compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwasmarm -wrap:sdk 2.0/sp2p2 (mwasmarm 3.0.4)
+libcrypto| Nasm linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+libcrypto| C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+libcrypto| C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+libcrypto| Compiler for language nasm for the build machine not found.
+libcrypto| C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+libcrypto| C linker for the build machine: gcc ld.bfd 2.42
+libcrypto| Build targets in project: 67
+libcrypto| Subproject libcrypto finished.
+
+Dependency libcrypto found: YES undefined (overridden)
+Run-time dependency libsyscall found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency libsyscall
+
+Executing subproject libsyscall 
+
+libsyscall| Project name: libsyscall
+libsyscall| Project version: undefined
+libsyscall| Nasm compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwasmarm -wrap:sdk 2.0/sp2p2 (mwasmarm 3.0.4)
+libsyscall| Nasm linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+libsyscall| C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+libsyscall| C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+libsyscall| Compiler for language nasm for the build machine not found.
+libsyscall| C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+libsyscall| C linker for the build machine: gcc ld.bfd 2.42
+libsyscall| Build targets in project: 68
+libsyscall| Subproject libsyscall finished.
+
+Dependency libsyscall found: YES undefined (overridden)
+Run-time dependency ppwlobby found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency ppwlobby
+
+Executing subproject ppwlobby 
+
+ppwlobby| Project name: ppwlobby
+ppwlobby| Project version: undefined
+ppwlobby| Nasm compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwasmarm -wrap:sdk 2.0/sp2p2 (mwasmarm 3.0.4)
+ppwlobby| Nasm linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+ppwlobby| C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+ppwlobby| C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+ppwlobby| Compiler for language nasm for the build machine not found.
+ppwlobby| C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+ppwlobby| C linker for the build machine: gcc ld.bfd 2.42
+ppwlobby| Dependency NitroDWC found: YES 2.2.30008 (overridden)
+ppwlobby| Build targets in project: 71
+ppwlobby| Subproject ppwlobby finished.
+
+Dependency ppwlobby found: YES undefined (overridden)
+
+Executing subproject metang 
+
+metang| Project name: metang
+metang| Project version: undefined
+metang| Program metang.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metang/metang.py)
+metang| Build targets in project: 71
+metang| Subproject metang finished.
+
+Program metang.py found: YES (overridden)
+Run-time dependency rapidjson found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency rapidjson
+
+Executing subproject rapidjson 
+
+rapidjson| Project name: rapidjson
+rapidjson| Project version: 1.1.0
+rapidjson| C++ compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+rapidjson| C++ linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+rapidjson| C++ compiler for the build machine: g++ (gcc 13.3.0 "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+rapidjson| C++ linker for the build machine: g++ ld.bfd 2.42
+rapidjson| Build targets in project: 295
+rapidjson| Subproject rapidjson finished.
+
+Dependency rapidjson from subproject subprojects/rapidjson-1.1.0 found: YES 1.1.0
+Program movedata.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/movedata.py)
+Program area_data.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/area_data.py)
+Program encounter.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/encounter.py)
+Program event.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/event.py)
+Program encdata_ex_elusive_rod.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/encdata_ex_elusive_rod.py)
+Program encdata_ex_honey_trees.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/encdata_ex_honey_trees.py)
+Program encdata_ex_trophy_garden.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/encdata_ex_trophy_garden.py)
+Program encdata_ex_great_marsh.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/encdata_ex_great_marsh.py)
+Program lighting.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/lighting.py)
+Program map_matrix.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/map_matrix.py)
+Program npc_trades.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/npc_trades.py)
+Program prop_model_set.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/jsoncnv/prop_model_set.py)
+Found pkg-config: YES (/usr/bin/pkg-config) 1.8.1
+Did not find CMake 'cmake'
+Found CMake: NO
+Build-time dependency libpng found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency libpng
+
+Executing subproject libpng 
+
+libpng| Project name: libpng
+libpng| Project version: 1.6.40
+libpng| C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+libpng| C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+libpng| C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+libpng| C linker for the build machine: gcc ld.bfd 2.42
+libpng| Build-time dependency zlib found: NO (tried pkgconfig, cmake and system)
+libpng| Looking for a fallback subproject for the dependency zlib
+
+Executing subproject libpng:zlib
+
+zlib| Project name: zlib
+zlib| Project version: 1.2.13
+zlib| C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+zlib| C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+zlib| C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+zlib| C linker for the build machine: gcc ld.bfd 2.42
+zlib| Compiler for C supports link arguments -Wl,--version-script,/mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/zlib-1.2.13/zlib.map: YES (cached)
+zlib| Compiler for C supports arguments /wd4131: NO (cached)
+zlib| Compiler for C supports arguments /wd4244: NO (cached)
+zlib| Compiler for C supports arguments /wd4245: NO (cached)
+zlib| Compiler for C supports arguments /wd4267: NO (cached)
+zlib| Compiler for C supports arguments /wd4127: NO (cached)
+zlib| Compiler for C supports arguments -Wno-implicit-fallthrough: YES (cached)
+zlib| Compiler for C supports arguments -Wno-implicit-function-declaration: YES (cached)
+zlib| Build targets in project: 306
+zlib| Subproject zlib finished.
+
+libpng| Dependency zlib from subproject subprojects/zlib-1.2.13 found: YES 1.2.13
+libpng| Library m found: YES
+libpng| Fetching value of define "__ARM_NEON" : (undefined) (cached)
+libpng| Configuring libpng16.pc using configuration
+libpng| Configuring libpng.pc using configuration
+libpng| Build targets in project: 307
+libpng| Subproject libpng finished.
+
+Dependency libpng from subproject subprojects/libpng-1.6.40 found: YES 1.6.40
+Program battle_anim_scripts.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/ordergen/battle_anim_scripts.py)
+Program forms.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/ordergen/forms.py)
+Program species.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/ordergen/species.py)
+Program text_banks.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/ordergen/text_banks.py)
+Program trainer_graphics.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/ordergen/trainer_graphics.py)
+Program postconf.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/postconf/postconf.py)
+Program make_pl_poke_icon.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_pl_poke_icon.py)
+Program make_pl_pokegra.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_pl_pokegra.py)
+Cleaning... 0 files.
+Program make_pl_otherpoke.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_pl_otherpoke.py)
+Program make_script_bin.sh found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_script_bin.sh)
+Program make_pl_pokezukan.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_pl_pokezukan.py)
+Program make_shinzukan.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_shinzukan.py)
+Program make_pl_growtbl.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_pl_growtbl.py)
+Program make_pokedex_data.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_pokedex_data.py)
+Program make_species_text_banks.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_species_text_banks.py)
+Program make_pokedex_enc_platinum.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_pokedex_enc_platinum.py)
+Program make_town_map_data.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_town_map_data.py)
+Program make_trainer_ball_capsules.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/make_trainer_ball_capsules.py)
+Program nclr_concat.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/scripts/nclr_concat.py)
+Program nef_fixer.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/debug/nef_fixer.py)
+Program overlay_mapper.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/debug/overlay_mapper.py)
+Program cp found: YES (/usr/bin/cp)
+Program arm-none-eabi-gcc found: YES (/usr/bin/arm-none-eabi-gcc)
+Program arm-none-eabi-objcopy found: YES (/usr/bin/arm-none-eabi-objcopy)
+Program makelcf found: YES (overridden)
+Program nitrorom found: NO
+Fallback to subproject nitrorom which provides program nitrorom
+
+Executing subproject nitrorom 
+
+nitrorom| Project name: nitrorom
+nitrorom| Project version: 0.1.0
+nitrorom| C compiler for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwccarm -wrap:sdk 2.0/sp2p2 (mwccarm 1.0.2)
+nitrorom| C linker for the host machine: /mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/metroskrew/bin/mwldarm -wrap:sdk 2.0/sp2p2 mwldarm 1.0.2
+nitrorom| C compiler for the build machine: gcc (gcc 13.3.0 "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+nitrorom| C linker for the build machine: gcc ld.bfd 2.42
+nitrorom| Configuring config.h using configuration
+nitrorom| Dependency libpng found: YES 1.6.40 (cached)
+nitrorom| Build targets in project: 309
+nitrorom| Subproject nitrorom finished.
+
+Program nitrorom found: YES (overridden)
+Program SDATTool_py found: NO
+Fallback to subproject SDATTool which provides program SDATTool_py
+
+Executing subproject SDATTool 
+
+SDATTool| Project name: SDATTool
+SDATTool| Project version: 1.4.1
+SDATTool| Program __main__.py found: YES (/mnt/c/Users/tinle/Downloads/pokeplatinum/subprojects/SDATTool/SDATTool/__main__.py)
+SDATTool| Build targets in project: 309
+SDATTool| Subproject SDATTool finished.
+
+Program __main__.py found: YES (overridden)
+Program sha1sum found: YES (/usr/bin/sha1sum)
+Build targets in project: 1670
+
+pokeplatinum 1.0
+
+  Subprojects
+    NitroDWC       : YES
+    NitroSDK       : YES
+    NitroSystem    : YES
+    NitroWiFi      : YES
+    SDATTool       : YES
+    libcrypto      : YES
+    libpng         : YES
+    libsyscall     : YES
+    libvct         : YES
+    metang         : YES
+    nitrorom       : YES
+    ppwlobby       : YES
+    rapidjson      : YES
+    zlib           : YES (from libpng)
+
+  User defined options
+    Cross files    : /mnt/c/Users/tinle/Downloads/pokeplatinum/meson/cross_unix.ini
+                     /mnt/c/Users/tinle/Downloads/pokeplatinum/build/root.ini
+    Native files   : /mnt/c/Users/tinle/Downloads/pokeplatinum/meson/native.ini
+                     /mnt/c/Users/tinle/Downloads/pokeplatinum/build/root.ini
+    gdb_debugging  : false
+    logging_enabled: false
+    revision       : 1
+    wrap_mode      : nopromote
+
+Found ninja-1.11.1 at /usr/bin/ninja
+Running postconf script '/mnt/c/Users/tinle/Downloads/pokeplatinum/tools/postconf/postconf.py'

@@ -1704,8 +1704,19 @@ CommonScript_GriseousOrbCouldNotBeRemoved:
     .balign 4, 0
 
 
-    CommonScript_DebugMenu:
+CommonScript_DebugMenu:
     LockAll
+    SetVar VAR_0x8008, VAR_LEVEL_CAP
+    GoToIfEq VAR_0x8008, 0, CommonScript_DebugMenu_DefaultLevelCap
+    BufferNumber 0, VAR_0x8008
+    GoTo CommonScript_DebugMenu_ShowIntro
+
+CommonScript_DebugMenu_DefaultLevelCap:
+    SetVar VAR_0x8008, 100
+    BufferNumber 0, VAR_0x8008
+
+CommonScript_DebugMenu_ShowIntro:
+    Message CommonStrings_Text_DebugMenuIntro
     InitLocalTextListMenu 1, 1, 0, VAR_RESULT
     AddListMenuEntry CommonStrings_Text_DebugMenuOption1, 0
     AddListMenuEntry CommonStrings_Text_DebugMenuOption2, 1
@@ -1741,6 +1752,7 @@ CommonScript_DebugMenu_HealFunction:
     End
 
 CommonScript_DebugMenu_Exit:
+    CloseMessage
     ReleaseAll
     End
 
@@ -2139,8 +2151,6 @@ CommonScript_DebugMenu_UnchangedName:
 
 
     
-
-
 
 
 

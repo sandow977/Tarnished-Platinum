@@ -1,0 +1,19 @@
+{
+    "name": "Spiky Shield",
+    "class": "CLASS_STATUS",
+    "type": "TYPE_GRASS",
+    "power": 0,
+    "accuracy": 0,
+    "pp": 10,
+    "effect": {
+        "type": "BATTLE_EFFECT_PROTECT",
+        "chance": 0
+    },
+    "range": "RANGE_USER",
+    "priority": 3,
+    "flags": [],
+    "contest": {
+        "effect": "CONTEST_EFFECT_LOW_VOLTAGE_ADVANTAGE",
+        "type": "CONTEST_TYPE_CUTE"
+    }
+}

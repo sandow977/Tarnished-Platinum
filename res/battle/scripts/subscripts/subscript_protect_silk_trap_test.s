@@ -1,0 +1,16 @@
+#include "macros/btlcmd.inc"
+
+_000:
+    PrintAttackMessage
+    Wait
+    WaitButtonABTime 30
+    PrintMessage BattleStrings_Text_PokemonProtectedItself_Ally, TAG_NICKNAME, BTLSCR_DEFENDER
+    Wait
+    WaitButtonABTime 30
+    UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_TYPE, SIDE_EFFECT_TYPE_MOVE_EFFECT
+    UpdateVarFromVar OPCODE_SET, BTLVAR_SIDE_EFFECT_MON, BTLVAR_ATTACKER
+    UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_PARAM, MOVE_SUBSCRIPT_PTR_SPEED_DOWN_1_STAGE
+    Call BATTLE_SUBSCRIPT_UPDATE_STAT_STAGE
+    UnlockMoveChoice BTLSCR_ATTACKER
+    Call BATTLE_SUBSCRIPT_CRASH_ON_MISS
+    End

@@ -8483,6 +8483,10 @@
       "en_US": "The dimensions became distorted!"
     },
     {
+      "id": "BattleStrings_Text_YBagShortcut",
+      "en_US": "Y: BALL!"
+    },
+    {
       "id": "BattleStrings_Text_TheDistortionWorldsPokemonAppeared",
       "en_US": [
         "The Distortion World’s {STRVAR_1 1, 0, 0}\n",

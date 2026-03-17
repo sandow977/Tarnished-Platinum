@@ -3325,7 +3325,17 @@ static void BattleControllerPlayer_CheckMoveFailure(BattleSystem *battleSys, Bat
         battleCtx->moveStatusFlags |= MOVE_STATUS_MULTI_HIT_DISRUPTED;
         battleCtx->command = BATTLE_CONTROL_AFTER_MOVE_MESSAGE;
     } else if (battleCtx->moveStatusFlags & MOVE_STATUS_DID_NOT_HIT) {
-        LOAD_SUBSEQ(subscript_missed);
+        if ((battleCtx->moveStatusFlags & MOVE_STATUS_PROTECTED)
+            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+            && battleCtx->moveProtect[battleCtx->defender] == MOVE_SILK_TRAP) {
+            LOAD_SUBSEQ(subscript_protect_silk_trap_test);
+        } else if ((battleCtx->moveStatusFlags & MOVE_STATUS_PROTECTED)
+            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+            && battleCtx->moveProtect[battleCtx->defender] == MOVE_SPIKY_SHIELD) {
+            LOAD_SUBSEQ(subscript_detect_spiky_shield_test);
+        } else {
+            LOAD_SUBSEQ(subscript_missed);
+        }
         battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
         battleCtx->commandNext = BATTLE_CONTROL_LOOP_FAINTED; // crash damage can kill
     } else {

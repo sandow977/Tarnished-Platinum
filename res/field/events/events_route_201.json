@@ -254,16 +254,6 @@
             "length": 4,
             "var": "VAR_FOLLOWER_RIVAL_STATE",
             "value": 3
-        },
-        {
-            "script": 16,
-            "x": 109,
-            "z": 857,
-            "y": 0,
-            "width": 5,
-            "length": 1,
-            "var": "VAR_FOLLOWER_RIVAL_STATE",
-            "value": 2
         }
     ]
 }
