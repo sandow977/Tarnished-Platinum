@@ -4554,61 +4554,54 @@ static BOOL BtlCmd_TryMist(BattleSystem *battleSys, BattleContext *battleCtx)
  * @param battleCtx
  * @return FALSE
  */
-static BOOL BtlCmd_TryOHKOMove(BattleSystem *battleSys, BattleContext *battleCtx)
+static BOOL BtlCmd_CheckHoldOnWith1HP(BattleSystem *battleSys, BattleContext *battleCtx)
 {
-    u16 hit;
+    BOOL endure = FALSE;
+    BOOL sturdyActivated = FALSE;
+
     BattleScript_Iter(battleCtx, 1);
-    battleCtx->battleStatusMask |= SYSCTL_NONSTANDARD_ACC_CHECK;
+    int inBattler = BattleScript_Read(battleCtx);
 
-    if (Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->defender, ABILITY_STURDY) == TRUE) {
-        battleCtx->moveStatusFlags |= MOVE_STATUS_STURDY;
-    } else {
-        if ((DEFENDING_MON.moveEffectsMask & MOVE_EFFECT_LOCK_ON) == FALSE
-            && Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_NO_GUARD
-            && Battler_Ability(battleCtx, battleCtx->defender) != ABILITY_NO_GUARD) {
-            // Use the usual OHKO accuracy check: scale upwards with the difference between the attacker and
-            // defender's levels.
-            hit = CURRENT_MOVE_DATA.accuracy + (ATTACKING_MON.level - DEFENDING_MON.level);
+    int battler = BattleScript_Battler(battleSys, battleCtx, inBattler);
+    int itemEffect = Battler_HeldItemEffect(battleCtx, battler);
+    int itemPower = Battler_HeldItemPower(battleCtx, battler, ITEM_POWER_CHECK_ALL);
 
-            if ((BattleSystem_RandNext(battleSys) % 100) < hit && ATTACKING_MON.level >= DEFENDING_MON.level) {
-                hit = TRUE;
-            } else {
-                hit = FALSE;
-            }
+    if (itemEffect == HOLD_EFFECT_MAYBE_ENDURE
+        && BattleSystem_RandNext(battleSys) % 100 < itemPower) {
+        endure = TRUE;
+    }
+
+    if (itemEffect == HOLD_EFFECT_ENDURE
+        && battleCtx->battleMons[battler].curHP == battleCtx->battleMons[battler].maxHP) {
+        endure = TRUE;
+
+        battleCtx->msgItemTemp = battleCtx->battleMons[battler].heldItem;
+        battleCtx->recycleItem[battler] = battleCtx->battleMons[battler].heldItem;
+        battleCtx->battleMons[battler].heldItem = ITEM_NONE;
+        BattleMon_CopyToParty(battleSys, battleCtx, battler);
+    }
+
+    if (Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battler, ABILITY_STURDY) == TRUE
+        && battleCtx->battleMons[battler].curHP == battleCtx->battleMons[battler].maxHP) {
+        endure = TRUE;
+        sturdyActivated = TRUE;
+    }
+
+    if (endure && battleCtx->battleMons[battler].curHP + battleCtx->hpCalcTemp <= 0) {
+        battleCtx->hpCalcTemp = (battleCtx->battleMons[battler].curHP - 1) * -1;
+
+        if (sturdyActivated == TRUE
+            && itemEffect != HOLD_EFFECT_ENDURE
+            && itemEffect != HOLD_EFFECT_MAYBE_ENDURE) {
+            battleCtx->moveStatusFlags |= MOVE_STATUS_ENDURED;
         } else {
-            if (((DEFENDING_MON.moveEffectsData.lockOnTarget == battleCtx->attacker
-                     && (DEFENDING_MON.moveEffectsMask & MOVE_EFFECT_LOCK_ON))
-                    || Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_NO_GUARD
-                    || Battler_Ability(battleCtx, battleCtx->defender) == ABILITY_NO_GUARD)
-                && ATTACKING_MON.level >= DEFENDING_MON.level) {
-                // Bypass the accuracy check: always hit.
-                hit = TRUE;
-            } else {
-                // Fallback to the usual OHKO accuracy check, for some reason.
-                hit = CURRENT_MOVE_DATA.accuracy + (ATTACKING_MON.level - DEFENDING_MON.level);
-
-                if ((BattleSystem_RandNext(battleSys) % 100) < hit && ATTACKING_MON.level >= DEFENDING_MON.level) {
-                    hit = TRUE;
-                } else {
-                    hit = FALSE;
-                }
-            }
-
-            battleCtx->moveStatusFlags |= MOVE_STATUS_BYPASSED_ACCURACY;
-        }
-
-        if (hit) {
-            battleCtx->damage = DEFENDING_MON.curHP * -1;
-            battleCtx->moveStatusFlags |= MOVE_STATUS_ONE_HIT_KO;
-        } else if (ATTACKING_MON.level >= DEFENDING_MON.level) {
-            battleCtx->moveStatusFlags |= MOVE_STATUS_MISSED;
-        } else {
-            battleCtx->moveStatusFlags |= MOVE_STATUS_ONE_HIT_KO_FAILED;
+            battleCtx->moveStatusFlags |= MOVE_STATUS_ENDURED_ITEM;
         }
     }
 
     return FALSE;
 }
+
 
 /**
  * @brief DivideVarByValue the value of a variable by another static value, storing the

@@ -3385,15 +3385,19 @@ static void BattleControllerPlayer_UpdateHP(BattleSystem *battleSys, BattleConte
             battleCtx->damage = (DEFENDING_MON.curHP - 1) * -1;
         }
 
-        if (DEFENDER_TURN_FLAGS.enduring == 0) {
-            if (itemEffect == HOLD_EFFECT_MAYBE_ENDURE && (BattleSystem_RandNext(battleSys) % 100) < itemPower) {
-                DEFENDER_SELF_TURN_FLAGS.focusItemActivated = TRUE;
-            }
+if (DEFENDER_TURN_FLAGS.enduring == 0) {
+    if (itemEffect == HOLD_EFFECT_MAYBE_ENDURE && (BattleSystem_RandNext(battleSys) % 100) < itemPower) {
+        DEFENDER_SELF_TURN_FLAGS.focusItemActivated = TRUE;
+    }
 
-            if (itemEffect == HOLD_EFFECT_ENDURE && DEFENDING_MON.curHP == DEFENDING_MON.maxHP) {
-                DEFENDER_SELF_TURN_FLAGS.focusItemActivated = TRUE;
-            }
-        }
+    if (itemEffect == HOLD_EFFECT_ENDURE && DEFENDING_MON.curHP == DEFENDING_MON.maxHP) {
+        DEFENDER_SELF_TURN_FLAGS.focusItemActivated = TRUE;
+        battleCtx->msgItemTemp = battleCtx->battleMons[battleCtx->defender].heldItem;
+        battleCtx->recycleItem[battleCtx->defender] = battleCtx->battleMons[battleCtx->defender].heldItem;
+        battleCtx->battleMons[battleCtx->defender].heldItem = ITEM_NONE;
+        BattleMon_CopyToParty(battleSys, battleCtx, battleCtx->defender);
+    }
+}
 
         if ((DEFENDER_TURN_FLAGS.enduring || DEFENDER_SELF_TURN_FLAGS.focusItemActivated)
             && DEFENDING_MON.curHP + battleCtx->damage <= 0) {
