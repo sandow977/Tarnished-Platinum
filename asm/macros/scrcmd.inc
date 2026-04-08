@@ -197,10 +197,9 @@
     .long \arg1-.-4
     .endm
 
-    .macro ScrCmd_Unused_018 arg0, arg1
+    .macro ChangeCommonScript scriptID
     .short 24
-    .byte \arg0
-    .long \arg1-.-4
+    .short \scriptID
     .endm
 
     .macro ScrCmd_Unused_019 arg0, arg1
@@ -4998,6 +4997,16 @@
     .short 842
     .short \slot
     .short \statusKind
+    .endm
+
+    .macro FillSinnohDexCaught
+    .short 843
+    .endm
+
+    .macro MakePartyMonShiny slot, resultVar
+    .short 844
+    .short \slot
+    .short \resultVar
     .endm
 
 

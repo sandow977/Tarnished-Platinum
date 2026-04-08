@@ -1,7 +1,7 @@
 {
     "name": "Scary Face",
     "class": "CLASS_STATUS",
-    "type": "TYPE_NORMAL",
+    "type": "TYPE_DARK",
     "power": 0,
     "accuracy": 90,
     "pp": 10,

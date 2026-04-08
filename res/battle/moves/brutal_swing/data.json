@@ -2,7 +2,7 @@
     "name": "BRUTAL_SWING",
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_DARK",
-    "power": 80,
+    "power": 60,
     "accuracy": 100,
     "pp": 20,
     "effect": {

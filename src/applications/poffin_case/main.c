@@ -470,7 +470,7 @@ void PoffinCase_UpdateMonContestStats(Poffin *poffin, Pokemon *mon)
 {
     u8 i;
 
-    u8 nature = Pokemon_GetNature(mon);
+    u8 nature = Pokemon_GetOriginalNature(mon);
     u8 likedFlavor = sFlavorPreferences[nature][0];
     u8 dislikedFlavor = sFlavorPreferences[nature][1];
 

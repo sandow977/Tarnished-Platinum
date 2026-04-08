@@ -84,6 +84,65 @@ species_height_gira = [''] * (NUM_POKEMON-2)
 species_name_number = [[''] * (NUM_POKEMON-2) for _ in range(NUM_LANGUAGES)]
 species_category = [[''] * (NUM_POKEMON-2) for _ in range(NUM_LANGUAGES)]
 
+
+def repair_mojibake(text: str) -> str:
+    repaired = text
+    suspicious = ('Ã', 'â', 'ã', '€', '™', 'œ', '¼', '½', '¿', 'ƒ', '\x81')
+
+    for _ in range(2):
+        if not any(ch in repaired for ch in suspicious):
+            break
+        candidate = None
+        for source_encoding in ('cp1252', 'latin-1'):
+            try:
+                candidate = repaired.encode(source_encoding).decode('utf-8')
+                break
+            except UnicodeError:
+                continue
+        if candidate is None:
+            break
+        if candidate == repaired:
+            break
+        repaired = candidate
+
+    return repaired
+
+
+def looks_broken(text: str) -> bool:
+    suspicious = ('Ã', 'â', 'ã', '€', '™', 'œ', '¼', '½', '¿', 'ƒ', '\x81', 'Æ')
+    return any(ch in text for ch in suspicious)
+
+
+def normalize_pokedex_strings(pkdexdata: dict) -> dict:
+    en_block = pkdexdata.get('en', {})
+    for lang in languages:
+        lang_block = pkdexdata.get(lang)
+        if not isinstance(lang_block, dict):
+            continue
+
+        for field in ('name', 'category'):
+            if isinstance(lang_block.get(field), str):
+                lang_block[field] = repair_mojibake(lang_block[field])
+
+        entry_text = lang_block.get('entry_text')
+        if isinstance(entry_text, list):
+            lang_block['entry_text'] = [
+                repair_mojibake(line) if isinstance(line, str) else line
+                for line in entry_text
+            ]
+
+        if lang != 'en':
+            if isinstance(lang_block.get('name'), str) and looks_broken(lang_block['name']):
+                lang_block['name'] = en_block.get('name', '')
+            if isinstance(lang_block.get('category'), str) and looks_broken(lang_block['category']):
+                lang_block['category'] = en_block.get('category', '')
+            entry_text = lang_block.get('entry_text')
+            if isinstance(entry_text, list) and any(isinstance(line, str) and looks_broken(line) for line in entry_text):
+                en_entry = en_block.get('entry_text', [])
+                lang_block['entry_text'] = list(en_entry) if isinstance(en_entry, list) else []
+
+    return pkdexdata
+
 def Convert_weight(hectograms):
     conv = 4.536 # this is the best estimate for the value Gamefreak used for conversion
     lbs = round(hectograms/conv,1)
@@ -125,6 +184,7 @@ for i, species_dir in enumerate(SPECIES_DIRS):
     try:
         with open(file, 'r', encoding='utf-8') as data_file:
             pkdata = json.load(data_file)
+        pkdata['pokedex_data'] = normalize_pokedex_strings(pkdata['pokedex_data'])
         pokemon_name = pkdata['pokedex_data']['en']['name']
     except json.decoder.JSONDecodeError as e:
         doc_lines = e.doc.splitlines()

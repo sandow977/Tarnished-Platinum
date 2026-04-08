@@ -4,7 +4,8 @@
     "items": [],
     "ai_flags": [
         "AI_FLAG_BASIC",
-        "AI_FLAG_EXPERT"
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_EVAL_ATTACK"
     ],
     "double_battle": false,
     "party": [
@@ -14,7 +15,7 @@
             "level": 14,
             "item": null,
             "moves": [
-                "MOVE_GROWTH",
+                "MOVE_TACKLE",
                 "MOVE_MEGA_DRAIN"
             ],
             "iv_scale": 0,

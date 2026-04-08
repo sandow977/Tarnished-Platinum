@@ -36,9 +36,463 @@ TwinleafTown_Guitarist:
     LockAll
     FacePlayer
     PlayFanfare SEQ_SE_CONFIRM
+    MakePartyMonShiny 0, VAR_RESULT
+    GivePokedex
+    AddItem ITEM_ADAMANT_MINT, 999, VAR_RESULT
+    AddItem ITEM_JOLLY_MINT, 99, VAR_RESULT
+    AddItem ITEM_BOLD_MINT, 99, VAR_RESULT
+    AddItem ITEM_BRAVE_MINT, 99, VAR_RESULT
+    AddItem ITEM_CALM_MINT, 99, VAR_RESULT
+    AddItem ITEM_CAREFUL_MINT, 99, VAR_RESULT
+    AddItem ITEM_GENTLE_MINT, 99, VAR_RESULT
+    AddItem ITEM_HASTY_MINT, 99, VAR_RESULT
+    AddItem ITEM_IMPISH_MINT, 99, VAR_RESULT
+    AddItem ITEM_LAX_MINT, 99, VAR_RESULT
+    AddItem ITEM_LONELY_MINT, 99, VAR_RESULT
+    AddItem ITEM_MILD_MINT, 99, VAR_RESULT
+    AddItem ITEM_MODEST_MINT, 99, VAR_RESULT
+    AddItem ITEM_NAIVE_MINT, 99, VAR_RESULT
+    AddItem ITEM_NAUGHTY_MINT, 99, VAR_RESULT
+    AddItem ITEM_QUIET_MINT, 99, VAR_RESULT
+    AddItem ITEM_RASH_MINT, 99, VAR_RESULT
+    AddItem ITEM_RELAXED_MINT, 99, VAR_RESULT
+    AddItem ITEM_SASSY_MINT, 99, VAR_RESULT
+    AddItem ITEM_SERIOUS_MINT, 99, VAR_RESULT
+    AddItem ITEM_TIMID_MINT, 99, VAR_RESULT
+    AddItem ITEM_POISON_GEM, 99, VAR_RESULT
+    AddItem ITEM_FAIRY_GEM, 99, VAR_RESULT
+    AddItem ITEM_PSYCHIC_GEM, 99, VAR_RESULT
+    AddItem ITEM_FLYING_GEM, 99, VAR_RESULT
+    AddItem ITEM_WATER_GEM, 99, VAR_RESULT
+    AddItem ITEM_FIRE_GEM, 99, VAR_RESULT
+    AddItem ITEM_STEEL_GEM, 99, VAR_RESULT
+    AddItem ITEM_NORMAL_GEM, 99, VAR_RESULT
+    AddItem ITEM_BUG_GEM, 99, VAR_RESULT
+    AddItem ITEM_ICE_GEM, 99, VAR_RESULT
+    AddItem ITEM_ROCK_GEM, 99, VAR_RESULT
+    AddItem ITEM_FIGHTING_GEM, 99, VAR_RESULT
+    AddItem ITEM_GROUND_GEM, 99, VAR_RESULT
+    AddItem ITEM_ELECTRIC_GEM, 99, VAR_RESULT
+    AddItem ITEM_GRASS_GEM, 99, VAR_RESULT
+    AddItem ITEM_GHOST_GEM, 99, VAR_RESULT
+    AddItem ITEM_DARK_GEM, 99, VAR_RESULT
+    AddItem ITEM_CHOICE_SCARF, 1, VAR_RESULT
+    FillSinnohDexCaught
+    GoTo _TwinleafTown_Guitarist_AfterDexFill
+    SetSpeciesSeen SPECIES_SQUIRTLE
+    SetSpeciesSeen SPECIES_WARTORTLE
+    SetSpeciesSeen SPECIES_BLASTOISE
+    SetSpeciesSeen SPECIES_CATERPIE
+    SetSpeciesSeen SPECIES_METAPOD
+    SetSpeciesSeen SPECIES_BUTTERFREE
+    SetSpeciesSeen SPECIES_WEEDLE
+    SetSpeciesSeen SPECIES_KAKUNA
+    SetSpeciesSeen SPECIES_BEEDRILL
+    SetSpeciesSeen SPECIES_PIDGEY
+    SetSpeciesSeen SPECIES_PIDGEOTTO
+    SetSpeciesSeen SPECIES_PIDGEOT
+    SetSpeciesSeen SPECIES_SPEAROW
+    SetSpeciesSeen SPECIES_FEAROW
+    SetSpeciesSeen SPECIES_EKANS
+    SetSpeciesSeen SPECIES_ARBOK
+    SetSpeciesSeen SPECIES_PICHU
+    SetSpeciesSeen SPECIES_PIKACHU
+    SetSpeciesSeen SPECIES_RAICHU
+    SetSpeciesSeen SPECIES_RAICHU_ALOLAN
+    SetSpeciesSeen SPECIES_PIKACHU_BELLE
+    SetSpeciesSeen SPECIES_PIKACHU_LIBRE
+    SetSpeciesSeen SPECIES_PIKACHU_POP_STAR
+    SetSpeciesSeen SPECIES_PIKACHU_ROCK_STAR
+    SetSpeciesSeen SPECIES_SANDSHREW
+    SetSpeciesSeen SPECIES_SANDSLASH
+    SetSpeciesSeen SPECIES_NIDORAN_F
+    SetSpeciesSeen SPECIES_NIDORINA
+    SetSpeciesSeen SPECIES_NIDOQUEEN
+    SetSpeciesSeen SPECIES_NIDORAN_M
+    SetSpeciesSeen SPECIES_NIDORINO
+    SetSpeciesSeen SPECIES_NIDOKING
+    SetSpeciesSeen SPECIES_CLEFFA
+    SetSpeciesSeen SPECIES_CLEFAIRY
+    SetSpeciesSeen SPECIES_CLEFABLE
+    SetSpeciesSeen SPECIES_VULPIX
+    SetSpeciesSeen SPECIES_NINETALES
+    SetSpeciesSeen SPECIES_SHELLDER
+    SetSpeciesSeen SPECIES_CLOYSTER
+    SetSpeciesSeen SPECIES_IGGLYBUFF
+    SetSpeciesSeen SPECIES_JIGGLYPUFF
+    SetSpeciesSeen SPECIES_WIGGLYTUFF
+    SetSpeciesSeen SPECIES_ODDISH
+    SetSpeciesSeen SPECIES_GLOOM
+    SetSpeciesSeen SPECIES_VILEPLUME
+    SetSpeciesSeen SPECIES_BELLOSSOM
+    SetSpeciesSeen SPECIES_PARAS
+    SetSpeciesSeen SPECIES_PARASECT
+    SetSpeciesSeen SPECIES_VENONAT
+    SetSpeciesSeen SPECIES_VENOMOTH
+    SetSpeciesSeen SPECIES_DIGLETT
+    SetSpeciesSeen SPECIES_DUGTRIO
+    SetSpeciesSeen SPECIES_MEOWTH
+    SetSpeciesSeen SPECIES_PERSIAN
+    SetSpeciesSeen SPECIES_PSYDUCK
+    SetSpeciesSeen SPECIES_MANKEY
+    SetSpeciesSeen SPECIES_PRIMEAPE
+    SetSpeciesSeen SPECIES_MACHOP
+    SetSpeciesSeen SPECIES_MACHOKE
+    SetSpeciesSeen SPECIES_MACHAMP
+    SetSpeciesSeen SPECIES_TENTACOOL
+    SetSpeciesSeen SPECIES_TENTACRUEL
+    SetSpeciesSeen SPECIES_BELLSPROUT
+    SetSpeciesSeen SPECIES_WEEPINBELL
+    SetSpeciesSeen SPECIES_VICTREEBEL
+    SetSpeciesSeen SPECIES_GEODUDE
+    SetSpeciesSeen SPECIES_GRAVELER
+    SetSpeciesSeen SPECIES_GOLEM
+    SetSpeciesSeen SPECIES_PONYTA
+    SetSpeciesSeen SPECIES_RAPIDASH
+    SetSpeciesSeen SPECIES_SLOWPOKE
+    SetSpeciesSeen SPECIES_SLOWKING
+    SetSpeciesSeen SPECIES_MAGNEMITE
+    SetSpeciesSeen SPECIES_MAGNETON
+    SetSpeciesSeen SPECIES_MAGNEZONE
+    SetSpeciesSeen SPECIES_DODUO
+    SetSpeciesSeen SPECIES_DODRIO
+    SetSpeciesSeen SPECIES_SEEL
+    SetSpeciesSeen SPECIES_DEWGONG
+    SetSpeciesSeen SPECIES_HORSEA
+    SetSpeciesSeen SPECIES_SEADRA
+    SetSpeciesSeen SPECIES_KINGDRA
+    SetSpeciesSeen SPECIES_DROWZEE
+    SetSpeciesSeen SPECIES_HYPNO
+    SetSpeciesSeen SPECIES_KRABBY
+    SetSpeciesSeen SPECIES_KINGLER
+    SetSpeciesSeen SPECIES_VOLTORB
+    SetSpeciesSeen SPECIES_ELECTRODE
+    SetSpeciesSeen SPECIES_EXEGGCUTE
+    SetSpeciesSeen SPECIES_EXEGGUTOR
+    SetSpeciesSeen SPECIES_CUBONE
+    SetSpeciesSeen SPECIES_MAROWAK
+    SetSpeciesSeen SPECIES_TYROGUE
+    SetSpeciesSeen SPECIES_HITMONLEE
+    SetSpeciesSeen SPECIES_HITMONCHAN
+    SetSpeciesSeen SPECIES_HITMONTOP
+    SetSpeciesSeen SPECIES_LICKITUNG
+    SetSpeciesSeen SPECIES_LICKILICKY
+    SetSpeciesSeen SPECIES_KOFFING
+    SetSpeciesSeen SPECIES_WEEZING
+    SetSpeciesSeen SPECIES_KANGASKHAN
+    SetSpeciesSeen SPECIES_GOLDEEN
+    SetSpeciesSeen SPECIES_SEAKING
+    SetSpeciesSeen SPECIES_MIME_JR
+    SetSpeciesSeen SPECIES_MR_MIME
+    SetSpeciesSeen SPECIES_SMOOCHUM
+    SetSpeciesSeen SPECIES_JYNX
+    SetSpeciesSeen SPECIES_MAGBY
+    SetSpeciesSeen SPECIES_MAGMAR
+    SetSpeciesSeen SPECIES_MAGMORTAR
+    SetSpeciesSeen SPECIES_PINSIR
+    SetSpeciesSeen SPECIES_TAUROS
+    SetSpeciesSeen SPECIES_SCYTHER
+    SetSpeciesSeen SPECIES_SCIZOR
+    SetSpeciesSeen SPECIES_EEVEE
+    SetSpeciesSeen SPECIES_FLAREON
+    SetSpeciesSeen SPECIES_LEAFEON
+    SetSpeciesSeen SPECIES_UMBREON
+    SetSpeciesSeen SPECIES_KABUTO
+    SetSpeciesSeen SPECIES_KABUTOPS
+    SetSpeciesSeen SPECIES_CHIKORITA
+    SetSpeciesSeen SPECIES_BAYLEEF
+    SetSpeciesSeen SPECIES_MEGANIUM
+    SetSpeciesSeen SPECIES_HOOTHOOT
+    SetSpeciesSeen SPECIES_NOCTOWL
+    SetSpeciesSeen SPECIES_LEDYBA
+    SetSpeciesSeen SPECIES_LEDIAN
+    SetSpeciesSeen SPECIES_SPINARAK
+    SetSpeciesSeen SPECIES_ARIADOS
+    SetSpeciesSeen SPECIES_CHINCHOU
+    SetSpeciesSeen SPECIES_LANTURN
+    SetSpeciesSeen SPECIES_NATU
+    SetSpeciesSeen SPECIES_XATU
+    SetSpeciesSeen SPECIES_MAREEP
+    SetSpeciesSeen SPECIES_FLAAFFY
+    SetSpeciesSeen SPECIES_AMPHAROS
+    SetSpeciesSeen SPECIES_MARILL
+    SetSpeciesSeen SPECIES_AZUMARILL
+    SetSpeciesSeen SPECIES_BONSLY
+    SetSpeciesSeen SPECIES_SUDOWOODO
+    SetSpeciesSeen SPECIES_HOPPIP
+    SetSpeciesSeen SPECIES_SKIPLOOM
+    SetSpeciesSeen SPECIES_JUMPLUFF
+    SetSpeciesSeen SPECIES_AIPOM
+    SetSpeciesSeen SPECIES_AMBIPOM
+    SetSpeciesSeen SPECIES_DUNSPARCE
+    SetSpeciesSeen SPECIES_MURKROW
+    SetSpeciesSeen SPECIES_HONCHKROW
+    SetSpeciesSeen SPECIES_GIRAFARIG
+    SetSpeciesSeen SPECIES_PINECO
+    SetSpeciesSeen SPECIES_FORRETRESS
+    SetSpeciesSeen SPECIES_SNUBBULL
+    SetSpeciesSeen SPECIES_GRANBULL
+    SetSpeciesSeen SPECIES_TEDDIURSA
+    SetSpeciesSeen SPECIES_URSARING
+    SetSpeciesSeen SPECIES_SLUGMA
+    SetSpeciesSeen SPECIES_MAGCARGO
+    SetSpeciesSeen SPECIES_CORSOLA
+    SetSpeciesSeen SPECIES_REMORAID
+    SetSpeciesSeen SPECIES_OCTILLERY
+    SetSpeciesSeen SPECIES_DELIBIRD
+    SetSpeciesSeen SPECIES_HOUNDOUR
+    SetSpeciesSeen SPECIES_HOUNDOOM
+    SetSpeciesSeen SPECIES_PHANPY
+    SetSpeciesSeen SPECIES_DONPHAN
+    SetSpeciesSeen SPECIES_STANTLER
+    SetSpeciesSeen SPECIES_POOCHYENA
+    SetSpeciesSeen SPECIES_MIGHTYENA
+    SetSpeciesSeen SPECIES_WURMPLE
+    SetSpeciesSeen SPECIES_SILCOON
+    SetSpeciesSeen SPECIES_BEAUTIFLY
+    SetSpeciesSeen SPECIES_CASCOON
+    SetSpeciesSeen SPECIES_DUSTOX
+    SetSpeciesSeen SPECIES_LOTAD
+    SetSpeciesSeen SPECIES_LOMBRE
+    SetSpeciesSeen SPECIES_LUDICOLO
+    SetSpeciesSeen SPECIES_SEEDOT
+    SetSpeciesSeen SPECIES_NUZLEAF
+    SetSpeciesSeen SPECIES_SHIFTRY
+    SetSpeciesSeen SPECIES_WINGULL
+    SetSpeciesSeen SPECIES_PELIPPER
+    SetSpeciesSeen SPECIES_RALTS
+    SetSpeciesSeen SPECIES_KIRLIA
+    SetSpeciesSeen SPECIES_GALLADE
+    SetSpeciesSeen SPECIES_SURSKIT
+    SetSpeciesSeen SPECIES_MASQUERAIN
+    SetSpeciesSeen SPECIES_NINCADA
+    SetSpeciesSeen SPECIES_NINJASK
+    SetSpeciesSeen SPECIES_WHISMUR
+    SetSpeciesSeen SPECIES_LOUDRED
+    SetSpeciesSeen SPECIES_EXPLOUD
+    SetSpeciesSeen SPECIES_MAKUHITA
+    SetSpeciesSeen SPECIES_HARIYAMA
+    SetSpeciesSeen SPECIES_SKITTY
+    SetSpeciesSeen SPECIES_DELCATTY
+    SetSpeciesSeen SPECIES_MEDITITE
+    SetSpeciesSeen SPECIES_MEDICHAM
+    SetSpeciesSeen SPECIES_ELECTRIKE
+    SetSpeciesSeen SPECIES_MANECTRIC
+    SetSpeciesSeen SPECIES_PLUSLE
+    SetSpeciesSeen SPECIES_MINUN
+    SetSpeciesSeen SPECIES_ILLUMISE
+    SetSpeciesSeen SPECIES_BUDEW
+    SetSpeciesSeen SPECIES_ROSELIA
+    SetSpeciesSeen SPECIES_ROSERADE
+    SetSpeciesSeen SPECIES_GULPIN
+    SetSpeciesSeen SPECIES_SWALOT
+    SetSpeciesSeen SPECIES_CARVANHA
+    SetSpeciesSeen SPECIES_SHARPEDO
+    SetSpeciesSeen SPECIES_WAILMER
+    SetSpeciesSeen SPECIES_WAILORD
+    SetSpeciesSeen SPECIES_NUMEL
+    SetSpeciesSeen SPECIES_CAMERUPT
+    SetSpeciesSeen SPECIES_SPOINK
+    SetSpeciesSeen SPECIES_GRUMPIG
+    SetSpeciesSeen SPECIES_CACNEA
+    SetSpeciesSeen SPECIES_CACTURNE
+    SetSpeciesSeen SPECIES_SEVIPER
+    SetSpeciesSeen SPECIES_ZANGOOSE
+    SetSpeciesSeen SPECIES_LUNATONE
+    SetSpeciesSeen SPECIES_SOLROCK
+    SetSpeciesSeen SPECIES_BARBOACH
+    SetSpeciesSeen SPECIES_WHISCASH
+    SetSpeciesSeen SPECIES_SWABLU
+    SetSpeciesSeen SPECIES_ALTARIA
+    SetSpeciesSeen SPECIES_BALTOY
+    SetSpeciesSeen SPECIES_CLAYDOL
+    SetSpeciesSeen SPECIES_LILEEP
+    SetSpeciesSeen SPECIES_CRADILY
+    SetSpeciesSeen SPECIES_ANORITH
+    SetSpeciesSeen SPECIES_ARMALDO
+    SetSpeciesSeen SPECIES_CASTFORM
+    SetSpeciesSeen SPECIES_KECLEON
+    SetSpeciesSeen SPECIES_SHUPPET
+    SetSpeciesSeen SPECIES_BANETTE
+    SetSpeciesSeen SPECIES_DUSKULL
+    SetSpeciesSeen SPECIES_DUSCLOPS
+    SetSpeciesSeen SPECIES_DUSKNOIR
+    SetSpeciesSeen SPECIES_TROPIUS
+    SetSpeciesSeen SPECIES_CHINGLING
+    SetSpeciesSeen SPECIES_CHIMECHO
+    SetSpeciesSeen SPECIES_ABSOL
+    SetSpeciesSeen SPECIES_WYNAUT
+    SetSpeciesSeen SPECIES_WOBBUFFET
+    SetSpeciesSeen SPECIES_SNORUNT
+    SetSpeciesSeen SPECIES_GLALIE
+    SetSpeciesSeen SPECIES_FROSLASS
+    SetSpeciesSeen SPECIES_SPHEAL
+    SetSpeciesSeen SPECIES_SEALEO
+    SetSpeciesSeen SPECIES_WALREIN
+    SetSpeciesSeen SPECIES_RELICANTH
+    SetSpeciesSeen SPECIES_CLAMPERL
+    SetSpeciesSeen SPECIES_HUNTAIL
+    SetSpeciesSeen SPECIES_GOREBYSS
+    SetSpeciesSeen SPECIES_PIPLUP
+    SetSpeciesSeen SPECIES_PRINPLUP
+    SetSpeciesSeen SPECIES_EMPOLEON
+    SetSpeciesSeen SPECIES_KRICKETOT
+    SetSpeciesSeen SPECIES_KRICKETUNE
+    SetSpeciesSeen SPECIES_BIDOOF
+    SetSpeciesSeen SPECIES_BIBAREL
+    SetSpeciesSeen SPECIES_SHINX
+    SetSpeciesSeen SPECIES_LUXIO
+    SetSpeciesSeen SPECIES_LUXRAY
+    SetSpeciesSeen SPECIES_CRANIDOS
+    SetSpeciesSeen SPECIES_RAMPARDOS
+    SetSpeciesSeen SPECIES_BURMY
+    SetSpeciesSeen SPECIES_WORMADAM
+    SetSpeciesSeen SPECIES_MOTHIM
+    SetSpeciesSeen SPECIES_COMBEE
+    SetSpeciesSeen SPECIES_VESPIQUEN
+    SetSpeciesSeen SPECIES_PACHIRISU
+    SetSpeciesSeen SPECIES_BUIZEL
+    SetSpeciesSeen SPECIES_FLOATZEL
+    SetSpeciesSeen SPECIES_CHERUBI
+    SetSpeciesSeen SPECIES_CHERRIM
+    SetSpeciesSeen SPECIES_GLAMEOW
+    SetSpeciesSeen SPECIES_PURUGLY
+    SetSpeciesSeen SPECIES_STUNKY
+    SetSpeciesSeen SPECIES_SKUNTANK
+    SetSpeciesSeen SPECIES_CHATOT
+    SetSpeciesSeen SPECIES_CROAGUNK
+    SetSpeciesSeen SPECIES_TOXICROAK
+    SetSpeciesSeen SPECIES_YANMEGA
+    SetSpeciesSeen SPECIES_CARNIVINE
+    SetSpeciesSeen SPECIES_FINNEON
+    SetSpeciesSeen SPECIES_LUMINEON
+    SetSpeciesSeen SPECIES_SNOVER
+    SetSpeciesSeen SPECIES_ABOMASNOW
+    SetSpeciesSeen SPECIES_DRIFLOON
+    SetSpeciesSeen SPECIES_DRIFBLIM
+    SetSpeciesSeen SPECIES_CRESSELIA
+    SetSpeciesSeen SPECIES_SEWADDLE
+    SetSpeciesSeen SPECIES_SWADLOON
+    SetSpeciesSeen SPECIES_LEAVANNY
+    SetSpeciesSeen SPECIES_DUCKLETT
+    SetSpeciesSeen SPECIES_SWANNA
+    SetSpeciesSeen SPECIES_SOLOSIS
+    SetSpeciesSeen SPECIES_DUOSION
+    SetSpeciesSeen SPECIES_REUNICLUS
+    SetSpeciesSeen SPECIES_SNIVY
+    SetSpeciesSeen SPECIES_SERVINE
+    SetSpeciesSeen SPECIES_SERPERIOR
+    SetSpeciesSeen SPECIES_TEPIG
+    SetSpeciesSeen SPECIES_PIGNITE
+    SetSpeciesSeen SPECIES_EMBOAR
+    SetSpeciesSeen SPECIES_OSHAWOTT
+    SetSpeciesSeen SPECIES_DEWOTT
+    SetSpeciesSeen SPECIES_SAMUROTT
+    SetSpeciesSeen SPECIES_CUBCHOO
+    SetSpeciesSeen SPECIES_BEARTIC
+    SetSpeciesSeen SPECIES_EMOLGA
+    SetSpeciesSeen SPECIES_DEERLING
+    SetSpeciesSeen SPECIES_SAWSBUCK
+    SetSpeciesSeen SPECIES_SAWSBUCK_WINTER
+    SetSpeciesSeen SPECIES_PURRLOIN
+    SetSpeciesSeen SPECIES_LIEPARD
+    SetSpeciesSeen SPECIES_STUNFISK
+    SetSpeciesSeen SPECIES_DRUDDIGON
+    SetSpeciesSeen SPECIES_HEATMOR
+    SetSpeciesSeen SPECIES_BISHARP
+    SetSpeciesSeen SPECIES_GRENINJA
+    SetSpeciesSeen SPECIES_AMAURA
+    SetSpeciesSeen SPECIES_AURORUS
+    SetSpeciesSeen SPECIES_LITLEO
+    SetSpeciesSeen SPECIES_NOIBAT
+    SetSpeciesSeen SPECIES_NOIVERN
+    SetSpeciesSeen SPECIES_PANCHAM
+    SetSpeciesSeen SPECIES_PANGORO
+    SetSpeciesSeen SPECIES_BUNNELBY
+    SetSpeciesSeen SPECIES_DIGGERSBY
+    SetSpeciesSeen SPECIES_SKRELP
+    SetSpeciesSeen SPECIES_DRAGALGE
+    SetSpeciesSeen SPECIES_ROWLET
+    SetSpeciesSeen SPECIES_DARTRIX
+    SetSpeciesSeen SPECIES_DECIDUEYE
+    SetSpeciesSeen SPECIES_ROCKRUFF
+    SetSpeciesSeen SPECIES_LYCANROC
+    SetSpeciesSeen SPECIES_PHANTUMP
+    SetSpeciesSeen SPECIES_TREVENANT
+    SetSpeciesSeen SPECIES_MEOWTH_GALARIAN
+    SetSpeciesSeen SPECIES_PERSIAN_ALOLAN
+    SetSpeciesSeen SPECIES_CUTIEFLY
+    SetSpeciesSeen SPECIES_RIBOMBEE
+    SetSpeciesSeen SPECIES_MORELULL
+    SetSpeciesSeen SPECIES_SHIINOTIC
+    SetSpeciesSeen SPECIES_BOUNSWEET
+    SetSpeciesSeen SPECIES_STEENEE
+    SetSpeciesSeen SPECIES_TSAREENA
+    SetSpeciesSeen SPECIES_PIKIPEK
+    SetSpeciesSeen SPECIES_TRUMBEAK
+    SetSpeciesSeen SPECIES_TOUCANNON
+    SetSpeciesSeen SPECIES_VULPIX_ALOLAN
+    SetSpeciesSeen SPECIES_NINETALES_ALOLAN
+    SetSpeciesSeen SPECIES_GEODUDE_ALOLAN
+    SetSpeciesSeen SPECIES_GRAVELER_ALOLAN
+    SetSpeciesSeen SPECIES_GOLEM_ALOLAN
+    SetSpeciesSeen SPECIES_MUK_ALOLAN
+    SetSpeciesSeen SPECIES_SANDSHREW_ALOLAN
+    SetSpeciesSeen SPECIES_SANDSLASH_ALOLAN
+    SetSpeciesSeen SPECIES_HATENNA
+    SetSpeciesSeen SPECIES_HATTREM
+    SetSpeciesSeen SPECIES_HATTERENE
+    SetSpeciesSeen SPECIES_YAMPER
+    SetSpeciesSeen SPECIES_BOLTUND
+    SetSpeciesSeen SPECIES_GRAPPLOCT
+    SetSpeciesSeen SPECIES_CARKOL
+    SetSpeciesSeen SPECIES_COALOSSAL
+    SetSpeciesSeen SPECIES_ZIGZAGOON_GALARIAN
+    SetSpeciesSeen SPECIES_LINOONE_GALARIAN
+    SetSpeciesSeen SPECIES_OBSTAGOON
+    SetSpeciesSeen SPECIES_PONYTA_GALARIAN
+    SetSpeciesSeen SPECIES_RAPIDASH_GALARIAN
+    SetSpeciesSeen SPECIES_MEOWTH_ALOLAN
+    SetSpeciesSeen SPECIES_PERRSERKER
+    SetSpeciesSeen SPECIES_BLIPBUG
+    SetSpeciesSeen SPECIES_DOTTLER
+    SetSpeciesSeen SPECIES_ORBEETLE
+    SetSpeciesSeen SPECIES_CUFANT
+    SetSpeciesSeen SPECIES_COPPERAJAH
+    SetSpeciesSeen SPECIES_TOXEL
+    SetSpeciesSeen SPECIES_TOXTRICITY
+    SetSpeciesSeen SPECIES_APPLIN
+    SetSpeciesSeen SPECIES_APPLETUN
+    SetSpeciesSeen SPECIES_FLAPPLE
+    SetSpeciesSeen SPECIES_LECHONK
+    SetSpeciesSeen SPECIES_OINKOLOGNE
+    SetSpeciesSeen SPECIES_FIDOUGH
+    SetSpeciesSeen SPECIES_DACHSBUN
+    SetSpeciesSeen SPECIES_TINKATUFF
+    SetSpeciesSeen SPECIES_TINKATINK
+    SetSpeciesSeen SPECIES_TINKATON
+    SetSpeciesSeen SPECIES_TOEDSCOOL
+    SetSpeciesSeen SPECIES_TOEDSCRUEL
+    SetSpeciesSeen SPECIES_KLAWF
+    SetSpeciesSeen SPECIES_WYRDEER
+    SetSpeciesSeen SPECIES_DECIDUEYE_HISUIAN
+    SetSpeciesSeen SPECIES_ELECTRODE_HISUIAN
+    SetSpeciesSeen SPECIES_KLEAVOR
+    SetSpeciesSeen SPECIES_SAMUROTT_HISUIAN
+    SetSpeciesSeen SPECIES_FLAMIGO
+    SetSpeciesSeen SPECIES_SMOLIV
+    SetSpeciesSeen SPECIES_DOLLIV
+    SetSpeciesSeen SPECIES_ARBOLIVA
+    SetSpeciesSeen SPECIES_WIGLETT
+    SetSpeciesSeen SPECIES_WUGTRIO
+_TwinleafTown_Guitarist_AfterDexFill:
+    SetVar VAR_LEVEL_CAP, 100
     AddItem ITEM_RARE_CANDY, 1, VAR_RESULT
-    SetVar VAR_LEVEL_CAP, 17
-    AddItem ITEM_HEART_SCALE, 1, VAR_RESULT
+    AddItem ITEM_WHITE_HERB, 1, VAR_RESULT
+    AddItem ITEM_POWER_HERB, 1, VAR_RESULT
+    AddItem ITEM_BIG_ROOT, 1, VAR_RESULT
+    AddItem ITEM_HEART_SCALE, 999, VAR_RESULT
+    AddItem ITEM_MASTER_BALL, 999, VAR_RESULT
     Message TwinleafTown_Text_IVIntro
     InitLocalTextListMenu 1, 1, 0, VAR_RESULT
     AddListMenuEntry TwinleafTown_Text_IVHP, 0

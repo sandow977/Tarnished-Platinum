@@ -2,8 +2,8 @@
     "name": "Smog",
     "class": "CLASS_SPECIAL",
     "type": "TYPE_POISON",
-    "power": 20,
-    "accuracy": 70,
+    "power": 50,
+    "accuracy": 100,
     "pp": 20,
     "effect": {
         "type": "BATTLE_EFFECT_POISON_HIT",
@@ -13,7 +13,8 @@
     "priority": 0,
     "flags": [
         "MOVE_FLAG_CAN_PROTECT",
-        "MOVE_FLAG_CAN_MIRROR_MOVE"
+        "MOVE_FLAG_CAN_MIRROR_MOVE",
+        "MOVE_FLAG_TRIGGERS_KINGS_ROCK"
     ],
     "contest": {
         "effect": "CONTEST_EFFECT_BASIC",

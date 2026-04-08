@@ -1,0 +1,116 @@
+{
+    "base_stats": {
+        "hp": 95,
+        "attack": 130,
+        "defense": 80,
+        "speed": 50,
+        "special_attack": 70,
+        "special_defense": 80
+    },
+    "types": [
+        "TYPE_ICE",
+        "TYPE_ICE"
+    ],
+    "catch_rate": 60,
+    "base_exp_reward": 177,
+    "ev_yields": {
+        "hp": 0,
+        "attack": 2,
+        "defense": 0,
+        "speed": 0,
+        "special_attack": 0,
+        "special_defense": 0
+    },
+    "held_items": {
+        "common": "ITEM_ASPEAR_BERRY",
+        "rare": "ITEM_NONE"
+    },
+    "gender_ratio": "GENDER_RATIO_FEMALE_50",
+    "hatch_cycles": 20,
+    "base_friendship": 50,
+    "exp_rate": "EXP_RATE_MEDIUM_FAST",
+    "egg_groups": [
+        "EGG_GROUP_FIELD",
+        "EGG_GROUP_FIELD"
+    ],
+    "abilities": [
+        "ABILITY_SNOW_CLOAK",
+        "ABILITY_SIMPLE"
+    ],
+    "safari_flee_rate": 0,
+    "body_color": "MON_COLOR_WHITE",
+    "flip_sprite": false,
+    "icon_palette": 0,
+    "learnset": {
+        "by_level": [],
+        "by_tm": []
+    },
+    "evolutions": [],
+    "pokedex_data": {
+        "height": 26,
+        "weight": 2600,
+        "body_shape": "SHAPE_QUADRUPED",
+        "trainer_scale_f": 272,
+        "pokemon_scale_f": 337,
+        "trainer_scale_m": 256,
+        "pokemon_scale_m": 337,
+        "trainer_pos_f": 8,
+        "pokemon_pos_f": 22,
+        "trainer_pos_m": 9,
+        "pokemon_pos_m": 22,
+        "en": {
+            "name": "BEARTIC",
+            "category": "Freezing Pokemon",
+            "entry_text": [
+                "It can make its breath freeze at\n",
+                "will. Very able in the water, it\n",
+                "catches prey in northern seas."
+            ]
+        },
+        "fr": {
+            "name": "BULBIZARRE",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "de": {
+            "name": "BISASAM",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "it": {
+            "name": "BULBASAUR",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "es": {
+            "name": "BULBASAUR",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "jp": {
+            "name": "BEARTIC",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        }
+    }
+}

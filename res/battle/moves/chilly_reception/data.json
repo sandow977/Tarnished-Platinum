@@ -1,10 +1,10 @@
 {
-    "name": "CHILLY_RECEPTION",
+    "name": "Chilly",
     "class": "CLASS_STATUS",
     "type": "TYPE_ICE",
-    "power": 120,
+    "power": 0,
     "accuracy": 100,
-    "pp": 5,
+    "pp": 15,
     "effect": {
         "type": "BATTLE_EFFECT_CHILLY_RECEPTION",
         "chance": 100

@@ -1233,6 +1233,84 @@
     .long 222
     .endm
 
+    .macro CalcStrengthSapHeal battler
+    .long 223
+    .long \battler
+    .endm
+
+    .macro CalcPowerTripPower
+    .long 224
+    .endm
+
+    .macro RemoveBattlerType battler, type
+    .long 225
+    .long \battler
+    .long \type
+    .endm
+
+    .macro CalcBoltBeakPower
+    .long 226
+    .endm
+
+    .macro SetBattlerType battler, type
+    .long 227
+    .long \battler
+    .long \type
+    .endm
+
+    .macro AddBattlerType battler, type
+    .long 228
+    .long \battler
+    .long \type
+    .endm
+
+    .macro CalcAcrobaticsPower
+    .long 229
+    .endm
+
+    .macro CalcRetaliatePower
+    .long 230
+    .endm
+
+    .macro CalcHeatCrashPower
+    .long 231
+    .endm
+
+    .macro TryBelch jump_if_fail
+    .long 232
+    .long (\jump_if_fail-.) / 4 - 1
+    .endm
+
+    .macro TryStickyWeb jump_if_fail
+    .long 233
+    .long (\jump_if_fail-.) / 4 - 1
+    .endm
+
+    .macro CheckStickyWeb battler, jump_no_web
+    .long 234
+    .long \battler
+    .long (\jump_no_web-.) / 4 - 1
+    .endm
+
+    .macro TryCoaching jump_if_fail
+    .long 235
+    .long (\jump_if_fail-.) / 4 - 1
+    .endm
+
+    .macro TopsyTurvy jump_if_fail
+    .long 236
+    .long (\jump_if_fail-.) / 4 - 1
+    .endm
+
+    .macro TryShedTail jump_if_fail
+    .long 237
+    .long (\jump_if_fail-.) / 4 - 1
+    .endm
+
+    .macro CalcKnockOffPower
+    .long 238
+    .endm
+
     .text
     .globl _start
 _start:

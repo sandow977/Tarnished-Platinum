@@ -3,11 +3,11 @@
     "class": "CLASS_SPECIAL",
     "type": "TYPE_WATER",
     "power": 60,
-    "accuracy": 100,
+    "accuracy": 0,
     "pp": 20,
     "effect": {
-        "type": "BATTLE_EFFECT_CONFUSE_HIT",
-        "chance": 20
+        "type": "BATTLE_EFFECT_BYPASS_ACCURACY",
+        "chance": 0
     },
     "range": "RANGE_SINGLE_TARGET",
     "priority": 0,

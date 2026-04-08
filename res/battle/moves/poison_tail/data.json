@@ -2,7 +2,7 @@
     "name": "Poison Tail",
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_POISON",
-    "power": 50,
+    "power": 90,
     "accuracy": 100,
     "pp": 25,
     "effect": {

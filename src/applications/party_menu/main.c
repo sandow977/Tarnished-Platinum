@@ -10,6 +10,7 @@
 #include "constants/string.h"
 #include "generated/items.h"
 #include "generated/moves.h"
+#include "generated/natures.h"
 #include "generated/pokemon_contest_types.h"
 
 #include "applications/party_menu/defs.h"
@@ -2636,9 +2637,141 @@ static u8 HandleSpecialInput(PartyMenuApplication *application)
 static int ApplyItemEffectOnPokemon(PartyMenuApplication *app)
 {
     ItemData *itemData = Item_Load(app->partyMenu->usedItemID, 0, HEAP_ID_PARTY_MENU);
+    Pokemon *mon = Party_GetPokemonBySlotIndex(app->partyMenu->party, app->currPartySlot);
+    u8 mintNature;
+
+    switch (app->partyMenu->usedItemID) {
+    case ITEM_ADAMANT_MINT:
+        mintNature = NATURE_ADAMANT;
+        break;
+    case ITEM_BOLD_MINT:
+        mintNature = NATURE_BOLD;
+        break;
+    case ITEM_BRAVE_MINT:
+        mintNature = NATURE_BRAVE;
+        break;
+    case ITEM_CALM_MINT:
+        mintNature = NATURE_CALM;
+        break;
+    case ITEM_CAREFUL_MINT:
+        mintNature = NATURE_CAREFUL;
+        break;
+    case ITEM_GENTLE_MINT:
+        mintNature = NATURE_GENTLE;
+        break;
+    case ITEM_HASTY_MINT:
+        mintNature = NATURE_HASTY;
+        break;
+    case ITEM_IMPISH_MINT:
+        mintNature = NATURE_IMPISH;
+        break;
+    case ITEM_JOLLY_MINT:
+        mintNature = NATURE_JOLLY;
+        break;
+    case ITEM_LAX_MINT:
+        mintNature = NATURE_LAX;
+        break;
+    case ITEM_LONELY_MINT:
+        mintNature = NATURE_LONELY;
+        break;
+    case ITEM_MILD_MINT:
+        mintNature = NATURE_MILD;
+        break;
+    case ITEM_MODEST_MINT:
+        mintNature = NATURE_MODEST;
+        break;
+    case ITEM_NAIVE_MINT:
+        mintNature = NATURE_NAIVE;
+        break;
+    case ITEM_NAUGHTY_MINT:
+        mintNature = NATURE_NAUGHTY;
+        break;
+    case ITEM_QUIET_MINT:
+        mintNature = NATURE_QUIET;
+        break;
+    case ITEM_RASH_MINT:
+        mintNature = NATURE_RASH;
+        break;
+    case ITEM_RELAXED_MINT:
+        mintNature = NATURE_RELAXED;
+        break;
+    case ITEM_SASSY_MINT:
+        mintNature = NATURE_SASSY;
+        break;
+    case ITEM_SERIOUS_MINT:
+        mintNature = NATURE_SERIOUS;
+        break;
+    case ITEM_TIMID_MINT:
+        mintNature = NATURE_TIMID;
+        break;
+    default:
+        mintNature = NATURE_COUNT;
+        break;
+    }
+
+    if (mintNature != NATURE_COUNT) {
+        if (Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL) || Pokemon_GetNature(mon) == mintNature) {
+            PartyMenu_PrintLongMessage(app, pl_msg_00000453_00105, TRUE);
+            app->currPartySlot = 7;
+            app->unk_B00 = sub_02085348;
+            Heap_Free(itemData);
+            return 5;
+        }
+
+        Bag_TryRemoveItem(app->partyMenu->bag, app->partyMenu->usedItemID, 1, HEAP_ID_PARTY_MENU);
+        Pokemon_SetMintNature(mon, mintNature);
+        Pokemon_CalcStats(mon);
+
+        PartyMenu_LoadMember(app, app->currPartySlot);
+        PartyMenu_DrawMemberPanelData(app, app->currPartySlot);
+        PartyMenu_LoadMemberWindowTiles(app, app->currPartySlot);
+        PartyMenu_DrawMemberStatusCondition(app, app->currPartySlot, app->partyMembers[app->currPartySlot].statusIcon);
+
+        MessageLoader_GetString(app->messageLoader, pl_msg_00000453_00108, app->tmpFormat);
+        StringTemplate_SetNickname(app->template, 0, Pokemon_GetBoxPokemon(mon));
+        StringTemplate_SetNatureName(app->template, 1, mintNature);
+        StringTemplate_Format(app->template, app->tmpString, app->tmpFormat);
+        PartyMenu_PrintLongMessage(app, PRINT_MESSAGE_PRELOADED, TRUE);
+        Sound_PlayEffect(SEQ_SE_DP_KAIFUKU);
+
+        app->unk_B00 = sub_02085348;
+        Heap_Free(itemData);
+        return 5;
+    }
+
+    if (app->partyMenu->usedItemID == ITEM_SHINY_SPRAY) {
+        if (Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL) || Pokemon_IsShiny(mon) == TRUE) {
+            PartyMenu_PrintLongMessage(app, pl_msg_00000453_00105, TRUE);
+            app->currPartySlot = 7;
+            app->unk_B00 = sub_02085348;
+            Heap_Free(itemData);
+            return 5;
+        }
+
+        {
+            u8 forcedShiny = TRUE;
+            Pokemon_SetValue(mon, MON_DATA_FORCED_SHINY, &forcedShiny);
+        }
+
+        PartyMenu_LoadMember(app, app->currPartySlot);
+        PartyMenu_DrawMemberPanelData(app, app->currPartySlot);
+        PartyMenu_LoadMemberWindowTiles(app, app->currPartySlot);
+        PartyMenu_DrawMemberStatusCondition(app, app->currPartySlot, app->partyMembers[app->currPartySlot].statusIcon);
+
+        MessageLoader_GetString(app->messageLoader, pl_msg_00000453_00106, app->tmpFormat);
+        StringTemplate_SetNickname(app->template, 0, Pokemon_GetBoxPokemon(mon));
+        StringTemplate_SetItemName(app->template, 1, app->partyMenu->usedItemID);
+        StringTemplate_Format(app->template, app->tmpString, app->tmpFormat);
+        PartyMenu_PrintLongMessage(app, PRINT_MESSAGE_PRELOADED, TRUE);
+        Sound_PlayEffect(SEQ_SE_DP_KAIFUKU);
+
+        app->unk_B00 = sub_02085348;
+        Heap_Free(itemData);
+        return 5;
+    }
 
     if (app->partyMenu->usedItemID == ITEM_GRACIDEA
-        && Pokemon_CanShayminSkyForm(Party_GetPokemonBySlotIndex(app->partyMenu->party, app->currPartySlot)) == TRUE) {
+        && Pokemon_CanShayminSkyForm(mon) == TRUE) {
         app->partyMenu->evoTargetSpecies = 1;
         Heap_Free(itemData);
         PartyMenu_SetupFormChangeAnim(app);
@@ -2658,8 +2791,6 @@ static int ApplyItemEffectOnPokemon(PartyMenuApplication *app)
     }
 
     if (app->partyMenu->usedItemID == ITEM_RARE_CANDY) {
-        Pokemon *mon = Party_GetPokemonBySlotIndex(app->partyMenu->party, app->currPartySlot);
-      
         int level = Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
         int levelCap = GetCurrentLevelCap(app->partyMenu->fieldSystem);
 
@@ -2678,8 +2809,6 @@ static int ApplyItemEffectOnPokemon(PartyMenuApplication *app)
 
 
         if (Item_Get(itemData, ITEM_PARAM_EVOLVE) != 0) {
-            Pokemon *mon = Party_GetPokemonBySlotIndex(app->partyMenu->party, app->currPartySlot);
-
             app->partyMenu->evoTargetSpecies = Pokemon_GetEvolutionTargetSpecies(NULL, mon, EVO_CLASS_BY_ITEM, app->partyMenu->usedItemID, &app->partyMenu->evoType);
             app->partyMenu->menuSelectionResult = PARTY_MENU_EXIT_CODE_EVOLVE_BY_ITEM;
             Heap_Free(itemData);

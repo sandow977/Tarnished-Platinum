@@ -4,7 +4,7 @@
     "type": "TYPE_STEEL",
     "power": 1,
     "accuracy": 100,
-    "pp": 5,
+    "pp": 10,
     "effect": {
         "type": "BATTLE_EFFECT_POWER_BASED_ON_LOW_SPEED",
         "chance": 0

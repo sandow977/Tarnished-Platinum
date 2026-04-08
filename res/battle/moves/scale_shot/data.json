@@ -1,21 +1,20 @@
 {
-    "name": "Superpower",
+    "name": "Scale Shot",
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_FIGHTING",
-    "power": 120,
-    "accuracy": 100,
-    "pp": 5,
+    "type": "TYPE_DRAGON",
+    "power": 25,
+    "accuracy": 90,
+    "pp": 20,
     "effect": {
-        "type": "BATTLE_EFFECT_LOWER_OWN_ATK_AND_DEF",
+        "type": "BATTLE_EFFECT_SCALE_SHOT",
         "chance": 0
     },
     "range": "RANGE_SINGLE_TARGET",
     "priority": 0,
     "flags": [
-        "MOVE_FLAG_MAKES_CONTACT",
         "MOVE_FLAG_CAN_PROTECT",
         "MOVE_FLAG_CAN_MIRROR_MOVE",
-        "MOVE_FLAG_HIDES_SHADOWS"
+        "MOVE_FLAG_TRIGGERS_KINGS_ROCK"
     ],
     "contest": {
         "effect": "CONTEST_EFFECT_FINAL_PERFORMANCE_ADVANTAGE",

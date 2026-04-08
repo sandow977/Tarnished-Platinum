@@ -10,43 +10,73 @@
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_AIPOM",
+            "species": "SPECIES_MAGIKARP",
             "form": 0,
-            "level": 32,
-            "item": null,
+            "level": 20,
+            "item": "ITEM_FOCUS_SASH",
             "moves": [
-                "MOVE_SWIFT",
-                "MOVE_WATER_PULSE",
-                "MOVE_SHOCK_WAVE",
-                "MOVE_AERIAL_ACE"
+                "MOVE_SPLASH",
+                "MOVE_NONE",
+                "MOVE_NONE",
+                "MOVE_NONE"
             ],
             "iv_scale": 50,
             "ball_seal": 0
         },
         {
-            "species": "SPECIES_GIRAFARIG",
+            "species": "SPECIES_MAGIKARP",
             "form": 0,
-            "level": 32,
-            "item": null,
+            "level": 1,
+            "item": "ITEM_LUM_BERRY",
             "moves": [
-                "MOVE_DOUBLE_HIT",
-                "MOVE_PSYBEAM",
-                "MOVE_ASSURANCE",
-                "MOVE_LIGHT_SCREEN"
+                "MOVE_SUBSTITUTE",
+                "MOVE_NONE",
+                "MOVE_NONE",
+                "MOVE_NONE"
             ],
             "iv_scale": 50,
             "ball_seal": 0
         },
         {
-            "species": "SPECIES_GROTLE",
+            "species": "SPECIES_CRADILY",
             "form": 0,
-            "level": 33,
-            "item": null,
+            "level": 32,
+            "item": "ITEM_POWER_HERB",
             "moves": [
-                "MOVE_MEGA_DRAIN",
-                "MOVE_BITE",
-                "MOVE_CURSE"
+                "MOVE_SPLASH",
+                "MOVE_NONE",
+                "MOVE_NONE",
+                "MOVE_NONE"
             ],
+            "iv_scale": 50,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_WEAVILE",
+            "form": 0,
+            "level": 50,
+            "item": "ITEM_LUM_BERRY",
+            "moves": [
+                "MOVE_SUBSTITUTE",
+                "MOVE_NONE",
+                "MOVE_NONE",
+                "MOVE_NONE"
+            ],
+            "iv_scale": 50,
+            "ball_seal": 0
+        },
+            {
+            "species": "SPECIES_SHEDINJA",
+            "form": 0,
+            "level": 3,
+            "item": "ITEM_LUM_BERRY",
+            "moves": [
+                "MOVE_PROTECT",
+                "MOVE_NONE",
+                "MOVE_NONE",
+                "MOVE_NONE"
+            ],
+    
             "iv_scale": 50,
             "ball_seal": 0
         }

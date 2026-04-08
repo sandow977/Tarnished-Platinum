@@ -1,36 +1,33 @@
 #include "macros/btlanimcmd.inc"
 
 L_0:
-    LoadParticleResource 0, superpower_spa
-    PlaySoundEffectL SEQ_SE_DP_W025
-    InitPokemonSpriteManager
-    LoadPokemonSpriteDummyResources 0
-    AddPokemonSprite BATTLER_ROLE_ATTACKER, FALSE, BATTLE_ANIM_MON_SPRITE_0, 0
-    Func_Superpower 0, 0
-    CreateEmitter 0, 2, EMITTER_CB_SET_POS_TO_ATTACKER
-    CreateEmitter 0, 3, EMITTER_CB_SET_POS_TO_ATTACKER
-    WaitForAnimTasks
-    Delay 30
-    Delay 10
+    LoadParticleResource 0, waterfall_spa
     ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_SCREEN_MODE, 1
-    SwitchBg 3, BATTLE_BG_SWITCH_MODE_FADE
-    Delay 5
-    PlaySoundEffectR SEQ_SE_DP_W025B
-    Func_MoveBattler BATTLE_ANIM_BATTLER_SPRITE_ATTACKER, 16, -8, 2
-    Delay 2
-    CreateEmitter 0, 0, EMITTER_CB_SET_POS_TO_DEFENDER
-    CreateEmitter 0, 1, EMITTER_CB_SET_POS_TO_DEFENDER
-    Func_Shake 8, 0, 1, 4, BATTLE_ANIM_BATTLER_SPRITE_DEFENDER
-    Func_MoveBattler BATTLE_ANIM_BATTLER_SPRITE_ATTACKER, -16, 8, 2
+    SetVar BATTLE_ANIM_VAR_BG_FADE_TYPE, 1
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_X, 0
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_Y, -20
+    SwitchBg 23, BATTLE_BG_SWITCH_MODE_FADE | BATTLE_BG_SWITCH_FLAG_MOVE
+    WaitForBgSwitch
+    PlayLoopedSoundEffectL SEQ_SE_DP_W152, 2, 4
+    CreateEmitter 0, 0, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_Shake 1, 0, 1, 4, BATTLE_ANIM_BATTLER_SPRITE_ATTACKER
     WaitForAnimTasks
+    PlaySoundEffectL SEQ_SE_DP_W291
+    Func_MoveBattlerX2 3, 24, BATTLE_ANIM_BATTLER_SPRITE_ATTACKER
+    WaitForAnimTasks
+    Func_MoveBattlerX2 3, -24, BATTLE_ANIM_BATTLER_SPRITE_ATTACKER
+    CreateEmitter 0, 1, EMITTER_CB_SET_POS_TO_DEFENDER
+    Delay 31
+    PlaySoundEffectR SEQ_SE_DP_W127
+    Delay 4
+    Func_FadeBattlerSprite BATTLE_ANIM_DEFENDER, 0, 1, BATTLE_COLOR_LIGHT_BLUE, 14, 0
+    Func_Shake 1, 0, 1, 6, BATTLE_ANIM_BATTLER_SPRITE_DEFENDER
     WaitForAllEmitters
     UnloadParticleSystem 0
     ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_SCREEN_MODE, 1
-    RestoreBg 3, BATTLE_BG_SWITCH_MODE_FADE
+    SetVar BATTLE_ANIM_VAR_BG_FADE_TYPE, 1
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_X, 0
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_Y, -20
+    RestoreBg 23, BATTLE_BG_SWITCH_MODE_FADE | BATTLE_BG_SWITCH_FLAG_STOP
     WaitForBgSwitch
-    FreePokemonSpriteManager
-    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_0
-    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_1
     End

@@ -1,9 +1,9 @@
 {
     "name": "Wrap",
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_NORMAL",
-    "power": 15,
-    "accuracy": 85,
+    "type": "TYPE_GRASS",
+    "power": 50,
+    "accuracy": 100,
     "pp": 20,
     "effect": {
         "type": "BATTLE_EFFECT_BIND_HIT",

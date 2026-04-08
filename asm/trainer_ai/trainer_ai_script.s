@@ -75,7 +75,7 @@ Basic_CheckForImmunity:
     IfLoadedEqualTo ABILITY_FLASH_FIRE, Basic_CheckFireAbsorption
     IfLoadedEqualTo ABILITY_WONDER_GUARD, Basic_CheckWonderGuard
     IfLoadedEqualTo ABILITY_LEVITATE, Basic_CheckGroundAbsorption
-    IfLoadedEqualTo ABILITY_LEVITATE, Basic_CheckWaterAbsorption2 ; BUG: This line should branch on Dry Skin rather than Levitate
+    IfLoadedEqualTo ABILITY_DRY_SKIN, Basic_CheckWaterAbsorption2 ; BUG: This line should branch on Dry Skin rather than Levitate
     GoTo Basic_NoImmunityAbility
 
 Basic_CheckElectricAbsorption:
@@ -255,7 +255,6 @@ Basic_ScoreMoveEffect:
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_IGNORE_EVATION_REMOVE_DARK_IMMUNE, Basic_CheckMiracleEye
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_POWER_BASED_ON_LOW_SPEED, Basic_CheckNonStandardDamageOrChargeTurn
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_FAINT_AND_FULL_HEAL_NEXT_MON, Basic_CheckHealingWish
-    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_NATURAL_GIFT, Basic_CheckNaturalGift
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_DOUBLE_SPEED_3_TURNS, Basic_CheckTailwind
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_RANDOM_STAT_UP_2, Basic_CheckAcupressure
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_METAL_BURST, Basic_CheckMetalBurst
@@ -1055,8 +1054,8 @@ Basic_CheckNaturalGift:
     ; Natural Gift type, score -10.
     LoadHeldItem AI_BATTLER_ATTACKER
     IfLoadedNotInTable Basic_NaturalGiftBerries, ScoreMinus10
-    IfMoveEffectivenessEquals TYPE_MULTI_IMMUNE, ScoreMinus10
-    PopOrEnd 
+    FlagMoveDamageScore FALSE
+    PopOrEnd
 
 Basic_NaturalGiftBerries:
     TableEntry ITEM_CHERI_BERRY
@@ -1736,7 +1735,6 @@ Expert_Main:
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_REMOVE_SCREENS, Expert_BrickBreak
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_REMOVE_HELD_ITEM, Expert_KnockOff
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SET_HP_EQUAL_TO_USER, Expert_Endeavor
-    IfCurrentMoveEffectEqualTo BATTLE_EFFECT_DECREASE_POWER_WITH_LESS_USER_HP, Expert_WaterSpout
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_SWITCH_ABILITIES, Expert_ChangeUserAbility
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_MAKE_SHARED_MOVES_UNUSEABLE, Expert_Imprison
     IfCurrentMoveEffectEqualTo BATTLE_EFFECT_HEAL_STATUS, Expert_Refresh
@@ -4616,11 +4614,11 @@ Expert_WaterSpout:
     IfMoveEffectivenessEquals TYPE_MULTI_QUARTER_DAMAGE, Expert_WaterSpout_ScoreMinus1
     IfMoveEffectivenessEquals TYPE_MULTI_HALF_DAMAGE, Expert_WaterSpout_ScoreMinus1
     IfSpeedCompareEqualTo COMPARE_SPEED_SLOWER, Expert_WaterSpout_SlowerCheckHP
-    IfHPPercentGreaterThan AI_BATTLER_DEFENDER, 50, Expert_WaterSpout_End
+    IfHPPercentGreaterThan AI_BATTLER_ATTACKER, 50, Expert_WaterSpout_End
     GoTo Expert_WaterSpout_ScoreMinus1
 
 Expert_WaterSpout_SlowerCheckHP:
-    IfHPPercentGreaterThan AI_BATTLER_DEFENDER, 70, Expert_WaterSpout_End
+    IfHPPercentGreaterThan AI_BATTLER_ATTACKER, 70, Expert_WaterSpout_End
 
 Expert_WaterSpout_ScoreMinus1:
     AddToMoveScore -1
@@ -7837,7 +7835,6 @@ CheckHP_DiscourageAtLowHP:
     TableEntry BATTLE_EFFECT_MAX_ATK_LOSE_HALF_MAX_HP
     TableEntry BATTLE_EFFECT_COPY_STAT_CHANGES
     TableEntry BATTLE_EFFECT_MIRROR_COAT
-    TableEntry BATTLE_EFFECT_DECREASE_POWER_WITH_LESS_USER_HP
     TableEntry BATTLE_EFFECT_ATK_DEF_DOWN
     TableEntry BATTLE_EFFECT_DEF_SPD_UP
     TableEntry BATTLE_EFFECT_ATK_DEF_UP

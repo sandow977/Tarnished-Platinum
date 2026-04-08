@@ -20,6 +20,7 @@
 #include "vram_transfer.h"
 
 #include "res/graphics/bag/bag_graphics.naix"
+#include "res/graphics/item_icons/item_icon.naix"
 #include "res/graphics/shop_menu/shop_gra.naix"
 
 static void InitSpriteSystem(BagController *controller);
@@ -314,6 +315,12 @@ void BagUI_TickSpriteAnimations(BagController *controller)
 
 void BagUI_UpdateItemSprite(BagController *controller, u16 item)
 {
+    if (item == ITEM_RETURN_ID) {
+        SpriteSystem_ReplaceCharResObj(controller->spriteSystem, controller->spriteMan, NARC_INDEX_ITEMTOOL__ITEMDATA__ITEM_ICON, unused_709_NCGR, FALSE, 49407);
+        SpriteSystem_ReplacePlttResObj(controller->spriteSystem, controller->spriteMan, NARC_INDEX_ITEMTOOL__ITEMDATA__ITEM_ICON, unused_710_NCLR, FALSE, 49404);
+        return;
+    }
+
     SpriteSystem_ReplaceCharResObj(controller->spriteSystem, controller->spriteMan, NARC_INDEX_ITEMTOOL__ITEMDATA__ITEM_ICON, Item_FileID(item, ITEM_FILE_TYPE_ICON), FALSE, 49407);
     SpriteSystem_ReplacePlttResObj(controller->spriteSystem, controller->spriteMan, NARC_INDEX_ITEMTOOL__ITEMDATA__ITEM_ICON, Item_FileID(item, ITEM_FILE_TYPE_PALETTE), FALSE, 49404);
 }

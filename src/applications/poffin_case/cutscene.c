@@ -514,7 +514,7 @@ static void GetPokemonInfo(PoffinCutscene *app)
     app->mon.baseMon = app->data->mon;
     app->mon.species = Pokemon_GetValue(app->data->mon, MON_DATA_SPECIES, NULL);
     app->mon.gender = Pokemon_GetGender(app->data->mon);
-    app->mon.nature = Pokemon_GetNature(app->data->mon);
+    app->mon.nature = Pokemon_GetOriginalNature(app->data->mon);
     app->mon.flipSprite = SpeciesData_GetFormValue(app->mon.species, Pokemon_GetValue(app->data->mon, MON_DATA_FORM, NULL), SPECIES_DATA_FLIP_SPRITE) ^ 1;
     app->mon.name = String_Init(12, app->heapID);
 

@@ -57,6 +57,7 @@
 #include "unk_02092494.h"
 
 #define FATEFUL_ENCOUNTER_LOCATION 3002
+#define FORCED_SHINY_MASK         (1 << 7)
 
 static const s8 sNatureFlavorAffinities[][5] = {
     [NATURE_HARDY] = {
@@ -255,6 +256,7 @@ static void Pokemon_LoadExperienceTableOf(enum ExpRate monExpRate, u32 *monExpTa
 static u32 Pokemon_GetExpRateBaseExpAt(enum ExpRate monExpRate, int monLevel);
 static u16 Pokemon_GetNatureStatValue(u8 monNature, u16 monStatValue, u8 statType);
 static u8 BoxPokemon_IsShiny(BoxPokemon *boxMon);
+static inline BOOL BoxPokemon_HasForcedShiny(BoxPokemon *boxMon);
 static inline BOOL Pokemon_InlineIsPersonalityShiny(u32 monOTID, u32 monPersonality);
 static void BuildPokemonSpriteTemplateDP(PokemonSpriteTemplate *spriteTemplate, u16 monSpecies, u8 monGender, u8 param3, u8 monShininess, u8 monForm, u32 monPersonality);
 static u8 LoadPokemonDPSpriteHeight(u16 monSpecies, u8 monGender, u8 param2, u8 monForm, u32 monPersonality);
@@ -1042,8 +1044,8 @@ static u32 BoxPokemon_GetDataInternal(BoxPokemon *boxMon, enum PokemonDataParam 
         result = monDataBlockB->form;
         break;
 
-    case MON_DATA_UNUSED_113:
-        result = monDataBlockB->unused1;
+    case MON_DATA_FORCED_SHINY:
+        result = (monDataBlockB->unused1 & FORCED_SHINY_MASK) != 0;
         break;
 
     case MON_DATA_UNUSED_114:
@@ -1601,8 +1603,12 @@ static void BoxPokemon_SetDataInternal(BoxPokemon *boxMon, enum PokemonDataParam
         monDataBlockB->form = *u8Value;
         break;
 
-    case MON_DATA_UNUSED_113:
-        monDataBlockB->unused1 = *u8Value;
+    case MON_DATA_FORCED_SHINY:
+        if (*u8Value) {
+            monDataBlockB->unused1 |= FORCED_SHINY_MASK;
+        } else {
+            monDataBlockB->unused1 &= ~FORCED_SHINY_MASK;
+        }
         break;
 
     case MON_DATA_UNUSED_114:
@@ -2072,7 +2078,7 @@ static void BoxPokemon_IncreaseDataInternal(BoxPokemon *boxMon, enum PokemonData
     case MON_DATA_FATEFUL_ENCOUNTER:
     case MON_DATA_GENDER:
     case MON_DATA_FORM:
-    case MON_DATA_UNUSED_113:
+    case MON_DATA_FORCED_SHINY:
     case MON_DATA_UNUSED_114:
     case MON_DATA_NICKNAME:
     case MON_DATA_NICKNAME_STRING:
@@ -2384,12 +2390,17 @@ u32 SpeciesData_GetLevelAt(SpeciesData *speciesData, u16 unused_monSpecies, u32 
     return i - 1;
 }
 
-u8 Pokemon_GetNature(Pokemon *mon)
+u8 Pokemon_GetNatureOf(u32 monPersonality)
 {
-    return BoxPokemon_GetNature(&mon->box);
+    return (u8)(monPersonality % NATURE_COUNT);
 }
 
-u8 BoxPokemon_GetNature(BoxPokemon *boxMon)
+u8 Pokemon_GetOriginalNature(Pokemon *mon)
+{
+    return BoxPokemon_GetOriginalNature(&mon->box);
+}
+
+u8 BoxPokemon_GetOriginalNature(BoxPokemon *boxMon)
 {
     BOOL reencrypt = BoxPokemon_EnterDecryptionContext(boxMon);
     u32 monPersonality = BoxPokemon_GetValue(boxMon, MON_DATA_PERSONALITY, NULL);
@@ -2399,9 +2410,29 @@ u8 BoxPokemon_GetNature(BoxPokemon *boxMon)
     return Pokemon_GetNatureOf(monPersonality);
 }
 
-u8 Pokemon_GetNatureOf(u32 monPersonality)
+u8 Pokemon_GetNature(Pokemon *mon)
 {
-    return (u8)(monPersonality % NATURE_COUNT);
+    return BoxPokemon_GetNature(&mon->box);
+}
+
+u8 BoxPokemon_GetNature(BoxPokemon *boxMon)
+{
+    BOOL reencrypt = BoxPokemon_EnterDecryptionContext(boxMon);
+    u16 mintNature = BoxPokemon_GetValue(boxMon, MON_DATA_UNUSED_114, NULL);
+
+    BoxPokemon_ExitDecryptionContext(boxMon, reencrypt);
+
+    if (mintNature >= 1 && mintNature <= NATURE_COUNT) {
+        return mintNature - 1;
+    }
+
+    return BoxPokemon_GetOriginalNature(boxMon);
+}
+
+void Pokemon_SetMintNature(Pokemon *mon, u8 monNature)
+{
+    u16 mintNature = monNature + 1;
+    Pokemon_SetValue(mon, MON_DATA_UNUSED_114, &mintNature);
 }
 
 static const s8 sNatureStatAffinities[][5] = {
@@ -2735,10 +2766,19 @@ u8 Pokemon_IsShiny(Pokemon *mon)
 // TODO return bool
 static u8 BoxPokemon_IsShiny(BoxPokemon *boxMon)
 {
+    if (BoxPokemon_HasForcedShiny(boxMon)) {
+        return TRUE;
+    }
+
     u32 monOTID = BoxPokemon_GetValue(boxMon, MON_DATA_OT_ID, NULL);
     u32 monPersonality = BoxPokemon_GetValue(boxMon, MON_DATA_PERSONALITY, NULL);
 
     return Pokemon_IsPersonalityShiny(monOTID, monPersonality);
+}
+
+static inline BOOL BoxPokemon_HasForcedShiny(BoxPokemon *boxMon)
+{
+    return BoxPokemon_GetValue(boxMon, MON_DATA_FORCED_SHINY, NULL) != 0;
 }
 
 static inline BOOL Pokemon_InlineIsPersonalityShiny(u32 monOTID, u32 monPersonality)
@@ -3813,7 +3853,7 @@ u16 Pokemon_GetBaseSpeciesForBattle(const u16 species)
 static void BoxPokemon_SetDefaultMoves(BoxPokemon *boxMon)
 {
     BOOL reencrypt; // must pre-declare to match
-    u16 *monLevelUpMoves = Heap_Alloc(HEAP_ID_SYSTEM, sizeof(SpeciesLearnset));
+    SpeciesLearnsetEntry *monLevelUpMoves = Heap_Alloc(HEAP_ID_SYSTEM, sizeof(SpeciesLearnset));
     reencrypt = BoxPokemon_EnterDecryptionContext(boxMon);
 
     u16 monSpecies = BoxPokemon_GetValue(boxMon, MON_DATA_SPECIES, NULL);
@@ -3822,9 +3862,9 @@ static void BoxPokemon_SetDefaultMoves(BoxPokemon *boxMon)
 
     Pokemon_LoadLevelUpMovesOf(monSpecies, monForm, monLevelUpMoves);
 
-    for (int i = 0; monLevelUpMoves[i] != LEARNSET_SENTINEL_ENTRY; i++) {
-        if ((monLevelUpMoves[i] & 0xFE00) <= monLevel << 9) {
-            u16 monLevelUpMoveID = monLevelUpMoves[i] & 0x1FF;
+    for (int i = 0; monLevelUpMoves[i].move != LEARNSET_SENTINEL_ENTRY; i++) {
+        if (monLevelUpMoves[i].level <= monLevel) {
+            u16 monLevelUpMoveID = monLevelUpMoves[i].move;
             if (BoxPokemon_AddMove(boxMon, monLevelUpMoveID) == LEARNSET_ALL_SLOTS_FILLED) {
                 BoxPokemon_ReplaceMove(boxMon, monLevelUpMoveID);
             }
@@ -3929,28 +3969,28 @@ static void BoxPokemon_SetMoveSlot(BoxPokemon *boxMon, u16 moveID, u8 moveSlot)
 u16 Pokemon_LevelUpMove(Pokemon *mon, int *index, u16 *moveID)
 {
     u16 result = MOVE_NONE;
-    u16 *monLevelUpMoves = Heap_Alloc(HEAP_ID_SYSTEM, sizeof(SpeciesLearnset));
+    SpeciesLearnsetEntry *monLevelUpMoves = Heap_Alloc(HEAP_ID_SYSTEM, sizeof(SpeciesLearnset));
     u16 monSpecies = Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL);
     int monForm = Pokemon_GetValue(mon, MON_DATA_FORM, NULL);
     u8 monLevel = Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
 
     Pokemon_LoadLevelUpMovesOf(monSpecies, monForm, monLevelUpMoves);
 
-    if (monLevelUpMoves[*index] == LEARNSET_SENTINEL_ENTRY) {
+    if (monLevelUpMoves[*index].move == LEARNSET_SENTINEL_ENTRY) {
         Heap_Free(monLevelUpMoves);
         return MOVE_NONE;
     }
 
-    while ((monLevelUpMoves[*index] & 0xFE00) != monLevel << 9) {
+    while (monLevelUpMoves[*index].level != monLevel) {
         (*index)++;
-        if (monLevelUpMoves[*index] == LEARNSET_SENTINEL_ENTRY) {
+        if (monLevelUpMoves[*index].move == LEARNSET_SENTINEL_ENTRY) {
             Heap_Free(monLevelUpMoves);
             return MOVE_NONE;
         }
     }
 
-    if ((monLevelUpMoves[*index] & 0xFE00) == monLevel << 9) {
-        *moveID = monLevelUpMoves[*index] & 0x1FF;
+    if (monLevelUpMoves[*index].level == monLevel) {
+        *moveID = monLevelUpMoves[*index].move;
         (*index)++;
         result = Pokemon_AddMove(mon, *moveID);
     }
@@ -4125,14 +4165,14 @@ s8 Pokemon_GetFlavorAffinityOf(u32 monPersonality, enum Flavor flavor)
 
 int Pokemon_LoadLevelUpMoveIdsOf(int monSpecies, int monForm, u16 *monLevelUpMoveIDs)
 {
-    u16 *monLevelUpMoves = Heap_Alloc(HEAP_ID_SYSTEM, sizeof(SpeciesLearnset));
+    SpeciesLearnsetEntry *monLevelUpMoves = Heap_Alloc(HEAP_ID_SYSTEM, sizeof(SpeciesLearnset));
 
     Pokemon_LoadLevelUpMovesOf(monSpecies, monForm, monLevelUpMoves);
 
     int result = 0;
 
-    while (monLevelUpMoves[result] != LEARNSET_ALL_SLOTS_FILLED) {
-        monLevelUpMoveIDs[result] = monLevelUpMoves[result] & 0x1FF;
+    while (monLevelUpMoves[result].move != LEARNSET_ALL_SLOTS_FILLED) {
+        monLevelUpMoveIDs[result] = monLevelUpMoves[result].move;
         result++;
     }
 
@@ -4579,7 +4619,7 @@ BOOL Pokemon_SetRotomForm(Pokemon *mon, int form, int moveSlot)
     return TRUE;
 }
 
-void Pokemon_LoadLevelUpMovesOf(int monSpecies, int monForm, u16 *monLevelUpMoves)
+void Pokemon_LoadLevelUpMovesOf(int monSpecies, int monForm, SpeciesLearnsetEntry *monLevelUpMoves)
 {
     monSpecies = Pokemon_GetFormNarcIndex(monSpecies, monForm);
     NARC_ReadWholeMemberByIndexPair(monLevelUpMoves, NARC_INDEX_POKETOOL__PERSONAL__WOTBL, monSpecies);

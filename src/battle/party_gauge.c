@@ -192,9 +192,9 @@ __attribute__((aligned(4))) static const u16 sPokeballYPosTheirs[] = {
 
 // TODO: naix?
 #define PARTY_GAUGE_NCLR     110
-#define PARTY_GAUGE_NCGR_BIN 340
-#define PARTY_GAUGE_NCER_BIN 341
-#define PARTY_GAUGE_NANR_BIN 342
+#define PARTY_GAUGE_NCGR_BIN 341
+#define PARTY_GAUGE_NCER_BIN 342
+#define PARTY_GAUGE_NANR_BIN 343
 
 void PartyGauge_LoadGraphics(SpriteSystem *spriteSys, SpriteManager *spriteMan, PaletteData *palette)
 {

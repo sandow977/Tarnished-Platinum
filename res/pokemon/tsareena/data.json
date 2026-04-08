@@ -1,0 +1,132 @@
+{
+    "base_stats": {
+        "hp": 72,
+        "attack": 120,
+        "defense": 98,
+        "speed": 72,
+        "special_attack": 50,
+        "special_defense": 98
+    },
+    "types": [
+        "TYPE_GRASS",
+        "TYPE_GRASS"
+    ],
+    "catch_rate": 45,
+    "base_exp_reward": 255,
+    "ev_yields": {
+        "hp": 0,
+        "attack": 3,
+        "defense": 0,
+        "speed": 0,
+        "special_attack": 0,
+        "special_defense": 0
+    },
+    "held_items": {
+        "common": "ITEM_NONE",
+        "rare": "ITEM_NONE"
+    },
+    "gender_ratio": "GENDER_RATIO_FEMALE_ONLY",
+    "hatch_cycles": 20,
+    "base_friendship": 50,
+    "exp_rate": "EXP_RATE_MEDIUM_SLOW",
+    "egg_groups": [
+        "EGG_GROUP_GRASS",
+        "EGG_GROUP_GRASS"
+    ],
+    "abilities": [
+        "ABILITY_LEAF_GUARD",
+        "ABILITY_SIMPLE"
+    ],
+    "safari_flee_rate": 0,
+    "body_color": "MON_COLOR_PURPLE",
+    "flip_sprite": false,
+    "icon_palette": 1,
+    "learnset": {
+        "by_level": [
+            [ 1, "MOVE_PARTING_SHOT" ],
+            [ 1, "MOVE_HEAD_CHARGE" ],
+            [ 1, "MOVE_TECHNO_BLAST" ],
+            [ 1, "MOVE_SACRED_SWORD" ],
+            [ 1, "MOVE_TORCH_SONG" ],
+            [ 1, "MOVE_FORESTS_CURSE" ],
+            [ 2, "MOVE_PARABOLIC_CHARGE" ],
+            [ 2, "MOVE_TOPSY_TURVY" ],
+            [ 2, "MOVE_MOONBLAST" ],
+            [ 2, "MOVE_AQUA_STEP" ],
+            [ 2, "MOVE_DIAMOND_STORM" ],
+            [ 3, "MOVE_MYSTICAL_FIRE" ],
+            [ 3, "MOVE_HARD_PRESS" ],
+            [ 3, "MOVE_NUZZLE" ],
+            [ 4, "MOVE_POWER_UP_PUNCH" ]
+        ],
+        "by_tm": []
+    },
+    "evolutions": [],
+    "pokedex_data": {
+        "height": 12,
+        "weight": 214,
+        "body_shape": "SHAPE_QUADRUPED",
+        "trainer_scale_f": 272,
+        "pokemon_scale_f": 337,
+        "trainer_scale_m": 256,
+        "pokemon_scale_m": 337,
+        "trainer_pos_f": 8,
+        "pokemon_pos_f": 22,
+        "trainer_pos_m": 9,
+        "pokemon_pos_m": 22,
+        "en": {
+            "name": "TSAREENA",
+            "category": "Fruit Pokemon",
+            "entry_text": [
+                "A Pokemon known for the beauty of\n",
+                "its well-shaped legs, it sometimes\n",
+                "appears in beauty advertisements."
+            ]
+        },
+        "fr": {
+            "name": "BULBIZARRE",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "de": {
+            "name": "BISASAM",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "it": {
+            "name": "BULBASAUR",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "es": {
+            "name": "BULBASAUR",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "jp": {
+            "name": "TSAREENA",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        }
+    }
+}

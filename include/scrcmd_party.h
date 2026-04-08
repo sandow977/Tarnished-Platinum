@@ -46,5 +46,6 @@ BOOL ScrCmd_FindPartySlotWithFatefulEncounterSpecies(ScriptContext *ctx);
 BOOL ScrCmd_CheckPartyHasHeldItem(ScriptContext *ctx);
 BOOL ScrCmd_SetPartyMonIVPerfect(ScriptContext *ctx);
 BOOL ScrCmd_SetPartyMonStatusUnsafe(ScriptContext *ctx);
+BOOL ScrCmd_MakePartyMonShiny(ScriptContext *ctx);
 
 #endif // POKEPLATINUM_SCRCMD_PARTY_H

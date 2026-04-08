@@ -1,24 +1,25 @@
 {
-    "name": "Superpower",
-    "class": "CLASS_PHYSICAL",
-    "type": "TYPE_FIGHTING",
-    "power": 120,
-    "accuracy": 100,
-    "pp": 5,
-    "effect": {
-        "type": "BATTLE_EFFECT_LOWER_OWN_ATK_AND_DEF",
-        "chance": 0
-    },
-    "range": "RANGE_SINGLE_TARGET",
-    "priority": 0,
+    "name":  "Power-Up Punch",
+    "class":  "CLASS_PHYSICAL",
+    "type":  "TYPE_FIGHTING",
+    "power":  40,
+    "accuracy":  100,
+    "pp":  20,
+    "effect":  {
+                   "type":  "BATTLE_EFFECT_RAISE_ATTACK_HIT",
+                   "chance":  100
+               },
+    "range":  "RANGE_SINGLE_TARGET",
+    "priority":  0,
     "flags": [
         "MOVE_FLAG_MAKES_CONTACT",
         "MOVE_FLAG_CAN_PROTECT",
         "MOVE_FLAG_CAN_MIRROR_MOVE",
-        "MOVE_FLAG_HIDES_SHADOWS"
+        "MOVE_FLAG_TRIGGERS_KINGS_ROCK"
     ],
-    "contest": {
-        "effect": "CONTEST_EFFECT_FINAL_PERFORMANCE_ADVANTAGE",
-        "type": "CONTEST_TYPE_TOUGH"
-    }
+    "contest":  {
+                    "effect":  "CONTEST_EFFECT_FINAL_PERFORMANCE_ADVANTAGE",
+                    "type":  "CONTEST_TYPE_TOUGH"
+                }
 }
+

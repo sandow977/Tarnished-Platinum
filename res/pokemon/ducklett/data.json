@@ -1,0 +1,116 @@
+{
+    "base_stats": {
+        "hp": 62,
+        "attack": 44,
+        "defense": 50,
+        "speed": 55,
+        "special_attack": 44,
+        "special_defense": 50
+    },
+    "types": [
+        "TYPE_WATER",
+        "TYPE_FLYING"
+    ],
+    "catch_rate": 190,
+    "base_exp_reward": 61,
+    "ev_yields": {
+        "hp": 1,
+        "attack": 0,
+        "defense": 0,
+        "speed": 0,
+        "special_attack": 0,
+        "special_defense": 0
+    },
+    "held_items": {
+        "common": "ITEM_NONE",
+        "rare": "ITEM_NONE"
+    },
+    "gender_ratio": "GENDER_RATIO_FEMALE_50",
+    "hatch_cycles": 20,
+    "base_friendship": 70,
+    "exp_rate": "EXP_RATE_MEDIUM_FAST",
+    "egg_groups": [
+        "EGG_GROUP_WATER_1",
+        "EGG_GROUP_FLYING"
+    ],
+    "abilities": [
+        "ABILITY_KEEN_EYE",
+        "ABILITY_SIMPLE"
+    ],
+    "safari_flee_rate": 0,
+    "body_color": "MON_COLOR_BLUE",
+    "flip_sprite": false,
+    "icon_palette": 0,
+    "learnset": {
+        "by_level": [],
+        "by_tm": []
+    },
+    "evolutions": [],
+    "pokedex_data": {
+        "height": 5,
+        "weight": 55,
+        "body_shape": "SHAPE_QUADRUPED",
+        "trainer_scale_f": 272,
+        "pokemon_scale_f": 337,
+        "trainer_scale_m": 256,
+        "pokemon_scale_m": 337,
+        "trainer_pos_f": 8,
+        "pokemon_pos_f": 22,
+        "trainer_pos_m": 9,
+        "pokemon_pos_m": 22,
+        "en": {
+            "name": "DUCKLETT",
+            "category": "Water Bird Pokemon",
+            "entry_text": [
+                "These bird Pokemon are excellent\n",
+                "divers. They swim around in the\n",
+                "water eating their favorite food."
+            ]
+        },
+        "fr": {
+            "name": "BULBIZARRE",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "de": {
+            "name": "BISASAM",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "it": {
+            "name": "BULBASAUR",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "es": {
+            "name": "BULBASAUR",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "jp": {
+            "name": "DUCKLETT",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        }
+    }
+}

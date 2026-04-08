@@ -15,6 +15,14 @@ typedef struct UnkStruct_ov16_0226DC24_t {
     SysTask *unk_14;
 } UnkStruct_ov16_0226DC24;
 
+enum {
+    BATTLE_CURSOR_NCLR = 80,
+    // Fairy added one more battle type icon, shifting later pl_batt_obj members by 1.
+    BATTLE_CURSOR_NCGR = 251,
+    BATTLE_CURSOR_NCER = 252,
+    BATTLE_CURSOR_NANR = 253
+};
+
 static void ov16_0226DE10(SysTask *param0, void *param1);
 void ov16_0226DBFC(SpriteManager *param0, u32 param1, u32 param2, u32 param3, u32 param4);
 void ov16_0226DCA8(UnkStruct_ov16_0226DC24 *param0);
@@ -38,10 +46,10 @@ void ov16_0226DB7C(SpriteSystem *param0, SpriteManager *param1, PaletteData *par
 {
     NARC *v0 = NARC_ctor(NARC_INDEX_BATTLE__GRAPHIC__PL_BATT_OBJ, heapID);
 
-    SpriteSystem_LoadPaletteBufferFromOpenNarc(param2, PLTTBUF_SUB_OBJ, param0, param1, v0, 80, FALSE, 1, NNS_G2D_VRAM_TYPE_2DSUB, param5);
-    SpriteSystem_LoadCharResObjFromOpenNarc(param0, param1, v0, 250, TRUE, NNS_G2D_VRAM_TYPE_2DSUB, param4);
-    SpriteSystem_LoadCellResObjFromOpenNarc(param0, param1, v0, 251, TRUE, param6);
-    SpriteSystem_LoadAnimResObjFromOpenNarc(param0, param1, v0, 252, TRUE, param7);
+    SpriteSystem_LoadPaletteBufferFromOpenNarc(param2, PLTTBUF_SUB_OBJ, param0, param1, v0, BATTLE_CURSOR_NCLR, FALSE, 1, NNS_G2D_VRAM_TYPE_2DSUB, param5);
+    SpriteSystem_LoadCharResObjFromOpenNarc(param0, param1, v0, BATTLE_CURSOR_NCGR, TRUE, NNS_G2D_VRAM_TYPE_2DSUB, param4);
+    SpriteSystem_LoadCellResObjFromOpenNarc(param0, param1, v0, BATTLE_CURSOR_NCER, TRUE, param6);
+    SpriteSystem_LoadAnimResObjFromOpenNarc(param0, param1, v0, BATTLE_CURSOR_NANR, TRUE, param7);
     NARC_dtor(v0);
 }
 

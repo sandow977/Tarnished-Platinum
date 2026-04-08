@@ -49,7 +49,8 @@
     || (battleCtx->battleMons[mon].moveEffectsMask & MOVE_EFFECT_MIRACLE_EYE))
 
 #define MON_IS_LOCKED_ONTO(mon1, mon2) ((battleCtx->battleMons[mon2].moveEffectsMask & MOVE_EFFECT_LOCK_ON) && battleCtx->battleMons[mon2].moveEffectsData.lockOnTarget == mon1)
-
+//Burn Up Typing
+#define TYPE_TYPELESS TYPE_MYSTERY
 #define MON_HAS_TYPE(mon, type)    (BattleMon_Get(battleCtx, mon, BATTLEMON_TYPE_1, NULL) == type || BattleMon_Get(battleCtx, mon, BATTLEMON_TYPE_2, NULL) == type)
 #define MON_IS_NOT_TYPE(mon, type) (BattleMon_Get(battleCtx, mon, BATTLEMON_TYPE_1, NULL) != type && BattleMon_Get(battleCtx, mon, BATTLEMON_TYPE_2, NULL) != type)
 

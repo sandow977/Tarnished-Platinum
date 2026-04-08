@@ -1061,6 +1061,20 @@ void Pokedex_Capture(Pokedex *pokedexData, Pokemon *mon)
     Write_SeenSpecies(pokedexData, species);
 }
 
+void Pokedex_FillSinnohDexCaught(Pokedex *pokedexData)
+{
+    u16 species;
+
+    CheckPokedexIntegrity(pokedexData);
+
+    for (species = 1; species <= MAX_SPECIES; species++) {
+        if (Pokemon_SinnohDexNumber(species) != 0) {
+            Write_CaughtSpecies(pokedexData, species);
+            Write_SeenSpecies(pokedexData, species);
+        }
+    }
+}
+
 void Pokedex_ObtainNationalDex(Pokedex *pokedexData)
 {
     CheckPokedexIntegrity(pokedexData);

@@ -1,9 +1,9 @@
 {
     "name": "Fury Attack",
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_NORMAL",
-    "power": 15,
-    "accuracy": 85,
+    "type": "TYPE_FLYING",
+    "power": 25,
+    "accuracy": 100,
     "pp": 20,
     "effect": {
         "type": "BATTLE_EFFECT_MULTI_HIT",

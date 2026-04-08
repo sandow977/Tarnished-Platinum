@@ -1,7 +1,7 @@
 {
-    "name": "Mist Ball",
-    "class": "CLASS_SPECIAL",
-    "type": "TYPE_NORMAL",
+    "name": "Spirit Break",
+    "class": "CLASS_PHYSICAL",
+    "type": "TYPE_FAIRY",
     "power": 75,
     "accuracy": 100,
     "pp": 15,
@@ -15,7 +15,7 @@
         "MOVE_FLAG_MAKES_CONTACT",
         "MOVE_FLAG_CAN_PROTECT",
         "MOVE_FLAG_CAN_MIRROR_MOVE",
-        "MOVE_FLAG_HIDES_SHADOWS"
+        "MOVE_FLAG_TRIGGERS_KINGS_ROCK"
     ],
     "contest": {
         "effect": "CONTEST_EFFECT_MAX_VOLTAGE_ADVANTAGE",

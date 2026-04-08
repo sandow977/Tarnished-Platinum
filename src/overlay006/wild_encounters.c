@@ -1007,7 +1007,7 @@ static void CreateWildMonShinyWithGenderOrNature(const u16 species, const u8 lev
             }
         } else if (encounterFieldParams->firstMonAbility == ABILITY_SYNCHRONIZE) {
             if (LCRNG_RandMod(2) == 0) {
-                firstMonNature = Pokemon_GetNature(firstPartyMon);
+                firstMonNature = Pokemon_GetOriginalNature(firstPartyMon);
                 abilityInEffect = TRUE;
             }
         }

@@ -3,10 +3,10 @@
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_ICE",
     "power": 65,
-    "accuracy": 95,
+    "accuracy": 100,
     "pp": 15,
     "effect": {
-        "type": "BATTLE_EFFECT_FLINCH_FREEZE_HIT",
+        "type": "BATTLE_EFFECT_FREEZE_HIT",
         "chance": 10
     },
     "range": "RANGE_SINGLE_TARGET",

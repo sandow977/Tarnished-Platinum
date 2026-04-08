@@ -1,0 +1,15 @@
+#include "macros/btlcmd.inc"
+
+_000:
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_ATTACKER, BATTLEMON_TYPE_1, TYPE_FIRE, _can_use
+    CompareMonDataToValue OPCODE_NEQ, BTLSCR_ATTACKER, BATTLEMON_TYPE_2, TYPE_FIRE, _fail
+
+_can_use:
+    UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_FLAGS_INDIRECT, MOVE_SIDE_EFFECT_ON_HIT | MOVE_SUBSCRIPT_PTR_BURN_UP
+    CalcCrit
+    CalcDamage
+    End
+
+_fail:
+    UpdateVar OPCODE_FLAG_ON, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_FAILED
+    End

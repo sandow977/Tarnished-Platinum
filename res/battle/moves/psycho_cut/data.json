@@ -2,7 +2,7 @@
     "name": "Psycho Cut",
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_PSYCHIC",
-    "power": 70,
+    "power": 90,
     "accuracy": 100,
     "pp": 20,
     "effect": {

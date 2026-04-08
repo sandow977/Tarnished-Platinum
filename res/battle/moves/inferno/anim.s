@@ -1,36 +1,60 @@
 #include "macros/btlanimcmd.inc"
 
 L_0:
-    LoadParticleResource 0, superpower_spa
-    PlaySoundEffectL SEQ_SE_DP_W025
-    InitPokemonSpriteManager
-    LoadPokemonSpriteDummyResources 0
-    AddPokemonSprite BATTLER_ROLE_ATTACKER, FALSE, BATTLE_ANIM_MON_SPRITE_0, 0
-    Func_Superpower 0, 0
-    CreateEmitter 0, 2, EMITTER_CB_SET_POS_TO_ATTACKER
-    CreateEmitter 0, 3, EMITTER_CB_SET_POS_TO_ATTACKER
-    WaitForAnimTasks
-    Delay 30
-    Delay 10
+    LoadParticleResource 0, magma_storm_spa
+    LoadParticleResource 1, magma_storm_spa
+    LoadParticleResource 2, magma_storm_spa
     ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_SCREEN_MODE, 1
-    SwitchBg 3, BATTLE_BG_SWITCH_MODE_FADE
+    SetVar BATTLE_ANIM_VAR_BG_FADE_TYPE, 1
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_X, 0
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_Y, 32
+    SwitchBg 43, BATTLE_BG_SWITCH_MODE_FADE | BATTLE_BG_SWITCH_FLAG_MOVE
+    WaitForBgSwitch
+    PlaySoundEffectR SEQ_SE_DP_W463
+    CreateEmitterEx 0, 0, 0, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 0, 0, 360, 0, 360, 64, 48, 40, 1, 0
+    CreateEmitterEx 0, 1, 1, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 1, 0, 360, 0, 360, 64, 48, 40, 1, 0
+    CreateEmitterEx 0, 2, 2, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 2, 0, 360, 0, 360, 64, 48, 40, 1, 0
     Delay 5
-    PlaySoundEffectR SEQ_SE_DP_W025B
-    Func_MoveBattler BATTLE_ANIM_BATTLER_SPRITE_ATTACKER, 16, -8, 2
-    Delay 2
-    CreateEmitter 0, 0, EMITTER_CB_SET_POS_TO_DEFENDER
-    CreateEmitter 0, 1, EMITTER_CB_SET_POS_TO_DEFENDER
-    Func_Shake 8, 0, 1, 4, BATTLE_ANIM_BATTLER_SPRITE_DEFENDER
-    Func_MoveBattler BATTLE_ANIM_BATTLER_SPRITE_ATTACKER, -16, 8, 2
-    WaitForAnimTasks
+    Func_FadeBattlerSprite BATTLE_ANIM_DEFENDER, 0, 3, BATTLE_COLOR_RED, 10, 10
+    CreateEmitterEx 0, 3, 0, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 3, 0, 360, 0, 360, 64, 48, 40, 1, 0
+    CreateEmitterEx 0, 4, 1, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 4, 0, 360, 0, 360, 64, 48, 40, 1, 0
+    CreateEmitterEx 0, 5, 2, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 5, 0, 360, 0, 360, 64, 48, 40, 1, 0
+    Delay 5
+    CreateEmitterEx 1, 0, 0, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 0, 0, 360, 0, 360, 64, 48, 40, 1, 1
+    CreateEmitterEx 1, 1, 1, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 1, 0, 360, 0, 360, 64, 48, 40, 1, 1
+    CreateEmitterEx 1, 2, 2, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 2, 0, 360, 0, 360, 64, 48, 40, 1, 1
+    Delay 5
+    CreateEmitterEx 1, 3, 0, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 3, 0, 360, 0, 360, 64, 48, 40, 1, 1
+    CreateEmitterEx 1, 4, 1, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 4, 0, 360, 0, 360, 64, 48, 40, 1, 1
+    CreateEmitterEx 1, 5, 2, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 5, 0, 360, 0, 360, 64, 48, 40, 1, 1
+    Delay 5
+    CreateEmitterEx 2, 0, 0, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 0, 0, 360, 0, 360, 64, 48, 40, 1, 2
+    CreateEmitterEx 2, 1, 1, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 1, 0, 360, 0, 360, 64, 48, 40, 1, 2
+    CreateEmitterEx 2, 2, 2, EMITTER_CB_SET_POS_TO_ATTACKER
+    Func_RevolveEmitter 2, 0, 360, 0, 360, 64, 48, 40, 1, 2
+    Delay 5
     WaitForAllEmitters
     UnloadParticleSystem 0
+    UnloadParticleSystem 1
+    UnloadParticleSystem 2
     ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_SCREEN_MODE, 1
-    RestoreBg 3, BATTLE_BG_SWITCH_MODE_FADE
+    SetVar BATTLE_ANIM_VAR_BG_FADE_TYPE, 1
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_X, 0
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_Y, 32
+    RestoreBg 43, BATTLE_BG_SWITCH_MODE_FADE | BATTLE_BG_SWITCH_FLAG_STOP
     WaitForBgSwitch
-    FreePokemonSpriteManager
-    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_0
-    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_1
     End

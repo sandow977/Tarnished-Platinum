@@ -2,6 +2,7 @@
 
 import argparse
 import pathlib
+import shutil
 import subprocess
 
 argparser = argparse.ArgumentParser(
@@ -38,7 +39,17 @@ output_dir = pathlib.Path(args.output_dir)
 bin_dest_dir = private_dir / "pl_poke_icon_work"
 bin_dest_dir.mkdir(parents=True, exist_ok=True)
 
-subprocess.run([
+for existing in bin_dest_dir.iterdir():
+    if existing.is_dir():
+        shutil.rmtree(existing)
+    else:
+        existing.unlink()
+
+
+def run_checked(command):
+    subprocess.run(command, check=True)
+
+run_checked([
     args.nitrogfx,
     shared_dir / "pl_poke_icon.pal",
     bin_dest_dir / "shared_pals.NCLR",
@@ -57,11 +68,11 @@ for i in range(len(shared_anims_cells)):
     anim_file_dst = bin_dest_dir / f"{shared_anims_cells[i][0]}.NANR"
     cell_file_dst = bin_dest_dir / f'{shared_anims_cells[i][1]}.NCER'
 
-    subprocess.run([args.nitrogfx, anim_file_src, anim_file_dst])
-    subprocess.run([args.nitrogfx, cell_file_src, cell_file_dst])
+    run_checked([args.nitrogfx, anim_file_src, anim_file_dst])
+    run_checked([args.nitrogfx, cell_file_src, cell_file_dst])
 
 for i, input_fname in enumerate(args.icon_files):
-    subprocess.run([
+    run_checked([
         args.nitrogfx,
         input_fname,
         bin_dest_dir / f"icon_{i:05}.NCGR",
@@ -69,7 +80,7 @@ for i, input_fname in enumerate(args.icon_files):
         "-version101"
     ])
 
-subprocess.run([
+run_checked([
     args.narc,
     "--create",
     "--index",

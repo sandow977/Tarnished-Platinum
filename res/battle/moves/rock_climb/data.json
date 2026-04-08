@@ -1,9 +1,9 @@
 {
     "name": "Rock Climb",
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_NORMAL",
+    "type": "TYPE_ROCK",
     "power": 90,
-    "accuracy": 85,
+    "accuracy": 100,
     "pp": 20,
     "effect": {
         "type": "BATTLE_EFFECT_CONFUSE_HIT",

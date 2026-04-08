@@ -1170,6 +1170,7 @@ static void ov62_0223B050(UnkStruct_0208C06C *param0)
     u32 form = v0->unk_04.unk_158[v0->unk_1B0];
     u16 species = v0->unk_04.unk_28[v0->unk_1B0];
     u32 personality = v0->unk_04.unk_64[v0->unk_1B0];
+    u8 forcedShiny = v0->unk_04.unk_198_forcedShiny[v0->unk_1B0];
     u32 v9;
     int v10 = 2;
 
@@ -1190,7 +1191,7 @@ static void ov62_0223B050(UnkStruct_0208C06C *param0)
 
     speciesData = SpeciesData_FromMonSpecies(species, HEAP_ID_102);
     gender = Pokemon_GetGenderOf(species, personality);
-    isShiny = Pokemon_IsPersonalityShiny(otID, personality);
+    isShiny = forcedShiny || Pokemon_IsPersonalityShiny(otID, personality);
     v9 = LoadPokemonSpriteYOffset(species, gender, v10, form, personality);
     v9 = 0;
 

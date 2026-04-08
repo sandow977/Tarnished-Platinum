@@ -1,0 +1,71 @@
+#include "macros/btlcmd.inc"
+
+_000:
+    PrintAttackMessage
+    Wait
+    CompareVarToValue OPCODE_FLAG_SET, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_MISSED | MOVE_STATUS_SEMI_INVULNERABLE, _done
+    CheckSubstitute BTLSCR_DEFENDER, _no_effect
+    PlayMoveAnimation BTLSCR_ATTACKER
+    Wait
+
+    CalcStrengthSapHeal BTLSCR_DEFENDER
+    CheckItemHoldEffect CHECK_NOT_HAVE, BTLSCR_ATTACKER, HOLD_EFFECT_LEECH_BOOST, _attack_drop
+    GetItemEffectParam BTLSCR_ATTACKER, BTLVAR_CALC_TEMP
+    UpdateVar OPCODE_ADD, BTLVAR_CALC_TEMP, 0x00000064
+    UpdateVarFromVar OPCODE_MUL, BTLVAR_HP_CALC_TEMP, BTLVAR_CALC_TEMP
+    UpdateVar OPCODE_DIV, BTLVAR_HP_CALC_TEMP, 100
+
+_attack_drop:
+    UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_TYPE, SIDE_EFFECT_TYPE_MOVE_EFFECT
+    UpdateVarFromVar OPCODE_SET, BTLVAR_SIDE_EFFECT_MON, BTLVAR_DEFENDER
+    UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_PARAM, MOVE_SUBSCRIPT_PTR_ATTACK_DOWN_1_STAGE
+    Call BATTLE_SUBSCRIPT_UPDATE_STAT_STAGE
+
+    UpdateVar OPCODE_FLAG_OFF, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_FAILED
+    UpdateVarFromVar OPCODE_SET, BTLVAR_MSG_BATTLER_TEMP, BTLVAR_ATTACKER
+    UpdateVar OPCODE_FLAG_ON, BTLVAR_BATTLE_CTX_STATUS, SYSCTL_SKIP_SPRITE_BLINK
+    CheckAbility CHECK_HAVE, BTLSCR_DEFENDER, ABILITY_LIQUID_OOZE, _liquid_ooze
+    CompareMonDataToValue OPCODE_NEQ, BTLSCR_ATTACKER, BATTLEMON_HEAL_BLOCK_TURNS, 0, _heal_blocked
+    UpdateMonDataFromVar OPCODE_GET, BTLSCR_MSG_BATTLER_TEMP, BATTLEMON_MAX_HP, BTLVAR_CALC_TEMP
+    CompareMonDataToVar OPCODE_EQU, BTLSCR_MSG_BATTLER_TEMP, BATTLEMON_CUR_HP, BTLVAR_CALC_TEMP, _full_hp
+    PlayBattleAnimation BTLSCR_MSG_BATTLER_TEMP, BATTLE_ANIMATION_RESTORE_HP
+    Wait
+    Call BATTLE_SUBSCRIPT_UPDATE_HP
+    PrintMessage BattleStrings_Text_PokemonRegainedHealth_Ally, TAG_NICKNAME, BTLSCR_MSG_BATTLER_TEMP
+    Wait
+    WaitButtonABTime 30
+    End
+
+_no_effect:
+    PrintMessage BattleStrings_Text_ButItHadNoEffect, TAG_NONE
+    Wait
+    WaitButtonABTime 30
+    UpdateVar OPCODE_FLAG_ON, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_NO_MORE_WORK
+    End
+
+_heal_blocked:
+    UpdateVar OPCODE_SET, BTLVAR_MSG_MOVE_TEMP, MOVE_HEAL_BLOCK
+    PrintMessage BattleStrings_Text_PokemonWasPreventedFromHealingDueToMove_Ally, TAG_NICKNAME_MOVE, BTLSCR_ATTACKER, BTLSCR_MSG_TEMP
+    Wait
+    WaitButtonABTime 30
+    End
+
+_liquid_ooze:
+    CheckAbility CHECK_HAVE, BTLSCR_ATTACKER, ABILITY_MAGIC_GUARD, _done
+    UpdateVar OPCODE_MUL, BTLVAR_HP_CALC_TEMP, -1
+    Call BATTLE_SUBSCRIPT_UPDATE_HP
+    PrintMessage BattleStrings_Text_ItSuckedUpTheLiquidOoze, TAG_NONE
+    Wait
+    WaitButtonABTime 30
+    End
+
+_full_hp:
+    WaitButtonABTime 30
+    PrintMessage BattleStrings_Text_PokemonsHPIsFull_Ally, TAG_NICKNAME, BTLSCR_MSG_BATTLER_TEMP
+    Wait
+    WaitButtonABTime 30
+    UpdateVar OPCODE_FLAG_ON, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_NO_MORE_WORK
+    End
+
+_done:
+    End

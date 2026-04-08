@@ -4,6 +4,15 @@
 _000:
     CheckSubstitute BTLSCR_SIDE_EFFECT_MON, _043
     CompareMonDataToValue OPCODE_FLAG_SET, BTLSCR_DEFENDER, BATTLEMON_VOLATILE_STATUS, VOLATILE_CONDITION_BIND, _043
+    CompareVarToValue OPCODE_EQU, BTLVAR_CURRENT_MOVE, MOVE_THUNDER_CAGE, _004
+    CompareVarToValue OPCODE_NEQ, BTLVAR_CURRENT_MOVE, MOVE_INFESTATION, _005
+    BufferMessage BattleStrings_Text_PokemonWasTrappedByInfestation_Ally, TAG_NICKNAME, BTLSCR_DEFENDER
+    GoTo _005
+
+_004:
+    BufferMessage BattleStrings_Text_PokemonWasTrappedByThunderCage_Ally, TAG_NICKNAME, BTLSCR_DEFENDER
+
+_005:
     PrintBufferedMessage 
     Wait 
     WaitButtonABTime 30

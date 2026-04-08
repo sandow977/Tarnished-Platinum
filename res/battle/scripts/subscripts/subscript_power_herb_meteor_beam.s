@@ -8,13 +8,18 @@ _000:
     ToggleVanish BTLSCR_ATTACKER, TRUE
 
 _011:
-    PrintBufferedMessage 
+    PrintMessage BattleStrings_Text_PokemonBeganChargingPower_Ally, TAG_NICKNAME, BTLSCR_ATTACKER
     Wait 
     WaitButtonABTime 30
+    CheckItemHoldEffect CHECK_HAVE, BTLSCR_ATTACKER, HOLD_EFFECT_CHARGE_SKIP, _014
+    LockMoveChoice BTLSCR_ATTACKER
+
+_014:
     UpdateVarFromVar OPCODE_SET, BTLVAR_SIDE_EFFECT_MON, BTLVAR_ATTACKER
     UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_PARAM, MOVE_SUBSCRIPT_PTR_SP_ATTACK_UP_1_STAGE
     UpdateVar OPCODE_SET, BTLVAR_SIDE_EFFECT_TYPE, SIDE_EFFECT_TYPE_INDIRECT
     Call BATTLE_SUBSCRIPT_UPDATE_STAT_STAGE
+    CheckItemHoldEffect CHECK_NOT_HAVE, BTLSCR_ATTACKER, HOLD_EFFECT_CHARGE_SKIP, _end
     PlayBattleAnimation BTLSCR_ATTACKER, BATTLE_ANIMATION_HELD_ITEM
     Wait 
     // {0} became fully charged due to its {1}!
@@ -23,4 +28,6 @@ _011:
     WaitButtonABTime 30
     RemoveItem BTLSCR_ATTACKER
     UpdateVar OPCODE_FLAG_OFF, BTLVAR_BATTLE_CTX_STATUS, SYSCTL_PLAYED_MOVE_ANIMATION
-    End 
+
+_end:
+    End

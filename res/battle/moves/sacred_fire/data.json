@@ -3,7 +3,7 @@
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_FIRE",
     "power": 100,
-    "accuracy": 95,
+    "accuracy": 100,
     "pp": 5,
     "effect": {
         "type": "BATTLE_EFFECT_THAW_AND_BURN_HIT",
@@ -14,7 +14,8 @@
     "flags": [
         "MOVE_FLAG_CAN_PROTECT",
         "MOVE_FLAG_CAN_MIRROR_MOVE",
-        "MOVE_FLAG_HIDES_SHADOWS"
+        "MOVE_FLAG_HIDES_SHADOWS",
+        "MOVE_FLAG_TRIGGERS_KINGS_ROCK"
     ],
     "contest": {
         "effect": "CONTEST_EFFECT_MAX_VOLTAGE_ADVANTAGE",

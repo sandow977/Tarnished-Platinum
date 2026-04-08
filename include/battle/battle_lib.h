@@ -613,6 +613,7 @@ BOOL Move_IsGhostCurse(BattleContext *battleCtx, u16 move, int battler);
  * @return FALSE
  */
 BOOL BattleSystem_CanStealItem(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
+BOOL BattleSystem_CanKnockOffItem(BattleContext *battleCtx, int attacker, int defender);
 
 /**
  * @brief Check if a battler is *not* holding Mail.
@@ -780,6 +781,27 @@ BOOL Move_FailsInHighGravity(BattleSystem *battleSys, BattleContext *battleCtx, 
 BOOL Move_HealBlocked(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int move);
 
 /**
+ * @brief Check if a move is considered sound-based.
+ *
+ * @param move      The move to check
+ * @return TRUE if the move is sound-based; FALSE otherwise
+ */
+BOOL Move_IsSoundBased(int move);
+
+/**
+ * @brief Check if a given move should fail because the battler was hit by
+ * Throat Chop.
+ *
+ * @param battleSys
+ * @param battleCtx
+ * @param battler   The battler trying to execute a move
+ * @param move      The move to be executed
+ * @return TRUE if the battler is under Throat Chop and the move is sound-based;
+ * FALSE otherwise
+ */
+BOOL Move_ThroatChopped(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int move);
+
+/**
  * @brief Update buffers for the attacking Pokemon related to Last Resort.
  *
  * @param battleSys
@@ -925,6 +947,8 @@ BOOL BattleSystem_SynchronizeStatus(BattleSystem *battleSys, BattleContext *batt
  * otherwise.
  */
 BOOL BattleSystem_TriggerHeldItem(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
+
+BOOL BattleSystem_ShouldConsumeGem(BattleContext *battleCtx, int battler, int itemEffect);
 
 /**
  * @brief Check if a Leftovers-type item should trigger at the end of the turn.
@@ -1212,7 +1236,12 @@ BOOL BattleSystem_PokemonIsOT(BattleSystem *battleSys, Pokemon *mon);
  * @return TRUE if a form change has triggered and the returned subscript should
  * be loaded for execution, FALSE otherwise.
  */
+ 
 BOOL BattleSystem_TriggerFormChange(BattleSystem *battleSys, BattleContext *battleCtx, int *subscript);
+
+//Burn Up/Double Shock Logic
+
+BOOL BattleSystem_RemoveBattlerType(BattleContext *battleCtx, int battler, int type);
 
 /**
  * @brief Initialize the party order buffer.
@@ -1300,6 +1329,13 @@ int BattleSystem_CalcDamageVariance(BattleSystem *battleSys, BattleContext *batt
  */
 int BattleSystem_CalcCriticalMulti(BattleSystem *battleSys, BattleContext *battleCtx, int attacker, int defender, int criticalStage, u32 sideConditions);
 
+//This will calculate the enemy's attack stat for Strength Sap calculation:
+int BattleSystem_CalcStrengthSapHealAmount(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
+
+//This is for Soak/Trick or Treat/Forest Curse
+BOOL BattleSystem_SetBattlerType(BattleContext *battleCtx, int battler, int type);
+//Forest Curse
+BOOL BattleSystem_AddBattlerType(BattleContext *battleCtx, int battler, int type);
 /**
  * @brief Check if a move can be copied by Mimic.
  *

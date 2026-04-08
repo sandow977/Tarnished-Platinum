@@ -102,6 +102,21 @@ form_sprites_order = form_registry[2]
 # 3. Walk species subdirectories; `species_dirnames` is the authority.
 foreach species : species_dirnames
     subdir(species)
+
+    sprite_data_path = join_paths(species, 'sprite_data.json')
+    if fs.exists(join_paths(pokemon_data_root, sprite_data_path))
+        species_data_files += files(sprite_data_path)
+    endif
+
+    normal_pal_path = join_paths(species, 'normal.pal')
+    if fs.exists(join_paths(pokemon_data_root, normal_pal_path))
+        pokegra_files += files(normal_pal_path)
+    endif
+
+    shiny_pal_path = join_paths(species, 'shiny.pal')
+    if fs.exists(join_paths(pokemon_data_root, shiny_pal_path))
+        pokegra_files += files(shiny_pal_path)
+    endif
 endforeach
 
 # Stash the listing of species in an environment so that other processes can make

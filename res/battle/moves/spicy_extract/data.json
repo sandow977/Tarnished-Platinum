@@ -6,7 +6,7 @@
     "accuracy": 100,
     "pp": 15,
     "effect": {
-        "type": "BATTLE_EFFECT_ATK_DEF_DOWN",
+        "type": "BATTLE_EFFECT_SPICY_EXTRACT",
         "chance": 0
     },
     "range": "RANGE_SINGLE_TARGET",

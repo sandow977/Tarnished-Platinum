@@ -1,22 +1,17 @@
 {
-    "name": "Superpower",
-    "class": "CLASS_PHYSICAL",
+    "name": "Coaching",
+    "class": "CLASS_STATUS",
     "type": "TYPE_FIGHTING",
-    "power": 120,
-    "accuracy": 100,
-    "pp": 5,
+    "power": 0,
+    "accuracy": 0,
+    "pp": 10,
     "effect": {
-        "type": "BATTLE_EFFECT_LOWER_OWN_ATK_AND_DEF",
+        "type": "BATTLE_EFFECT_COACHING",
         "chance": 0
     },
-    "range": "RANGE_SINGLE_TARGET",
+    "range": "RANGE_ALLY",
     "priority": 0,
-    "flags": [
-        "MOVE_FLAG_MAKES_CONTACT",
-        "MOVE_FLAG_CAN_PROTECT",
-        "MOVE_FLAG_CAN_MIRROR_MOVE",
-        "MOVE_FLAG_HIDES_SHADOWS"
-    ],
+    "flags": [],
     "contest": {
         "effect": "CONTEST_EFFECT_FINAL_PERFORMANCE_ADVANTAGE",
         "type": "CONTEST_TYPE_TOUGH"

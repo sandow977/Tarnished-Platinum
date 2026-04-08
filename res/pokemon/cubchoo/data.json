@@ -1,0 +1,116 @@
+{
+    "base_stats": {
+        "hp": 55,
+        "attack": 70,
+        "defense": 40,
+        "speed": 40,
+        "special_attack": 60,
+        "special_defense": 40
+    },
+    "types": [
+        "TYPE_ICE",
+        "TYPE_ICE"
+    ],
+    "catch_rate": 120,
+    "base_exp_reward": 61,
+    "ev_yields": {
+        "hp": 0,
+        "attack": 1,
+        "defense": 0,
+        "speed": 0,
+        "special_attack": 0,
+        "special_defense": 0
+    },
+    "held_items": {
+        "common": "ITEM_ASPEAR_BERRY",
+        "rare": "ITEM_NONE"
+    },
+    "gender_ratio": "GENDER_RATIO_FEMALE_50",
+    "hatch_cycles": 20,
+    "base_friendship": 50,
+    "exp_rate": "EXP_RATE_MEDIUM_FAST",
+    "egg_groups": [
+        "EGG_GROUP_FIELD",
+        "EGG_GROUP_FIELD"
+    ],
+    "abilities": [
+        "ABILITY_SNOW_CLOAK",
+        "ABILITY_SIMPLE"
+    ],
+    "safari_flee_rate": 0,
+    "body_color": "MON_COLOR_WHITE",
+    "flip_sprite": false,
+    "icon_palette": 0,
+    "learnset": {
+        "by_level": [],
+        "by_tm": []
+    },
+    "evolutions": [],
+    "pokedex_data": {
+        "height": 5,
+        "weight": 85,
+        "body_shape": "SHAPE_QUADRUPED",
+        "trainer_scale_f": 272,
+        "pokemon_scale_f": 337,
+        "trainer_scale_m": 256,
+        "pokemon_scale_m": 337,
+        "trainer_pos_f": 8,
+        "pokemon_pos_f": 22,
+        "trainer_pos_m": 9,
+        "pokemon_pos_m": 22,
+        "en": {
+            "name": "CUBCHOO",
+            "category": "Chill Pokemon",
+            "entry_text": [
+                "When it is not feeling well, the\n",
+                "mucus from its nose gets watery,\n",
+                "and its ice moves lose power."
+            ]
+        },
+        "fr": {
+            "name": "BULBIZARRE",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "de": {
+            "name": "BISASAM",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "it": {
+            "name": "BULBASAUR",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "es": {
+            "name": "BULBASAUR",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "jp": {
+            "name": "CUBCHOO",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        }
+    }
+}

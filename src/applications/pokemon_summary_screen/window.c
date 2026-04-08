@@ -43,6 +43,7 @@ enum SummaryTextAlignment {
 #define PP_TEXT_Y 16
 
 static void PrintStringToWindow(PokemonSummaryScreen *summaryScreen, Window *window, TextColor color, enum SummaryTextAlignment alignment);
+static void PrintSkillsStatValue(PokemonSummaryScreen *summaryScreen, Window *window);
 static void PrintTextToStaticWindow(PokemonSummaryScreen *summaryScreen, enum SummaryStaticWindow windowIndex, u32 entryID, TextColor color, enum SummaryTextAlignment alignment);
 static void PrintStaticWindows(PokemonSummaryScreen *summaryScreen);
 static void PrintMoveNameAndPP(PokemonSummaryScreen *summaryScreen, u32 moveIndex);
@@ -927,6 +928,19 @@ static void PrintStringToWindow(PokemonSummaryScreen *summaryScreen, Window *win
     Text_AddPrinterWithParamsAndColor(window, FONT_SYSTEM, summaryScreen->string, xOffset, 0, TEXT_SPEED_NO_TRANSFER, color, NULL);
 }
 
+static void PrintSkillsStatValue(PokemonSummaryScreen *summaryScreen, Window *window)
+{
+    u8 strWidth = Font_CalcStringWidth(FONT_SYSTEM, summaryScreen->string, 0);
+    u8 windowWidth = Window_GetWidth(window) * 8;
+    u8 xOffset = windowWidth - strWidth;
+
+    if (xOffset >= 1) {
+        xOffset -= 1;
+    }
+
+    Text_AddPrinterWithParamsAndColor(window, FONT_SYSTEM, summaryScreen->string, xOffset, 0, TEXT_SPEED_NO_TRANSFER, SUMMARY_TEXT_BLACK, NULL);
+}
+
 static void PrintTextToStaticWindow(PokemonSummaryScreen *summaryScreen, enum SummaryStaticWindow windowIndex, u32 entryID, TextColor color, enum SummaryTextAlignment alignment)
 {
     MessageLoader_GetString(summaryScreen->msgLoader, entryID, summaryScreen->string);
@@ -1175,15 +1189,15 @@ static void DrawSkillsPageWindows(PokemonSummaryScreen *summaryScreen)
 
     PrintCurrentAndMaxInfo(summaryScreen, 0, PokemonSummary_Text_Slash, PokemonSummary_Text_TemplateCurrentHp, PokemonSummary_Text_TemplateMaxHp, summaryScreen->monData.curHP, summaryScreen->monData.maxHP, 3, hpWindowWidth / 2, 0);
     SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateAttack, summaryScreen->monData.attack, 3, PADDING_MODE_NONE);
-    PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_ATTACK], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+    PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_ATTACK]);
     SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateDefense, summaryScreen->monData.defense, 3, PADDING_MODE_NONE);
-    PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_DEFENSE], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+    PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_DEFENSE]);
     SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpAttack, summaryScreen->monData.spAttack, 3, PADDING_MODE_NONE);
-    PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_ATTACK], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+    PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_ATTACK]);
     SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpDefense, summaryScreen->monData.spDefense, 3, PADDING_MODE_NONE);
-    PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_DEFENSE], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+    PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_DEFENSE]);
     SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpeed, summaryScreen->monData.speed, 3, PADDING_MODE_NONE);
-    PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SPEED], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+    PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SPEED]);
 
     StringTemplate_SetAbilityName(summaryScreen->strFormatter, 0, summaryScreen->monData.ability);
     String *buf = MessageLoader_GetNewString(summaryScreen->msgLoader, PokemonSummary_Text_TemplateAbility);
@@ -1625,23 +1639,23 @@ void PokemonSummaryScreen_PrintSkillsForCurrentState(PokemonSummaryScreen *summa
         PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_HP], SUMMARY_TEXT_BLACK, ALIGN_CENTER);
 
         SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateAttack, summaryScreen->monData.ivAttack, 3, PADDING_MODE_NONE);
-        PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_ATTACK], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+        PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_ATTACK]);
         PrintNatureArrow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_ATTACK], STAT_ATTACK);
 
         SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateDefense, summaryScreen->monData.ivDefense, 3, PADDING_MODE_NONE);
-        PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_DEFENSE], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+        PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_DEFENSE]);
         PrintNatureArrow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_DEFENSE], STAT_DEFENSE);
 
         SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpAttack, summaryScreen->monData.ivSpAttack, 3, PADDING_MODE_NONE);
-        PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_ATTACK], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+        PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_ATTACK]);
         PrintNatureArrow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_ATTACK], STAT_SPECIAL_ATTACK);
 
         SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpDefense, summaryScreen->monData.ivSpDefense, 3, PADDING_MODE_NONE);
-        PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_DEFENSE], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+        PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_DEFENSE]);
         PrintNatureArrow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_DEFENSE], STAT_SPECIAL_DEFENSE);
 
         SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpeed, summaryScreen->monData.ivSpeed, 3, PADDING_MODE_NONE);
-        PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SPEED], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+        PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SPEED]);
         PrintNatureArrow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SPEED], STAT_SPEED);
         break;
 
@@ -1651,23 +1665,23 @@ void PokemonSummaryScreen_PrintSkillsForCurrentState(PokemonSummaryScreen *summa
         PrintCurrentAndMaxInfo(summaryScreen, 0, PokemonSummary_Text_Slash, PokemonSummary_Text_TemplateCurrentHp, PokemonSummary_Text_TemplateMaxHp, summaryScreen->monData.curHP, summaryScreen->monData.maxHP, 3, hpWindowWidth / 2, 0);
 
         SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateAttack, summaryScreen->monData.attack, 3, PADDING_MODE_NONE);
-        PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_ATTACK], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+        PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_ATTACK]);
         PrintNatureArrow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_ATTACK], STAT_ATTACK);
 
         SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateDefense, summaryScreen->monData.defense, 3, PADDING_MODE_NONE);
-        PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_DEFENSE], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+        PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_DEFENSE]);
         PrintNatureArrow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_DEFENSE], STAT_DEFENSE);
 
         SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpAttack, summaryScreen->monData.spAttack, 3, PADDING_MODE_NONE);
-        PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_ATTACK], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+        PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_ATTACK]);
         PrintNatureArrow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_ATTACK], STAT_SPECIAL_ATTACK);
 
         SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpDefense, summaryScreen->monData.spDefense, 3, PADDING_MODE_NONE);
-        PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_DEFENSE], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+        PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_DEFENSE]);
         PrintNatureArrow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SP_DEFENSE], STAT_SPECIAL_DEFENSE);
 
         SetAndFormatNumberBuf(summaryScreen, PokemonSummary_Text_TemplateSpeed, summaryScreen->monData.speed, 3, PADDING_MODE_NONE);
-        PrintStringToWindow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SPEED], SUMMARY_TEXT_BLACK, ALIGN_RIGHT);
+        PrintSkillsStatValue(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SPEED]);
         PrintNatureArrow(summaryScreen, &summaryScreen->extraWindows[SUMMARY_WINDOW_SPEED], STAT_SPEED);
         break;
     }

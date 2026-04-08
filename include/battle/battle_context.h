@@ -39,6 +39,8 @@ typedef struct SideConditions {
     u32 followMe : 1;
     u32 followMeUser : 2;
     u32 knockedOffItemsMask : 6;
+    u32 retaliateActive : 1;
+    u32 retaliatePending : 1;
     u32 padding00_1D : 3;
 
     u32 spikesLayers : 2;
@@ -100,7 +102,8 @@ typedef struct MoveFailFlags {
     u32 confused : 1;
     u32 gravity : 1;
     u32 healBlocked : 1;
-    u32 padding00_0A : 22;
+    u32 throatChopped : 1;
+    u32 padding00_0B : 21;
 } MoveFailFlags;
 
 typedef struct BattleScriptTaskData {

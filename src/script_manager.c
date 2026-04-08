@@ -215,6 +215,39 @@ ScriptContext *ScriptContext_CreateAndStart(FieldSystem *fieldSystem, u16 script
     return ctx;
 }
 
+void ScriptContext_ChangeScript(FieldSystem *fieldSystem, ScriptContext *ctx, u16 scriptID)
+{
+    u32 i;
+    u16 offsetID;
+
+    if (ctx->loader != NULL) {
+        MessageLoader_Free(ctx->loader);
+        ctx->loader = NULL;
+    }
+
+    if (ctx->scripts != NULL) {
+        Heap_Free((void *)ctx->scripts);
+        ctx->scripts = NULL;
+    }
+
+    ctx->stackPointer = 0;
+    ctx->shouldResume = NULL;
+
+    for (i = 0; i < NELEMS(ctx->data); i++) {
+        ctx->data[i] = 0;
+    }
+
+    for (i = 0; i < NELEMS(ctx->stack); i++) {
+        ctx->stack[i] = NULL;
+    }
+
+    offsetID = ScriptContext_LoadAndOffsetID(fieldSystem, ctx, scriptID);
+
+    ScriptContext_Start(ctx, ctx->scripts);
+    ScriptContext_JumpToOffsetID(ctx, offsetID);
+    ScriptContext_SetTask(ctx, fieldSystem->task);
+}
+
 static void ScriptContext_LoadAndStart(FieldSystem *fieldSystem, ScriptContext *ctx, u16 scriptID, u8 dummy)
 {
     ctx->fieldSystem = fieldSystem;

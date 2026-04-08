@@ -903,91 +903,179 @@
     },
     {
       "id": "pl_msg_00000391_00113",
-      "garbage": 0
+      "en_US": [
+        "A mysterious spray that can be used\n",
+        "on a party Pokemon to turn it into a\n",
+        "shiny Pokemon."
+      ]
     },
     {
       "id": "pl_msg_00000391_00114",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Attack stat grow stronger.\n",
+        "However, its Sp. Atk stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00115",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Defense stat grow stronger.\n",
+        "However, its Attack stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00116",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Attack stat grow stronger.\n",
+        "However, its Speed stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00117",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Sp. Def stat grow stronger.\n",
+        "However, its Attack stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00118",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Sp. Def stat grow stronger.\n",
+        "However, its Sp. Atk stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00119",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Sp. Def stat grow stronger.\n",
+        "However, its Defense stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00120",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Speed stat grow stronger.\n",
+        "However, its Defense stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00121",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Defense stat grow stronger.\n",
+        "However, its Sp. Atk stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00122",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Speed stat grow stronger.\n",
+        "However, its Sp. Atk stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00123",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Defense stat grow stronger.\n",
+        "However, its Speed stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00124",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Attack stat grow stronger.\n",
+        "However, its Defense stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00125",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Sp. Atk stat grow stronger.\n",
+        "However, its Defense stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00126",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Sp. Atk stat grow stronger.\n",
+        "However, its Attack stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00127",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Speed stat grow stronger.\n",
+        "However, its Sp. Def stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00128",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Attack stat grow stronger.\n",
+        "However, its Sp. Def stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00129",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Sp. Atk stat grow stronger.\n",
+        "However, its Speed stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00130",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Sp. Atk stat grow stronger.\n",
+        "However, its Sp. Def stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00131",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Defense stat grow stronger.\n",
+        "However, its Speed stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00132",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Sp. Def stat grow stronger.\n",
+        "However, its Speed stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00133",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint will\n",
+        "cause all of its stats to grow at an\n",
+        "equal rate."
+      ]
     },
     {
       "id": "pl_msg_00000391_00134",
-      "garbage": 0
+      "en_US": [
+        "Having a Pokemon smell this mint can\n",
+        "make its Speed stat grow stronger.\n",
+        "However, its Attack stat may suffer."
+      ]
     },
     {
       "id": "pl_msg_00000391_00135",
@@ -3645,6 +3733,150 @@
         "A high-tech key that has to be used at\n",
         "a specific location. It emits a special\n",
         "electric signal to open a door."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00468",
+      "en_US": [
+        "A gem with an essence of fire.\n",
+        "When held, it strengthens the power\n",
+        "of a Fire-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00469",
+      "en_US": [
+        "A gem with an essence of water.\n",
+        "When held, it strengthens the power\n",
+        "of a Water-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00470",
+      "en_US": [
+        "A gem with an essence of electricity.\n",
+        "When held, it strengthens the power\n",
+        "of a Electric-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00471",
+      "en_US": [
+        "A gem with an essence of nature.\n",
+        "When held, it strengthens the power\n",
+        "of a Grass-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00472",
+      "en_US": [
+        "A gem with an essence of ice.\n",
+        "When held, it strengthens the power\n",
+        "of a Ice-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00473",
+      "en_US": [
+        "A gem with an essence of combat.\n",
+        "When held, it strengthens the power\n",
+        "of a Fighting-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00474",
+      "en_US": [
+        "A gem with an essence of poison.\n",
+        "When held, it strengthens the power\n",
+        "of a Poison-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00475",
+      "en_US": [
+        "A gem with an essence of land.\n",
+        "When held, it strengthens the power\n",
+        "of a Ground-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00476",
+      "en_US": [
+        "A gem with an essence of air.\n",
+        "When held, it strengthens the power\n",
+        "of a Flying-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00477",
+      "en_US": [
+        "A gem with an essence of the mind.\n",
+        "When held, it strengthens the power\n",
+        "of a Psychic-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00478",
+      "en_US": [
+        "A gem with an insect-like essence.\n",
+        "When held, it strengthens the power\n",
+        "of a Bug-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00479",
+      "en_US": [
+        "A gem with an essence of rock.\n",
+        "When held, it strengthens the power\n",
+        "of a Rock-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00480",
+      "en_US": [
+        "A gem with a spectral essence.\n",
+        "When held, it strengthens the power\n",
+        "of a Ghost-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00481",
+      "en_US": [
+        "A gem with a draconic essence.\n",
+        "When held, it strengthens the power\n",
+        "of a Dragon-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00482",
+      "en_US": [
+        "A gem with an essence of darkness.\n",
+        "When held, it strengthens the power\n",
+        "of a Dark-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00483",
+      "en_US": [
+        "A gem with an essence of steel.\n",
+        "When held, it strengthens the power\n",
+        "of a Steel-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00484",
+      "en_US": [
+        "A gem with an ordinary essence.\n",
+        "When held, it strengthens the power\n",
+        "of a Normal-type move one time."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00485",
+      "en_US": [
+        "A gem with an essence of the fey.\n",
+        "When held, it strengthens the power\n",
+        "of a Fairy-type move one time."
       ]
     }
   ]

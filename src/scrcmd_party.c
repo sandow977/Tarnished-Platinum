@@ -930,3 +930,30 @@ BOOL ScrCmd_SetPartyMonStatusUnsafe(ScriptContext *ctx)
     Pokemon_SetValue(mon, MON_DATA_STATUS, &status);
     return FALSE;
 }
+
+BOOL ScrCmd_MakePartyMonShiny(ScriptContext *ctx)
+{
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+    u16 partySlot = ScriptContext_GetVar(ctx);
+    u16 *destVar = ScriptContext_GetVarPointer(ctx);
+    Party *party = SaveData_GetParty(fieldSystem->saveData);
+    u16 partyCount = Party_GetCurrentCount(party);
+
+    *destVar = FALSE;
+
+    if (partySlot >= partyCount) {
+        return FALSE;
+    }
+
+    Pokemon *mon = Party_GetPokemonBySlotIndex(party, partySlot);
+
+    if (Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL)) {
+        return FALSE;
+    }
+
+    u8 forcedShiny = TRUE;
+    Pokemon_SetValue(mon, MON_DATA_FORCED_SHINY, &forcedShiny);
+
+    *destVar = TRUE;
+    return FALSE;
+}

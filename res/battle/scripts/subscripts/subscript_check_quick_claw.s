@@ -12,8 +12,7 @@ _000:
 _022:
     PlayBattleAnimation BTLSCR_ATTACKER, BATTLE_ANIMATION_HELD_ITEM
     Wait 
-    CompareVarToValue OPCODE_EQU, BTLVAR_WAITING_BATTLERS, 1, _039
-    // {0}’s {1} let it move first!
+    // {0}'s {1} let it move first!
     PrintMessage BattleStrings_Text_PokemonsItemLetItMoveFirst_Ally, TAG_NICKNAME_ITEM, BTLSCR_ATTACKER, BTLSCR_ATTACKER
     Wait 
     WaitButtonABTime 30

@@ -262,7 +262,7 @@ static BOOL ScrCmd_ReturnCommonScript(ScriptContext *ctx);
 static BOOL ScrCmd_GoTo(ScriptContext *ctx);
 static MapObject *GetLocalMapObjByIndex(FieldSystem *fieldSystem, int localID);
 static BOOL ScrCmd_Unused_017(ScriptContext *ctx);
-static BOOL ScrCmd_Unused_018(ScriptContext *ctx);
+static BOOL ScrCmd_ChangeCommonScript(ScriptContext *ctx);
 static BOOL ScrCmd_Unused_019(ScriptContext *ctx);
 static BOOL ScrCmd_Call(ScriptContext *ctx);
 static BOOL ScrCmd_Return(ScriptContext *ctx);
@@ -733,6 +733,7 @@ static BOOL ScrCmd_ResetDistortionWorldPersistedCameraAngles(ScriptContext *ctx)
 static BOOL ScrCmd_CheckHeapMemory(ScriptContext *ctx);
 static BOOL ScrCmd_StartGiratinaOriginBattle(ScriptContext *ctx);
 static BOOL ScrCmd_WriteSpeciesSeen(ScriptContext *ctx);
+static BOOL ScrCmd_FillSinnohDexCaught(ScriptContext *ctx);
 static BOOL ScrCmd_320(ScriptContext *ctx);
 static BOOL ScrCmd_StartDistortionWorldGiratinaShadowEvent(ScriptContext *ctx);
 static BOOL ScrCmd_FinishDistortionWorldGiratinaShadowEvent(ScriptContext *ctx);
@@ -789,7 +790,7 @@ const ScrCmdFunc Unk_020EAC58[] = {
     ScrCmd_ReturnCommonScript,
     ScrCmd_GoTo,
     ScrCmd_Unused_017,
-    ScrCmd_Unused_018,
+    ScrCmd_ChangeCommonScript,
     ScrCmd_Unused_019,
     ScrCmd_Call,
     ScrCmd_Return,
@@ -1608,6 +1609,8 @@ const ScrCmdFunc Unk_020EAC58[] = {
     ScrCmd_SetPartyMonIVPerfect,
     ScrCmd_SetRepelSteps,
     ScrCmd_SetPartyMonStatusUnsafe,
+    ScrCmd_FillSinnohDexCaught,
+    ScrCmd_MakePartyMonShiny,
 };
 
 const u32 Unk_020EAB80 = NELEMS(Unk_020EAC58);
@@ -1867,19 +1870,13 @@ static BOOL ScrCmd_Unused_017(ScriptContext *ctx)
     return FALSE;
 }
 
-static BOOL ScrCmd_Unused_018(ScriptContext *ctx)
+static BOOL ScrCmd_ChangeCommonScript(ScriptContext *ctx)
 {
-    u32 taskVal = FieldTask_GetDummy1CVal(ctx->task);
-    u8 val = ScriptContext_ReadByte(ctx);
-    s32 offset = (s32)ScriptContext_ReadWord(ctx);
+    u16 scriptID = ScriptContext_ReadHalfWord(ctx);
 
-    if (taskVal == val) {
-        ScriptContext_Jump(ctx, (u8 *)(ctx->scriptPtr + offset));
-    }
-
+    ScriptContext_ChangeScript(ctx->fieldSystem, ctx, scriptID);
     return FALSE;
 }
-
 static BOOL ScrCmd_Unused_019(ScriptContext *ctx)
 {
     FieldSystem *fieldSystem = ctx->fieldSystem;
@@ -6505,6 +6502,14 @@ static BOOL ScrCmd_WriteSpeciesSeen(ScriptContext *ctx)
     u16 species = ScriptContext_GetVar(ctx);
 
     FieldSystem_WriteSpeciesSeen(ctx->fieldSystem, species);
+    return FALSE;
+}
+
+static BOOL ScrCmd_FillSinnohDexCaught(ScriptContext *ctx)
+{
+    Pokedex *pokedex = SaveData_GetPokedex(ctx->fieldSystem->saveData);
+
+    Pokedex_FillSinnohDexCaught(pokedex);
     return FALSE;
 }
 

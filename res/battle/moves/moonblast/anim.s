@@ -1,36 +1,55 @@
 #include "macros/btlanimcmd.inc"
 
 L_0:
-    LoadParticleResource 0, superpower_spa
-    PlaySoundEffectL SEQ_SE_DP_W025
-    InitPokemonSpriteManager
-    LoadPokemonSpriteDummyResources 0
-    AddPokemonSprite BATTLER_ROLE_ATTACKER, FALSE, BATTLE_ANIM_MON_SPRITE_0, 0
-    Func_Superpower 0, 0
-    CreateEmitter 0, 2, EMITTER_CB_SET_POS_TO_ATTACKER
-    CreateEmitter 0, 3, EMITTER_CB_SET_POS_TO_ATTACKER
+    LoadParticleResource 0, mist_ball_spa
+    SetVar BATTLE_ANIM_VAR_BG_FADE_TYPE, 0
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_X, 0
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_Y, 1
+    SwitchBg 54, BATTLE_BG_SWITCH_MODE_FADE | BATTLE_BG_SWITCH_FLAG_MOVE
+    WaitForBgSwitch
+    Delay 24
+    PlayLoopedSoundEffectC SEQ_SE_DP_W081, 2, 4
+    CreateEmitter 0, 0, EMITTER_CB_GENERIC
+    SetExtraParams 0, 2, 6, 1, 0, 0
+    Delay 15
+    PlayLoopedSoundEffectR SEQ_SE_DP_W028, 2, 4
+    Func_FadeBg FADE_BG_TYPE_BASE, 1, 0, 8, BATTLE_COLOR_WHITE
+    CreateEmitter 0, 5, EMITTER_CB_SET_POS_TO_DEFENDER
+    CreateEmitter 0, 6, EMITTER_CB_SET_POS_TO_DEFENDER
+    Func_Shake 1, 0, 1, 2, BATTLE_ANIM_BATTLER_SPRITE_DEFENDER
+    JumpIfBattlerSide BATTLER_ROLE_ATTACKER, L_1, L_2
+    End
+
+L_1:
+    CreateEmitter 0, 1, EMITTER_CB_NONE
+    CreateEmitter 0, 2, EMITTER_CB_NONE
     WaitForAnimTasks
-    Delay 30
-    Delay 10
-    ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_SCREEN_MODE, 1
-    SwitchBg 3, BATTLE_BG_SWITCH_MODE_FADE
-    Delay 5
-    PlaySoundEffectR SEQ_SE_DP_W025B
-    Func_MoveBattler BATTLE_ANIM_BATTLER_SPRITE_ATTACKER, 16, -8, 2
-    Delay 2
-    CreateEmitter 0, 0, EMITTER_CB_SET_POS_TO_DEFENDER
-    CreateEmitter 0, 1, EMITTER_CB_SET_POS_TO_DEFENDER
-    Func_Shake 8, 0, 1, 4, BATTLE_ANIM_BATTLER_SPRITE_DEFENDER
-    Func_MoveBattler BATTLE_ANIM_BATTLER_SPRITE_ATTACKER, -16, 8, 2
+    Func_FadeBg FADE_BG_TYPE_BASE, 1, 8, 0, BATTLE_COLOR_WHITE
+    Func_FadeBattlerSprite BATTLE_ANIM_DEFENDER, 0, 1, BATTLE_COLOR_WHITE, 10, 0
     WaitForAnimTasks
+    PlaySoundEffectC SEQ_SE_DP_186
     WaitForAllEmitters
     UnloadParticleSystem 0
-    ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_SCREEN_MODE, 1
-    RestoreBg 3, BATTLE_BG_SWITCH_MODE_FADE
+    SetVar BATTLE_ANIM_VAR_BG_FADE_TYPE, 1
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_X, 0
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_Y, 1
+    RestoreBg 54, BATTLE_BG_SWITCH_MODE_FADE | BATTLE_BG_SWITCH_FLAG_STOP
     WaitForBgSwitch
-    FreePokemonSpriteManager
-    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_0
-    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_1
+    End
+
+L_2:
+    CreateEmitter 0, 3, EMITTER_CB_NONE
+    CreateEmitter 0, 4, EMITTER_CB_NONE
+    WaitForAnimTasks
+    Func_FadeBg FADE_BG_TYPE_BASE, 1, 8, 0, BATTLE_COLOR_WHITE
+    Func_FadeBattlerSprite BATTLE_ANIM_DEFENDER, 0, 1, BATTLE_COLOR_WHITE, 10, 0
+    WaitForAnimTasks
+    PlaySoundEffectC SEQ_SE_DP_186
+    WaitForAllEmitters
+    UnloadParticleSystem 0
+    SetVar BATTLE_ANIM_VAR_BG_FADE_TYPE, 1
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_X, 0
+    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_Y, 1
+    RestoreBg 54, BATTLE_BG_SWITCH_MODE_FADE | BATTLE_BG_SWITCH_FLAG_STOP
+    WaitForBgSwitch
     End

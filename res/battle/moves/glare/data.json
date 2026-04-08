@@ -1,7 +1,7 @@
 {
     "name": "Glare",
     "class": "CLASS_STATUS",
-    "type": "TYPE_NORMAL",
+    "type": "TYPE_POISON",
     "power": 0,
     "accuracy": 75,
     "pp": 30,

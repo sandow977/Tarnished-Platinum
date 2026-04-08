@@ -1,36 +1,41 @@
 #include "macros/btlanimcmd.inc"
 
 L_0:
-    LoadParticleResource 0, superpower_spa
-    PlaySoundEffectL SEQ_SE_DP_W025
+    LoadParticleResource 0, toxic_spa
+    LoadParticleResource 1, toxic_spa
     InitPokemonSpriteManager
     LoadPokemonSpriteDummyResources 0
-    AddPokemonSprite BATTLER_ROLE_ATTACKER, FALSE, BATTLE_ANIM_MON_SPRITE_0, 0
-    Func_Superpower 0, 0
-    CreateEmitter 0, 2, EMITTER_CB_SET_POS_TO_ATTACKER
-    CreateEmitter 0, 3, EMITTER_CB_SET_POS_TO_ATTACKER
-    WaitForAnimTasks
-    Delay 30
-    Delay 10
-    ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_SCREEN_MODE, 1
-    SwitchBg 3, BATTLE_BG_SWITCH_MODE_FADE
-    Delay 5
-    PlaySoundEffectR SEQ_SE_DP_W025B
-    Func_MoveBattler BATTLE_ANIM_BATTLER_SPRITE_ATTACKER, 16, -8, 2
-    Delay 2
-    CreateEmitter 0, 0, EMITTER_CB_SET_POS_TO_DEFENDER
-    CreateEmitter 0, 1, EMITTER_CB_SET_POS_TO_DEFENDER
-    Func_Shake 8, 0, 1, 4, BATTLE_ANIM_BATTLER_SPRITE_DEFENDER
-    Func_MoveBattler BATTLE_ANIM_BATTLER_SPRITE_ATTACKER, -16, 8, 2
-    WaitForAnimTasks
+    LoadPokemonSpriteDummyResources 1
+    AddPokemonSprite BATTLER_ROLE_DEFENDER, FALSE, BATTLE_ANIM_MON_SPRITE_0, 0
+    AddPokemonSprite BATTLER_ROLE_DEFENDER_PARTNER, FALSE, BATTLE_ANIM_MON_SPRITE_1, 1
+    Func_SetPokemonSpritePriority BATTLE_ANIM_MON_SPRITE_0, 81, BATTLE_ANIM_BG_POKEMON, 0, BATTLER_ROLE_DEFENDER
+    Func_SetPokemonSpritePriority BATTLE_ANIM_MON_SPRITE_1, 80, BATTLE_ANIM_BG_POKEMON, 0, BATTLER_ROLE_DEFENDER_PARTNER
+    Delay 1
+    Func_HideBattler BATTLE_ANIM_DEFENDER, TRUE
+    Func_HideBattler BATTLE_ANIM_DEFENDER_PARTNER, TRUE
+    Delay 1
+    CreateEmitter 1, 0, EMITTER_CB_GENERIC
+    SetExtraParams 0, 2, 5, 0, 0, 0
+    SetExtraParams 1, 0, -1720, 0
+    CreateEmitter 0, 1, EMITTER_CB_GENERIC
+    SetExtraParams 0, 2, 2, 0, 0, 0
+    CreateEmitter 0, 2, EMITTER_CB_GENERIC
+    SetExtraParams 0, 2, 2, 0, 0, 0
+    PlaySoundEffectR SEQ_SE_DP_161
+    Func_FadePokemonSprite BATTLE_ANIM_DEFENDER, 0, 1, 0, 10, BATTLE_COLOR_PURPLE
+    Delay 8
+    PlayLoopedSoundEffectR SEQ_SE_DP_W092D, 2, 7
+    Delay 12
+    Func_FadePokemonSprite BATTLE_ANIM_DEFENDER, 0, 1, 10, 0, BATTLE_COLOR_PURPLE
+    Func_HideBattler BATTLE_ANIM_DEFENDER, FALSE
+    Func_HideBattler BATTLE_ANIM_DEFENDER_PARTNER, FALSE
     WaitForAllEmitters
     UnloadParticleSystem 0
-    ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_SCREEN_MODE, 1
-    RestoreBg 3, BATTLE_BG_SWITCH_MODE_FADE
-    WaitForBgSwitch
-    FreePokemonSpriteManager
+    UnloadParticleSystem 1
+    WaitForAnimTasks
+    Func_HideBattler BATTLE_ANIM_DEFENDER, FALSE
+    Func_HideBattler BATTLE_ANIM_DEFENDER_PARTNER, FALSE
     RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_0
     RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_1
+    FreePokemonSpriteManager
     End

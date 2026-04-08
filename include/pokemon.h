@@ -311,20 +311,44 @@ u32 Pokemon_GetSpeciesLevelAt(u16 monSpecies, u32 monExp);
 u32 SpeciesData_GetLevelAt(SpeciesData *speciesData, u16 unused_monSpecies, u32 monExp);
 
 /**
- * @brief Gets the nature of a Pokemon based on its personality value
+ * @brief Gets the effective nature of a Pokemon, accounting for mint effects
  *
  * @param mon
- * @return The pokemons nature
+ * @return The pokemons effective nature
  */
 u8 Pokemon_GetNature(Pokemon *mon);
 
 /**
- * @brief Gets the nature of a BoxPokemon based on its personality value
+ * @brief Gets the effective nature of a BoxPokemon, accounting for mint effects
  *
  * @param boxMon
- * @return The pokemons nature
+ * @return The pokemons effective nature
  */
 u8 BoxPokemon_GetNature(BoxPokemon *boxMon);
+
+/**
+ * @brief Gets the original nature of a Pokemon based on its personality value
+ *
+ * @param mon
+ * @return The pokemons original nature
+ */
+u8 Pokemon_GetOriginalNature(Pokemon *mon);
+
+/**
+ * @brief Gets the original nature of a BoxPokemon based on its personality value
+ *
+ * @param boxMon
+ * @return The pokemons original nature
+ */
+u8 BoxPokemon_GetOriginalNature(BoxPokemon *boxMon);
+
+/**
+ * @brief Sets a Pokemon's mint nature
+ *
+ * @param mon
+ * @param monNature The mint-applied nature
+ */
+void Pokemon_SetMintNature(Pokemon *mon, u8 monNature);
 
 /**
  * @brief Gets the nature of a pokemon based on its personality value
@@ -786,9 +810,9 @@ BOOL Pokemon_SetRotomForm(Pokemon *mon, int form, int moveSlot);
  *
  * @param monSpecies
  * @param monForm
- * @param[out] monLevelUpMoves Pointer to a u16 array to store the move table
+ * @param[out] monLevelUpMoves Pointer to a SpeciesLearnsetEntry array to store the move table
  */
-void Pokemon_LoadLevelUpMovesOf(int monSpecies, int monForm, u16 *monLevelUpMoves);
+void Pokemon_LoadLevelUpMovesOf(int monSpecies, int monForm, SpeciesLearnsetEntry *monLevelUpMoves);
 
 /**
  * @brief Play a Pokemon's cry, according to the given species and form number.

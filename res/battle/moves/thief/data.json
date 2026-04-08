@@ -2,11 +2,11 @@
     "name": "Thief",
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_DARK",
-    "power": 40,
+    "power": 60,
     "accuracy": 100,
     "pp": 10,
     "effect": {
-        "type": "BATTLE_EFFECT_STEAL_HELD_ITEM",
+        "type": "BATTLE_EFFECT_HIT",
         "chance": 0
     },
     "range": "RANGE_SINGLE_TARGET",
@@ -15,7 +15,8 @@
         "MOVE_FLAG_MAKES_CONTACT",
         "MOVE_FLAG_CAN_PROTECT",
         "MOVE_FLAG_CAN_MIRROR_MOVE",
-        "MOVE_FLAG_HIDES_HP_GAUGES"
+        "MOVE_FLAG_HIDES_HP_GAUGES",
+        "MOVE_FLAG_TRIGGERS_KINGS_ROCK"
     ],
     "contest": {
         "effect": "CONTEST_EFFECT_STEAL_VOLTAGE",

@@ -66,6 +66,7 @@
     ScriptEntry CommonScript_FadeToDefaultMusic @ 0x808
     ScriptEntry CommonScript_GriseousOrbCouldNotBeRemoved @ 0x809
     ScriptEntry CommonScript_DebugMenu @ 0x80A
+    ScriptEntry CommonScript_DebugMenu_OpenPC @ 0x80B
     ScriptEntryEnd
 
 CommonScript_EmptyScript1:
@@ -1724,6 +1725,7 @@ CommonScript_DebugMenu_ShowIntro:
     AddListMenuEntry CommonStrings_Text_DebugMenuOption4, 3
     AddListMenuEntry CommonStrings_Text_DebugMenuOption5, 4
     AddListMenuEntry CommonStrings_Text_DebugMenuOption6, 5
+    AddListMenuEntry CommonStrings_Text_DebugMenuOption7, 6
     ShowListMenu
     GoToIfEq VAR_RESULT, 0, CommonScript_DebugMenu_OpenPC
     GoToIfEq VAR_RESULT, 1, CommonScript_DebugMenu_HealFunction
@@ -1731,15 +1733,203 @@ CommonScript_DebugMenu_ShowIntro:
     GoToIfEq VAR_RESULT, 3, CommonScript_DebugMenu_SetIVs
     GoToIfEq VAR_RESULT, 4, CommonScript_DebugMenu_LearnMoves
     GoToIfEq VAR_RESULT, 5, CommonScript_DebugMenu_RenameMons
+    GoToIfEq VAR_RESULT, 6, CommonScript_DebugMenu_Trainers
     GoTo CommonScript_DebugMenu_Exit
 
 
 CommonScript_DebugMenu_OpenPC:
     BufferPlayerName 0
-    SetFlag FLAG_UNK_0x00EC
     PlayFanfare SEQ_SE_DP_PC_ON
     Message pl_msg_00000213_00032
-    GoTo _0C1C
+    GoTo CommonScript_DebugMenu_PortablePC_MainMenu
+
+
+CommonScript_DebugMenu_OpenPCHandoff:
+    CloseMessage
+    CallCommonScript 0x80B
+    GoTo CommonScript_DebugMenu_Exit
+
+
+CommonScript_DebugMenu_PortablePC_MainMenu:
+    BufferPlayerName 0
+    Message pl_msg_00000213_00033
+    InitGlobalTextMenu 1, 1, 0, VAR_0x8006
+    CallIfUnset FLAG_MET_BEBE, _0C7B
+    CallIfSet FLAG_MET_BEBE, _0C81
+    AddMenuEntryImm 60, 1
+    GetNationalDexEnabled VAR_RESULT
+    CallIfEq VAR_RESULT, 0, _0C87
+    CallIfEq VAR_RESULT, 1, _0C8D
+    GoToIfSet FLAG_GAME_COMPLETED, CommonScript_DebugMenu_PortablePC_MainMenuCompleted
+    GoToIfUnset FLAG_GAME_COMPLETED, CommonScript_DebugMenu_PortablePC_MainMenuIncomplete
+    ReturnCommonScript
+    End
+
+CommonScript_DebugMenu_PortablePC_MainMenuCompleted:
+    AddMenuEntryImm 61, 3
+    AddMenuEntryImm 64, 4
+    ShowMenu
+    SetVar VAR_0x8008, VAR_0x8006
+    GoToIfEq VAR_0x8008, 0, CommonScript_DebugMenu_PortablePC_StorageGreeting
+    GoToIfEq VAR_0x8008, 1, CommonScript_DebugMenu_PortablePC_CapsuleGreeting
+    GoToIfEq VAR_0x8008, 2, CommonScript_DebugMenu_PortablePC_SpecialOption
+    GoToIfEq VAR_0x8008, 3, CommonScript_DebugMenu_PortablePC_HallOfFame
+    GoTo CommonScript_DebugMenu_PortablePC_Exit
+
+CommonScript_DebugMenu_PortablePC_MainMenuIncomplete:
+    AddMenuEntryImm 64, 3
+    ShowMenu
+    SetVar VAR_0x8008, VAR_0x8006
+    GoToIfEq VAR_0x8008, 0, CommonScript_DebugMenu_PortablePC_StorageGreeting
+    GoToIfEq VAR_0x8008, 1, CommonScript_DebugMenu_PortablePC_CapsuleGreeting
+    GoToIfEq VAR_0x8008, 2, CommonScript_DebugMenu_PortablePC_SpecialOption
+    GoTo CommonScript_DebugMenu_PortablePC_Exit
+
+CommonScript_DebugMenu_PortablePC_StorageGreeting:
+    PlayFanfare SEQ_SE_DP_PC_LOGIN
+    BufferPlayerName 0
+    Message pl_msg_00000213_00034
+    Call _0D2C
+    GoTo CommonScript_DebugMenu_PortablePC_StorageMenu
+
+CommonScript_DebugMenu_PortablePC_StorageMenu:
+    ShowListMenu
+    SetVar VAR_0x8008, VAR_RESULT
+    GoToIfEq VAR_0x8008, 0, CommonScript_DebugMenu_PortablePC_Deposit
+    GoToIfEq VAR_0x8008, 1, CommonScript_DebugMenu_PortablePC_Withdraw
+    GoToIfEq VAR_0x8008, 2, CommonScript_DebugMenu_PortablePC_MovePokemon
+    GoToIfEq VAR_0x8008, 3, CommonScript_DebugMenu_PortablePC_MoveItems
+    GoToIfEq VAR_0x8008, 4, CommonScript_DebugMenu_PortablePC_Compare
+    GoTo CommonScript_DebugMenu_PortablePC_MainMenu
+
+CommonScript_DebugMenu_PortablePC_Deposit:
+    CloseMessage
+    Call CommonScript_DebugMenu_PortablePC_FadeOut
+    OpenPokemonStorage 0
+    ReturnToField
+    GoTo CommonScript_DebugMenu_PortablePC_ReturnFromStorage
+
+CommonScript_DebugMenu_PortablePC_Withdraw:
+    CloseMessage
+    Call CommonScript_DebugMenu_PortablePC_FadeOut
+    OpenPokemonStorage 1
+    ReturnToField
+    GoTo CommonScript_DebugMenu_PortablePC_ReturnFromStorage
+
+CommonScript_DebugMenu_PortablePC_MovePokemon:
+    CloseMessage
+    Call CommonScript_DebugMenu_PortablePC_FadeOut
+    OpenPokemonStorage 2
+    ReturnToField
+    GoTo CommonScript_DebugMenu_PortablePC_ReturnFromStorage
+
+CommonScript_DebugMenu_PortablePC_MoveItems:
+    CloseMessage
+    Call CommonScript_DebugMenu_PortablePC_FadeOut
+    OpenPokemonStorage 3
+    ReturnToField
+    GoTo CommonScript_DebugMenu_PortablePC_ReturnFromStorage
+
+CommonScript_DebugMenu_PortablePC_Compare:
+    CloseMessage
+    Call CommonScript_DebugMenu_PortablePC_FadeOut
+    OpenPokemonStorage 4
+    ReturnToField
+    GoTo CommonScript_DebugMenu_PortablePC_ReturnFromStorage
+
+CommonScript_DebugMenu_PortablePC_ReturnFromStorage:
+    ScrCmd_30B
+    BufferPlayerName 0
+    MessageInstant 33
+    Call _0D2C
+    FadeScreenIn
+    GoTo CommonScript_DebugMenu_PortablePC_StorageMenu
+
+CommonScript_DebugMenu_PortablePC_FadeOut:
+    FadeScreenOut
+    WaitFadeScreen
+    Return
+
+CommonScript_DebugMenu_PortablePC_CapsuleGreeting:
+    PlayFanfare SEQ_SE_DP_PC_LOGIN
+    BufferPlayerName 0
+    Message pl_msg_00000213_00035
+    GoTo CommonScript_DebugMenu_PortablePC_CapsuleMenuSetup
+
+CommonScript_DebugMenu_PortablePC_CapsuleMenuSetup:
+    Call _0E61
+    GoTo CommonScript_DebugMenu_PortablePC_CapsuleMenu
+
+CommonScript_DebugMenu_PortablePC_CapsuleMenu:
+    ShowListMenu
+    SetVar VAR_0x8008, VAR_RESULT
+    GoToIfEq VAR_0x8008, 0, CommonScript_DebugMenu_PortablePC_CapsuleCase
+    GoToIfEq VAR_0x8008, 1, CommonScript_DebugMenu_PortablePC_SealEditor
+    GoTo CommonScript_DebugMenu_PortablePC_MainMenu
+
+CommonScript_DebugMenu_PortablePC_CapsuleCase:
+    CloseMessage
+    ScrCmd_1B4 VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, CommonScript_DebugMenu_PortablePC_CapsuleCaseFull
+    ScrCmd_1B3
+    GoTo CommonScript_DebugMenu_PortablePC_CapsuleCaseReturn
+
+CommonScript_DebugMenu_PortablePC_CapsuleCaseFull:
+    Message pl_msg_00000213_00052
+    GoTo CommonScript_DebugMenu_PortablePC_CapsuleMenuSetup
+
+CommonScript_DebugMenu_PortablePC_CapsuleCaseReturn:
+    BufferPlayerName 0
+    OpenMessage
+    Call _0E61
+    GoTo CommonScript_DebugMenu_PortablePC_CapsuleMenu
+
+CommonScript_DebugMenu_PortablePC_SealEditor:
+    ScrCmd_2AB VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, CommonScript_DebugMenu_PortablePC_SealEditorUnavailable
+    CloseMessage
+    OpenSealCapsuleEditor
+    GoTo CommonScript_DebugMenu_PortablePC_SealEditorReturn
+
+CommonScript_DebugMenu_PortablePC_SealEditorUnavailable:
+    Message pl_msg_00000213_00118
+    GoTo CommonScript_DebugMenu_PortablePC_CapsuleMenuSetup
+
+CommonScript_DebugMenu_PortablePC_SealEditorReturn:
+    BufferPlayerName 0
+    MessageInstant 33
+    Call _0E61
+    Call _0C06
+    FadeScreenIn
+    GoTo CommonScript_DebugMenu_PortablePC_CapsuleMenu
+
+CommonScript_DebugMenu_PortablePC_HallOfFame:
+    PlayFanfare SEQ_SE_DP_PC_LOGIN
+    CloseMessage
+    ScrCmd_336 VAR_RESULT
+    GoToIfEq VAR_RESULT, 1, CommonScript_DebugMenu_PortablePC_HallOfFameUnavailable
+    ScrCmd_0B1
+    ReturnToField
+    Call _0F80
+    GoTo CommonScript_DebugMenu_PortablePC_MainMenu
+
+CommonScript_DebugMenu_PortablePC_HallOfFameUnavailable:
+    Message pl_msg_00000213_00131
+    GoTo CommonScript_DebugMenu_PortablePC_MainMenu
+
+CommonScript_DebugMenu_PortablePC_SpecialOption:
+    PlayFanfare SEQ_SE_DP_PC_LOGIN
+    CallCommonScript 0x26DF
+    GoTo CommonScript_DebugMenu_PortablePC_MainMenu
+
+CommonScript_DebugMenu_PortablePC_Exit:
+    CloseMessage
+    PlayFanfare SEQ_SE_DP_PC_LOGOFF
+    ReturnCommonScript
+    End
+
+
+
 
 CommonScript_DebugMenu_HealFunction:
     HealParty
@@ -2150,8 +2340,84 @@ CommonScript_DebugMenu_UnchangedName:
 
 
 
-    
+CommonScript_DebugMenu_Trainers:
+    InitLocalTextListMenu 1, 1, 0, VAR_RESULT
+    AddListMenuEntry CommonStrings_Text_Fight1, 0
+    AddListMenuEntry CommonStrings_Text_Fight2, 1
+    AddListMenuEntry CommonStrings_Text_Fight3, 2
+    AddListMenuEntry CommonStrings_Text_Fight4, 3
+    AddListMenuEntry CommonStrings_Text_Fight5, 4
+    AddListMenuEntry CommonStrings_Text_Fight6, 5
+    AddListMenuEntry CommonStrings_Text_Fight7, 6
+    ShowListMenu
+    GoToIfEq VAR_RESULT, 0, CommonScript_Battle1
+    GoToIfEq VAR_RESULT, 1, CommonScript_Battle2
+    GoToIfEq VAR_RESULT, 2, CommonScript_Battle3
+    GoToIfEq VAR_RESULT, 3, CommonScript_Battle4
+    GoToIfEq VAR_RESULT, 4, CommonScript_Battle5
+    GoToIfEq VAR_RESULT, 5, CommonScript_Battle6
+    GoToIfEq VAR_RESULT, 6, CommonScript_Battle7
+    GoTo CommonScript_DebugMenu_Exit
 
+CommonScript_Battle1:
+    CloseMessage
+    StartTrainerBattle TRAINER_ACE_TRAINER_ARTHUR
+    CheckWonBattle VAR_RESULT
+    ReleaseAll
+    End
+
+CommonScript_Battle2:
+    CloseMessage
+    StartTrainerBattle TRAINER_ACE_TRAINER_BLAKE
+    CheckWonBattle VAR_RESULT
+    ReleaseAll
+    End
+
+CommonScript_Battle3:
+    CloseMessage
+    StartTrainerBattle TRAINER_ACE_TRAINER_ALLEN
+    CheckWonBattle VAR_RESULT
+    ReleaseAll
+    End
+
+
+CommonScript_Battle4:
+    CloseMessage
+    StartTrainerBattle TRAINER_ACE_TRAINER_ALYSSA
+    CheckWonBattle VAR_RESULT
+    ReleaseAll
+    End
+
+CommonScript_Battle5:
+    CloseMessage
+    StartTrainerBattle TRAINER_ACE_TRAINER_ANTON
+    CheckWonBattle VAR_RESULT
+    ReleaseAll
+    End
+
+CommonScript_Battle6:
+    CloseMessage
+    StartTrainerBattle TRAINER_ACE_TRAINER_ABEL
+    CheckWonBattle VAR_RESULT
+    ReleaseAll
+    End
+
+CommonScript_Battle7:
+    CloseMessage
+    StartTrainerBattle TRAINER_ACE_TRAINER_ALICIA
+    CheckWonBattle VAR_RESULT
+    ReleaseAll
+    End
+
+
+
+
+
+
+
+
+
+    
 
 
 

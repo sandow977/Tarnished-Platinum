@@ -1,35 +1,34 @@
 {
     "front": {
         "y_offset": {
-            "female": 12,
-            "male": 12
+            "female": 0,
+            "male": 0
         },
-        "addl_y_offset": -2,
         "animation": 2,
         "cry_delay": 0,
-        "start_delay": 18,
+        "start_delay": 0,
         "frames": [
             {
                 "sprite_frame": 0,
-                "frame_delay": 5,
+                "frame_delay": 10,
                 "x_shift": 0,
                 "y_shift": 0
             },
             {
                 "sprite_frame": 1,
-                "frame_delay": 4,
+                "frame_delay": 10,
                 "x_shift": 0,
                 "y_shift": 0
             },
             {
-                "sprite_frame": -2,
-                "frame_delay": 1,
+                "sprite_frame": 0,
+                "frame_delay": 10,
                 "x_shift": 0,
                 "y_shift": 0
             },
             {
-                "sprite_frame": 1,
-                "frame_delay": 15,
+                "sprite_frame": -1,
+                "frame_delay": 0,
                 "x_shift": 0,
                 "y_shift": 0
             },
@@ -69,33 +68,34 @@
                 "x_shift": 0,
                 "y_shift": 0
             }
-        ]
+        ],
+        "addl_y_offset": -21
     },
     "back": {
         "y_offset": {
-            "female": 5,
-            "male": 5
+            "female": 0,
+            "male": 0
         },
-        "animation": 2,
-        "cry_delay": 6,
-        "start_delay": 0,
+        "animation": 5,
+        "cry_delay": 15,
+        "start_delay": 10,
         "frames": [
             {
                 "sprite_frame": 0,
-                "frame_delay": 6,
+                "frame_delay": 10,
                 "x_shift": 0,
                 "y_shift": 0
             },
             {
                 "sprite_frame": 1,
                 "frame_delay": 15,
-                "x_shift": -6,
+                "x_shift": 4,
                 "y_shift": 0
             },
             {
                 "sprite_frame": 1,
-                "frame_delay": 4,
-                "x_shift": -6,
+                "frame_delay": 7,
+                "x_shift": 3,
                 "y_shift": 0
             },
             {
@@ -144,6 +144,6 @@
     },
     "shadow": {
         "x_offset": 0,
-        "size": "SHADOW_SIZE_LARGE"
+        "size": "SHADOW_SIZE_SMALL"
     }
 }

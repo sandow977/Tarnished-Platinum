@@ -1,7 +1,7 @@
 {
     "name": "Misty Explosion",
     "class": "CLASS_SPECIAL",
-    "type": "TYPE_NORMAL",
+    "type": "TYPE_FAIRY",
     "power": 250,
     "accuracy": 100,
     "pp": 5,

@@ -13,6 +13,7 @@ typedef struct {
     u8 unk_176;
     u8 unk_177;
     u8 unk_178[32];
+    u8 unk_198_forcedShiny[30];
     UnkStruct_ov62_02239DA4_sub1 unk_198;
 } UnkStruct_ov62_02239DA4;
 

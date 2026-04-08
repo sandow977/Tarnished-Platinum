@@ -28,13 +28,14 @@ typedef struct MoveEffectsData {
     u32 magnetRiseTurns : 3;
     u32 healBlockTurns : 3;
     u32 embargoTurns : 3;
+    u32 throatChopTurns : 3;
     u32 canUnburden : 1;
     u32 metronomeTurns : 4;
     u32 micleBerry : 1;
     u32 custapBerry : 1;
     u32 quickClaw : 1;
     u32 meFirst : 1;
-    u32 padding0004_1F : 1;
+    u32 ateBerry : 1;
 
     int rechargeTurnNumber;
     int fakeOutTurnNumber;

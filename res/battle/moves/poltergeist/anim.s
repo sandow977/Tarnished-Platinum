@@ -1,14 +1,27 @@
 #include "macros/btlanimcmd.inc"
 
 L_0:
-    LoadParticleResource 0, slack_off_spa
-    PlaySoundEffectL SEQ_SE_DP_W281
-    Func_ScaleBattlerSprite BATTLE_ANIM_BATTLER_SPRITE_ATTACKER, 100, 100, 100, 60, 100, HOLD_F(20) | CYCLES(1), SCALE_F(4) | RESTORE_F(4)
+    InitPokemonSpriteManager
+    LoadPokemonSpriteDummyResources 0
+    LoadPokemonSpriteDummyResources 1
+    AddPokemonSprite BATTLER_ROLE_ATTACKER, FALSE, BATTLE_ANIM_MON_SPRITE_0, 0
+    AddPokemonSprite BATTLER_ROLE_DEFENDER, FALSE, BATTLE_ANIM_MON_SPRITE_1, 1
+    LoadPokemonSpriteDummyResources 2
+    AddPokemonSprite BATTLER_ROLE_ATTACKER_PARTNER, FALSE, BATTLE_ANIM_MON_SPRITE_2, 2
+    BtlAnimCmd_082 2, 1, 2
+    LoadPokemonSpriteDummyResources 3
+    AddPokemonSprite BATTLER_ROLE_DEFENDER_PARTNER, FALSE, BATTLE_ANIM_MON_SPRITE_3, 3
+    BtlAnimCmd_082 3, 1, 3
+    Func_Memento
+    PlaySoundEffectL SEQ_SE_DP_W060
+    Delay 24
+    PlaySoundEffectR SEQ_SE_DP_W060B
     WaitForAnimTasks
-    CreateEmitter 0, 0, EMITTER_CB_SET_POS_TO_ATTACKER
-    Func_FadeBattlerSprite BATTLE_ANIM_ATTACKER, 0, 1, BATTLE_COLOR_WHITE, 10, 0
-    PlaySoundEffectL SEQ_SE_DP_W071B
-    WaitForAnimTasks
-    WaitForAllEmitters
-    UnloadParticleSystem 0
+    FreePokemonSpriteManager
+    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_0
+    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_1
+    BtlAnimCmd_083 1
+    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_2
+    BtlAnimCmd_083 1
+    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_3
     End

@@ -51,6 +51,7 @@ void ov61_0222AE88(SaveData *saveData, const PCBoxes *pcBoxes, int boxID, UnkStr
         }
 
         param3->unk_158[v1] = PCBoxes_GetBoxMonData(pcBoxes, boxID, v1, MON_DATA_FORM, NULL);
+        param3->unk_198_forcedShiny[v1] = PCBoxes_GetBoxMonData(pcBoxes, boxID, v1, MON_DATA_FORCED_SHINY, NULL);
     }
 
     param3->unk_176 = PCBoxes_GetWallpaper(pcBoxes, boxID);

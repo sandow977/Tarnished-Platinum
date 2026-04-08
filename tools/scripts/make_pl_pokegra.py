@@ -35,6 +35,34 @@ output_dir = pathlib.Path(args.output_dir)
 
 private_dir.mkdir(parents=True, exist_ok=True)
 
+for existing in private_dir.iterdir():
+    if existing.is_dir():
+        shutil.rmtree(existing)
+    else:
+        existing.unlink()
+
+
+def run_checked(command):
+    subprocess.run(command, check=True)
+
+
+def usable_png(path: pathlib.Path) -> bool:
+    return path.exists() and path.stat().st_size > 0
+
+
+def resolve_sprite_source(species_dir: pathlib.Path, gender: str, face: str) -> pathlib.Path | None:
+    preferred = species_dir / f'{gender}_{face}.png'
+    if usable_png(preferred):
+        return preferred
+
+    fallback_gender = 'female' if gender == 'male' else 'male'
+    fallback = species_dir / f'{fallback_gender}_{face}.png'
+    if usable_png(fallback):
+        return fallback
+
+    return None
+
+
 for i, subdir in enumerate(SPECIES_DIRS):
     # Do not attempt to process either egg or bad_egg
     if subdir in ['egg', 'bad_egg']:
@@ -43,11 +71,11 @@ for i, subdir in enumerate(SPECIES_DIRS):
     j = 0
     for face in ['back', 'front']:
         for gender in ['female', 'male']:
-            source_file = source_dir / subdir / f'{gender}_{face}.png'
+            source_file = resolve_sprite_source(source_dir / subdir, gender, face)
             target_file = private_dir / f'{i:04}-{j:02}.NCGR'
 
-            if source_file.exists():
-                subprocess.run([
+            if source_file is not None:
+                run_checked([
                     args.nitrogfx,
                     source_file,
                     target_file,
@@ -55,7 +83,9 @@ for i, subdir in enumerate(SPECIES_DIRS):
                     '-scan',
                 ])
             else:
-                subprocess.run(['touch', target_file])
+                raise FileNotFoundError(
+                    f"Missing or zero-byte sprite source for {subdir}: {gender}_{face}.png"
+                )
 
             j += 1
 
@@ -66,8 +96,12 @@ for i, subdir in enumerate(SPECIES_DIRS):
 
     normal_pal_src = source_dir / subdir / 'normal.pal'
     shiny_pal_src = source_dir / subdir / 'shiny.pal'
+    if not normal_pal_src.exists():
+        raise FileNotFoundError(f"Missing palette source for {subdir}: {normal_pal_src}")
+    if not shiny_pal_src.exists():
+        raise FileNotFoundError(f"Missing palette source for {subdir}: {shiny_pal_src}")
 
-    subprocess.run([
+    run_checked([
         args.nitrogfx,
         normal_pal_src,
         private_dir / f'{i:04}-04.NCLR',
@@ -75,7 +109,7 @@ for i, subdir in enumerate(SPECIES_DIRS):
         '-nopad',
         '-comp', '10'
     ])
-    subprocess.run([
+    run_checked([
         args.nitrogfx,
         shiny_pal_src,
         private_dir / f'{i:04}-05.NCLR',
@@ -84,7 +118,7 @@ for i, subdir in enumerate(SPECIES_DIRS):
         '-comp', '10'
     ])
 
-subprocess.run([
+run_checked([
     args.narc,
     '--create',
     '--file', output_dir / 'pl_pokegra.narc',

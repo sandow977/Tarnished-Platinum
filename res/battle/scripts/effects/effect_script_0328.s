@@ -1,0 +1,25 @@
+#include "macros/btlcmd.inc"
+
+
+_000:
+    TryTeleport _025
+    CompareVarToValue OPCODE_FLAG_SET, BTLVAR_BATTLE_TYPE, BATTLE_TYPE_TRAINER, _018
+    Call BATTLE_SUBSCRIPT_ATTACK_MESSAGE_AND_ANIMATION
+    // {0} fled from battle!
+    PrintMessage BattleStrings_Text_PokemonFledFromBattle_Ally, TAG_NICKNAME, BTLSCR_ATTACKER
+    Wait
+    WaitButtonABTime 30
+    FadeOutBattle
+    Wait
+    UpdateVar OPCODE_FLAG_ON, BTLVAR_RESULT_MASK, BATTLE_RESULT_PLAYER_FLED
+    IncrementGameRecord BTLSCR_ATTACKER, BATTLER_TYPE_SOLO_ENEMY, RECORD_WILD_MON_FLED
+    End
+
+_018:
+    TryReplaceFaintedMon BTLSCR_ATTACKER, TRUE, _025
+    Call BATTLE_SUBSCRIPT_ATTACK_MESSAGE_AND_ANIMATION
+    GoToSubscript BATTLE_SUBSCRIPT_CHILLY_RECEPTION
+
+_025:
+    UpdateVar OPCODE_FLAG_ON, BTLVAR_MOVE_STATUS_FLAGS, MOVE_STATUS_FAILED
+    End

@@ -1,9 +1,9 @@
 {
     "name": "Disable",
     "class": "CLASS_STATUS",
-    "type": "TYPE_NORMAL",
+    "type": "TYPE_PSYCHIC",
     "power": 0,
-    "accuracy": 80,
+    "accuracy": 100,
     "pp": 20,
     "effect": {
         "type": "BATTLE_EFFECT_DISABLE",

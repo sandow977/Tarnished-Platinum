@@ -4,13 +4,13 @@
     "type": "TYPE_NORMAL",
     "power": 40,
     "accuracy": 100,
-    "pp": 10,
+    "pp": 3,
     "effect": {
         "type": "BATTLE_EFFECT_ALWAYS_FLINCH_FIRST_TURN_ONLY",
         "chance": 100
     },
     "range": "RANGE_SINGLE_TARGET",
-    "priority": 1,
+    "priority": 3,
     "flags": [
         "MOVE_FLAG_MAKES_CONTACT",
         "MOVE_FLAG_CAN_PROTECT",

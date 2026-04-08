@@ -1,0 +1,116 @@
+{
+    "base_stats": {
+        "hp": 68,
+        "attack": 55,
+        "defense": 55,
+        "speed": 42,
+        "special_attack": 50,
+        "special_defense": 50
+    },
+    "types": [
+        "TYPE_GRASS",
+        "TYPE_FLYING"
+    ],
+    "catch_rate": 45,
+    "base_exp_reward": 64,
+    "ev_yields": {
+        "hp": 1,
+        "attack": 0,
+        "defense": 0,
+        "speed": 0,
+        "special_attack": 0,
+        "special_defense": 0
+    },
+    "held_items": {
+        "common": "ITEM_NONE",
+        "rare": "ITEM_NONE"
+    },
+    "gender_ratio": "GENDER_RATIO_FEMALE_12_5",
+    "hatch_cycles": 15,
+    "base_friendship": 50,
+    "exp_rate": "EXP_RATE_MEDIUM_SLOW",
+    "egg_groups": [
+        "EGG_GROUP_FLYING",
+        "EGG_GROUP_FLYING"
+    ],
+    "abilities": [
+        "ABILITY_OVERGROW",
+        "ABILITY_NONE"
+    ],
+    "safari_flee_rate": 0,
+    "body_color": "MON_COLOR_BROWN",
+    "flip_sprite": false,
+    "icon_palette": 0,
+    "learnset": {
+        "by_level": [],
+        "by_tm": []
+    },
+    "evolutions": [],
+    "pokedex_data": {
+        "height": 3,
+        "weight": 15,
+        "body_shape": "SHAPE_QUADRUPED",
+        "trainer_scale_f": 272,
+        "pokemon_scale_f": 337,
+        "trainer_scale_m": 256,
+        "pokemon_scale_m": 337,
+        "trainer_pos_f": 8,
+        "pokemon_pos_f": 22,
+        "trainer_pos_m": 9,
+        "pokemon_pos_m": 22,
+        "en": {
+            "name": "ROWLET",
+            "category": "Grass Quill Pokemon",
+            "entry_text": [
+                "It feels relaxed in tight, dark\n",
+                "places and may use its Trainer\n",
+                "pocket or bag as a nest."
+            ]
+        },
+        "fr": {
+            "name": "BULBIZARRE",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "de": {
+            "name": "BISASAM",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "it": {
+            "name": "BULBASAUR",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "es": {
+            "name": "BULBASAUR",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        },
+        "jp": {
+            "name": "ROWLET",
+            "category": "Pokemon",
+            "entry_text": [
+                "Placeholder dex text.\n",
+                "Temporary donor text for\n",
+                "build recovery only."
+            ]
+        }
+    }
+}

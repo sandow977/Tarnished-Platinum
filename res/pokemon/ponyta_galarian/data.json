@@ -1,0 +1,116 @@
+{
+    "base_stats": {
+        "hp": 50,
+        "attack": 85,
+        "defense": 55,
+        "speed": 90,
+        "special_attack": 65,
+        "special_defense": 65
+    },
+    "types": [
+        "TYPE_PSYCHIC",
+        "TYPE_PSYCHIC"
+    ],
+    "catch_rate": 190,
+    "base_exp_reward": 82,
+    "ev_yields": {
+        "hp": 0,
+        "attack": 0,
+        "defense": 0,
+        "speed": 1,
+        "special_attack": 0,
+        "special_defense": 0
+    },
+    "held_items": {
+        "common": "ITEM_NONE",
+        "rare": "ITEM_NONE"
+    },
+    "gender_ratio": "GENDER_RATIO_FEMALE_50",
+    "hatch_cycles": 20,
+    "base_friendship": 70,
+    "exp_rate": "EXP_RATE_MEDIUM_FAST",
+    "egg_groups": [
+        "EGG_GROUP_FIELD",
+        "EGG_GROUP_FIELD"
+    ],
+    "abilities": [
+        "ABILITY_RUN_AWAY",
+        "ABILITY_SIMPLE"
+    ],
+    "safari_flee_rate": 0,
+    "body_color": "MON_COLOR_WHITE",
+    "flip_sprite": false,
+    "icon_palette": 2,
+    "learnset": {
+        "by_level": [],
+        "by_tm": []
+    },
+    "evolutions": [],
+    "pokedex_data": {
+        "height": 7,
+        "weight": 69,
+        "body_shape": "SHAPE_QUADRUPED",
+        "trainer_scale_f": 272,
+        "pokemon_scale_f": 337,
+        "trainer_scale_m": 256,
+        "pokemon_scale_m": 337,
+        "trainer_pos_f": 8,
+        "pokemon_pos_f": 22,
+        "trainer_pos_m": 9,
+        "pokemon_pos_m": 22,
+        "en": {
+            "name": "PONYTAG",
+            "category": "Unique Horn Pokemon",
+            "entry_text": [
+                "Its small horn hides a healing\n",
+                "power. A few rubs from it can\n",
+                "heal a slight wound."
+            ]
+        },
+        "fr": {
+            "name": "BULBIZARRE",
+            "category": "PokÃ©mon Graine",
+            "entry_text": [
+                "Au matin de sa vie, la graine sur\n",
+                "son dos lui fournit les Ã©lÃ©ments\n",
+                "dont il a besoin pour grandir."
+            ]
+        },
+        "de": {
+            "name": "BISASAM",
+            "category": "Samen",
+            "entry_text": [
+                "Nach der Geburt nimmt es fÃ¼r eine\n",
+                "Weile NÃ¤hrstoffe Ã¼ber den Samen\n",
+                "auf seinem RÃ¼cken auf."
+            ]
+        },
+        "it": {
+            "name": "BULBASAUR",
+            "category": "PokÃ©mon Seme",
+            "entry_text": [
+                "Dopo la nascita, cresce traendo\n",
+                "nutrimento dal seme piantato\n",
+                "sul suo dorso."
+            ]
+        },
+        "es": {
+            "name": "BULBASAUR",
+            "category": "PokÃ©mon Semilla",
+            "entry_text": [
+                "DespuÃ©s de nacer, crece\n",
+                "alimentÃ¡ndose de las semillas\n",
+                "de su lomo."
+            ]
+        },
+        "jp": {
+            "name": "ãƒ•ã‚·ã‚®ãƒ€ãƒ",
+            "category": "ãŸã­ãƒã‚±ãƒ¢ãƒ³",
+            "entry_text": [
+                "ã†ã¾ã‚Œã¦ã‹ã‚‰ã€€ã—ã°ã‚‰ãã®ã€€ã‚ã„ã ã¯\n",
+                "ã›ãªã‹ã®ã€€ã‚¿ãƒã‹ã‚‰ã€€ãˆã„ã‚ˆã†ã‚’\n",
+                "ã‚‚ã‚‰ã£ã¦ã€€ãŠãŠããã€€ãã ã¤ã€‚"
+            ]
+        }
+    }
+}

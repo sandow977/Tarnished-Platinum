@@ -1,24 +1,24 @@
 {
-    "name": "Superpower",
+    "name": "Beak Blast",
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_FIGHTING",
-    "power": 120,
+    "type": "TYPE_FLYING",
+    "power": 100,
     "accuracy": 100,
-    "pp": 5,
+    "pp": 15,
     "effect": {
-        "type": "BATTLE_EFFECT_LOWER_OWN_ATK_AND_DEF",
+        "type": "BATTLE_EFFECT_BEAK_BLAST",
         "chance": 0
     },
     "range": "RANGE_SINGLE_TARGET",
-    "priority": 0,
+    "priority": -3,
     "flags": [
-        "MOVE_FLAG_MAKES_CONTACT",
         "MOVE_FLAG_CAN_PROTECT",
         "MOVE_FLAG_CAN_MIRROR_MOVE",
-        "MOVE_FLAG_HIDES_SHADOWS"
+        "MOVE_FLAG_HIDES_HP_GAUGES",
+        "MOVE_FLAG_TRIGGERS_KINGS_ROCK"
     ],
     "contest": {
-        "effect": "CONTEST_EFFECT_FINAL_PERFORMANCE_ADVANTAGE",
-        "type": "CONTEST_TYPE_TOUGH"
+        "effect": "CONTEST_EFFECT_BASIC",
+        "type": "CONTEST_TYPE_COOL"
     }
 }

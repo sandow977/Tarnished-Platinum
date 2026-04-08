@@ -58,6 +58,8 @@
 #include "unk_0202D05C.h"
 #include "unk_0203D1B8.h"
 #include "unk_0208C098.h"
+
+#include "res/graphics/item_icons/item_icon.naix"
 #include "unk_02097B18.h"
 #include "vars_flags.h"
 
@@ -1574,20 +1576,30 @@ static void Shop_SetScrollSpritesPositionXY(ShopMenu *shopMenu, u8 isBuyingItem)
 static void Shop_ChangeItemIconGfx(ShopMenu *shopMenu, u16 itemId)
 {
     SpriteResource *spriteRes;
+    int iconFile;
+    int paletteFile;
 
     if ((shopMenu->martType != MART_TYPE_NORMAL) && (shopMenu->martType != MART_TYPE_FRONTIER)) {
         Sprite_SetDrawFlag(shopMenu->sprites[SHOP_SPRITE_ITEM_ICON], FALSE);
         return;
     }
 
+    if (itemId == SHOP_ITEM_END) {
+        iconFile = unused_709_NCGR;
+        paletteFile = unused_710_NCLR;
+    } else {
+        iconFile = Item_FileID(itemId, ITEM_FILE_TYPE_ICON);
+        paletteFile = Item_FileID(itemId, ITEM_FILE_TYPE_PALETTE);
+    }
+
     spriteRes = SpriteResourceCollection_Find(shopMenu->spriteManager.resourceCollections[0], 2);
 
-    SpriteResourceCollection_ModifyTiles(shopMenu->spriteManager.resourceCollections[0], spriteRes, 16, Item_FileID(itemId, ITEM_FILE_TYPE_ICON), FALSE, HEAP_ID_FIELD2);
+    SpriteResourceCollection_ModifyTiles(shopMenu->spriteManager.resourceCollections[0], spriteRes, 16, iconFile, FALSE, HEAP_ID_FIELD2);
     SpriteTransfer_RetransferCharData(spriteRes);
 
     spriteRes = SpriteResourceCollection_Find(shopMenu->spriteManager.resourceCollections[1], 1);
 
-    SpriteResourceCollection_ModifyPalette(shopMenu->spriteManager.resourceCollections[1], spriteRes, 16, Item_FileID(itemId, ITEM_FILE_TYPE_PALETTE), FALSE, HEAP_ID_FIELD2);
+    SpriteResourceCollection_ModifyPalette(shopMenu->spriteManager.resourceCollections[1], spriteRes, 16, paletteFile, FALSE, HEAP_ID_FIELD2);
     SpriteTransfer_ReplacePlttData(spriteRes);
 }
 

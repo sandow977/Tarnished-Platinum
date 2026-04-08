@@ -19,8 +19,8 @@
         "special_defense": 0
     },
     "held_items": {
-        "common": "ITEM_ORAN_BERRY",
-        "rare": "ITEM_LIGHT_BALL"
+        "common": "ITEM_FOCUS_SASH",
+        "rare": "ITEM_FOCUS_SASH"
     },
     "gender_ratio": "GENDER_RATIO_FEMALE_50",
     "hatch_cycles": 10,
@@ -37,8 +37,8 @@
             [ 1, "MOVE_THUNDER_SHOCK" ],
             [ 1, "MOVE_GROWL" ],
             [ 5, "MOVE_TAIL_WHIP" ],
-            [ 10, "MOVE_THUNDER_WAVE" ],
-            [ 13, "MOVE_QUICK_ATTACK" ],
+            [ 10, "MOVE_SOAK" ],
+            [ 13, "MOVE_DOUBLE_SHOCK" ],
             [ 18, "MOVE_DOUBLE_TEAM" ],
             [ 21, "MOVE_SLAM" ],
             [ 26, "MOVE_THUNDERBOLT" ],

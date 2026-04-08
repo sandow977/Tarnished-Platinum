@@ -1,36 +1,39 @@
 #include "macros/btlanimcmd.inc"
 
 L_0:
-    LoadParticleResource 0, superpower_spa
-    PlaySoundEffectL SEQ_SE_DP_W025
+    LoadParticleResource 0, shadow_sneak_spa
+    LoadParticleResource 1, shadow_force_spa
     InitPokemonSpriteManager
     LoadPokemonSpriteDummyResources 0
+    LoadPokemonSpriteDummyResources 1
+    LoadPokemonSpriteDummyResources 2
+    LoadPokemonSpriteDummyResources 3
     AddPokemonSprite BATTLER_ROLE_ATTACKER, FALSE, BATTLE_ANIM_MON_SPRITE_0, 0
-    Func_Superpower 0, 0
-    CreateEmitter 0, 2, EMITTER_CB_SET_POS_TO_ATTACKER
-    CreateEmitter 0, 3, EMITTER_CB_SET_POS_TO_ATTACKER
-    WaitForAnimTasks
-    Delay 30
-    Delay 10
-    ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_SCREEN_MODE, 1
-    SwitchBg 3, BATTLE_BG_SWITCH_MODE_FADE
-    Delay 5
-    PlaySoundEffectR SEQ_SE_DP_W025B
-    Func_MoveBattler BATTLE_ANIM_BATTLER_SPRITE_ATTACKER, 16, -8, 2
+    AddPokemonSprite BATTLER_ROLE_ENEMY_1, FALSE, BATTLE_ANIM_MON_SPRITE_1, 1
+    AddPokemonSprite BATTLER_ROLE_PLAYER_2, FALSE, BATTLE_ANIM_MON_SPRITE_2, 2
+    AddPokemonSprite BATTLER_ROLE_ENEMY_2, FALSE, BATTLE_ANIM_MON_SPRITE_3, 3
+    Func_RenderPokemonSprites 45
+    CreateEmitter 0, 0, EMITTER_CB_GENERIC
+    SetExtraParams 0, 2, 6, 1, 0, 0
     Delay 2
-    CreateEmitter 0, 0, EMITTER_CB_SET_POS_TO_DEFENDER
-    CreateEmitter 0, 1, EMITTER_CB_SET_POS_TO_DEFENDER
-    Func_Shake 8, 0, 1, 4, BATTLE_ANIM_BATTLER_SPRITE_DEFENDER
-    Func_MoveBattler BATTLE_ANIM_BATTLER_SPRITE_ATTACKER, -16, 8, 2
+    PlayMovingSoundEffectAtkDef SEQ_SE_DP_161, BATTLE_SOUND_PAN_LEFT, BATTLE_SOUND_PAN_RIGHT, 4, 2
     WaitForAnimTasks
-    WaitForAllEmitters
-    UnloadParticleSystem 0
-    ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_SCREEN_MODE, 1
-    RestoreBg 3, BATTLE_BG_SWITCH_MODE_FADE
-    WaitForBgSwitch
     FreePokemonSpriteManager
     RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_0
     RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_1
+    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_2
+    RemovePokemonSprite BATTLE_ANIM_MON_SPRITE_3
+    PlaySoundEffectR SEQ_SE_DP_186
+    CreateEmitter 0, 1, EMITTER_CB_SET_POS_TO_DEFENDER
+    CreateEmitter 1, 1, EMITTER_CB_SET_POS_TO_DEFENDER
+    CreateEmitter 1, 2, EMITTER_CB_SET_POS_TO_DEFENDER
+    CreateEmitter 1, 0, EMITTER_CB_SET_POS_TO_DEFENDER
+    Func_Shake 4, 0, 1, 2, BATTLE_ANIM_BATTLER_SPRITE_DEFENDER
+    Func_FadeBattlerSprite BATTLE_ANIM_DEFENDER, 0, 1, BATTLE_COLOR_BLACK, 14, 0
+    PlayDelayedSoundEffectR SEQ_SE_DP_W007, 2
+    PlayDelayedSoundEffectR SEQ_SE_DP_W109, 3
+    PlayDelayedSoundEffectR SEQ_SE_DP_W109, 8
+    WaitForAllEmitters
+    UnloadParticleSystem 1
+    UnloadParticleSystem 0
     End

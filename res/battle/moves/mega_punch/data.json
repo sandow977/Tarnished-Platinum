@@ -1,9 +1,9 @@
 {
     "name": "Mega Punch",
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_NORMAL",
+    "type": "TYPE_FIGHTING",
     "power": 80,
-    "accuracy": 85,
+    "accuracy": 100,
     "pp": 20,
     "effect": {
         "type": "BATTLE_EFFECT_HIT",

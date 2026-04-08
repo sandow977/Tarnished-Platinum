@@ -1,0 +1,6 @@
+{
+  "_comment": "Map target species -> donor species when you intentionally want to reuse an existing shiny.pal.",
+  "dugtrio": "diglett",
+  "skuntank": "stunky",
+  "lumineon": "finneon"
+}

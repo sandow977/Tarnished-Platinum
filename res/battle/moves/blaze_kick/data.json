@@ -3,7 +3,7 @@
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_FIRE",
     "power": 85,
-    "accuracy": 90,
+    "accuracy": 100,
     "pp": 10,
     "effect": {
         "type": "BATTLE_EFFECT_HIGH_CRITICAL_BURN_HIT",
@@ -14,7 +14,8 @@
     "flags": [
         "MOVE_FLAG_MAKES_CONTACT",
         "MOVE_FLAG_CAN_PROTECT",
-        "MOVE_FLAG_CAN_MIRROR_MOVE"
+        "MOVE_FLAG_CAN_MIRROR_MOVE",
+        "MOVE_FLAG_TRIGGERS_KINGS_ROCK"
     ],
     "contest": {
         "effect": "CONTEST_EFFECT_FIRST_PERFORMANCE_ADVANTAGE",

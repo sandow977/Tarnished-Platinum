@@ -2957,6 +2957,19 @@ case 5:
         }
     }
 
+    if (gSystem.pressedKeys & PAD_BUTTON_Y) {
+
+        u32 battleType = BattleSystem_GetBattleType(v0->battleSys);
+
+        if ((battleType & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_NO_ITEMS | BATTLE_TYPE_SAFARI | BATTLE_TYPE_PAL_PARK)) == 0) {
+            v0->unk_0C = 2;
+            v0->unk_0B = 10;
+            Sound_PlayEffect(SEQ_SE_DP_DECIDE);
+            v0->unk_0A = 6;
+            break;
+        }
+    }
+
     v0->unk_0C = BattleSystem_MenuInput(v2);
 
     if (v0->unk_0C != 0xffffffff) {

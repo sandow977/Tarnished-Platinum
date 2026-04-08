@@ -869,7 +869,7 @@
     {
       "id": "CommonStrings_Text_DebugMenuIntro",
       "en_US": [
-        "Current Cap: {STRVAR_0 0, 2, 0}\n",
+        "Current Cap: {STRVAR_1 0, 3, 0}\n",
         "What do you want to do?"
       ]
     },
@@ -907,6 +907,12 @@
       "id": "CommonStrings_Text_DebugMenuOption6",
       "en_US": [
         "Rename Pokémon"
+      ]
+    },
+    {
+      "id": "CommonStrings_Text_DebugMenuOption7",
+      "en_US": [
+        "Fight Trainers"
       ]
     },
     {
@@ -1067,6 +1073,48 @@
     "id": "CommonScript_Text_FailedSleep",
     "en_US": [
       "You don’t have a full party!"
+    ]
+  },
+    {
+    "id": "CommonStrings_Text_Fight1",
+    "en_US": [
+      "1"
+    ]
+  },
+     {
+    "id": "CommonStrings_Text_Fight2",
+    "en_US": [
+      "2"
+    ]
+  },
+   {
+    "id": "CommonStrings_Text_Fight3",
+    "en_US": [
+      "3"
+    ]
+  },
+   {
+    "id": "CommonStrings_Text_Fight4",
+    "en_US": [
+      "4"
+    ]
+  },
+   {
+    "id": "CommonStrings_Text_Fight5",
+    "en_US": [
+      "5"
+    ]
+  },
+   {
+    "id": "CommonStrings_Text_Fight6",
+    "en_US": [
+      "6"
+    ]
+  },
+   {
+    "id": "CommonStrings_Text_Fight7",
+    "en_US": [
+      "7"
     ]
   },
   {

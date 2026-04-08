@@ -87,6 +87,14 @@ typedef struct BattleMessageParams {
     int params[6]; //< Params for the rendered message
 } BattleMessageParams;
 
+enum {
+    BATTLE_LEVEL_UP_NCLR = 82,
+    // Fairy added one more battle type icon, shifting later pl_batt_obj members by 1.
+    BATTLE_LEVEL_UP_NCGR = 257,
+    BATTLE_LEVEL_UP_NCER = 258,
+    BATTLE_LEVEL_UP_NANR = 259
+};
+
 static BOOL BtlCmd_PlayEncounterAnimation(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_SetPokemonEncounter(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_PokemonSlideIn(BattleSystem *battleSys, BattleContext *battleCtx);
@@ -310,7 +318,30 @@ static BOOL BtlCmd_CheckCurMoveIsType(BattleSystem *battleSys, BattleContext *ba
 static BOOL BtlCmd_LoadArchivedMonData(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_RefreshMonData(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BtlCmd_End(BattleSystem *battleSys, BattleContext *battleCtx);
-
+//Strength Sap/Stored Power
+static BOOL BtlCmd_CalcStrengthSapHeal(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_CalcPowerTripPower(BattleSystem *battleSys, BattleContext *battleCtx);
+//Burn Up/Double Shock
+static BOOL BtlCmd_RemoveBattlerType(BattleSystem *battleSys, BattleContext *battleCtx);
+//Bolt Beak Power
+static BOOL BtlCmd_CalcBoltBeakPower(BattleSystem *battleSys, BattleContext *battleCtx);
+//Soak
+static BOOL BtlCmd_SetBattlerType(BattleSystem *battleSys, BattleContext *battleCtx);
+//Forest Curse
+static BOOL BtlCmd_AddBattlerType(BattleSystem *battleSys, BattleContext *battleCtx);
+//Acrobatics
+static BOOL BtlCmd_CalcAcrobaticsPower(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_CalcKnockOffPower(BattleSystem *battleSys, BattleContext *battleCtx);
+//Retaliate
+static BOOL BtlCmd_CalcRetaliatePower(BattleSystem *battleSys, BattleContext *battleCtx);
+//Heat Crash/Heavy Slam
+static BOOL BtlCmd_CalcHeatCrashPower(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_TryStickyWeb(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_TryBelch(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_CheckStickyWeb(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_TryCoaching(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_TopsyTurvy(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BtlCmd_TryShedTail(BattleSystem *battleSys, BattleContext *battleCtx);
 static int BattleScript_Read(BattleContext *battleCtx);
 static void BattleScript_Iter(BattleContext *battleCtx, int i);
 static void BattleScript_Jump(BattleContext *battleCtx, enum NarcID narcID, int file);
@@ -572,7 +603,23 @@ static const BtlCmd sBattleCommands[] = {
     BtlCmd_CheckCurMoveIsType,
     BtlCmd_LoadArchivedMonData,
     BtlCmd_RefreshMonData,
-    BtlCmd_End
+    BtlCmd_End,
+    BtlCmd_CalcStrengthSapHeal,
+    BtlCmd_CalcPowerTripPower,
+    BtlCmd_RemoveBattlerType,
+    BtlCmd_CalcBoltBeakPower,
+    BtlCmd_SetBattlerType,
+    BtlCmd_AddBattlerType,
+    BtlCmd_CalcAcrobaticsPower,
+    BtlCmd_CalcRetaliatePower,
+    BtlCmd_CalcHeatCrashPower,
+    BtlCmd_TryBelch,
+    BtlCmd_TryStickyWeb,
+    BtlCmd_CheckStickyWeb,
+    BtlCmd_TryCoaching,
+    BtlCmd_TopsyTurvy,
+    BtlCmd_TryShedTail,
+    BtlCmd_CalcKnockOffPower,
 };
 
 BOOL BattleScript_Exec(BattleSystem *battleSys, BattleContext *battleCtx)
@@ -602,6 +649,55 @@ static BOOL BtlCmd_PlayEncounterAnimation(BattleSystem *battleSys, BattleContext
 
     return FALSE;
 }
+//Shed Tail Logic
+static BOOL BtlCmd_TryShedTail(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int jumpOnFail = BattleScript_Read(battleCtx);
+    int subHP = BattleSystem_Divide(ATTACKING_MON.maxHP, 4);
+
+    if ((ATTACKING_MON.statusVolatile & VOLATILE_CONDITION_SUBSTITUTE)
+        || BattleSystem_AnyReplacementMons(battleSys, battleCtx, battleCtx->attacker) == FALSE
+        || ATTACKING_MON.curHP <= (subHP * 2)) {
+        BattleScript_Iter(battleCtx, jumpOnFail);
+    } else {
+        if (BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker) != BATTLE_SIDE_PLAYER) {
+            int slot = BattleAI_SwitchedSlot(battleSys, battleCtx->attacker);
+
+            if (slot == 6) {
+                int i;
+                int partner = BattleSystem_GetPartner(battleSys, battleCtx->attacker);
+                Party *party = BattleSystem_GetParty(battleSys, battleCtx->attacker);
+
+                slot = BattleAI_PostKOSwitchIn(battleSys, battleCtx->attacker);
+
+                if (slot == 6) {
+                    for (i = 0; i < Party_GetCurrentCount(party); i++) {
+                        Pokemon *mon = Party_GetPokemonBySlotIndex(party, i);
+
+                        if (Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL)
+                            && Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL) == FALSE
+                            && Pokemon_GetValue(mon, MON_DATA_HP, NULL)
+                            && i != battleCtx->selectedPartySlot[battleCtx->attacker]
+                            && i != battleCtx->selectedPartySlot[partner]) {
+                            slot = i;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            battleCtx->switchedPartySlot[battleCtx->attacker] = slot;
+        }
+
+        battleCtx->hpCalcTemp = (subHP * 2) * -1;
+        ATTACKING_MON.moveEffectsData.substituteHP = subHP;
+        ATTACKING_MON.statusVolatile &= ~VOLATILE_CONDITION_BIND;
+    }
+
+    return FALSE;
+}
+
 
 /**
  * @brief Set a wild Pokemon as the battle encounter.
@@ -768,6 +864,44 @@ static BOOL BtlCmd_PokemonSlideIn(BattleSystem *battleSys, BattleContext *battle
  * @param battleCtx
  * @return FALSE
  */
+
+//Strength Sap
+static BOOL BtlCmd_CalcStrengthSapHeal(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+
+    int battler = BattleScript_Battler(battleSys, battleCtx, BattleScript_Read(battleCtx));
+
+    battleCtx->hpCalcTemp = BattleSystem_CalcStrengthSapHealAmount(battleSys, battleCtx, battler);
+    return FALSE;
+}
+//Stored Power/Power Trip
+static BOOL BtlCmd_CalcPowerTripPower(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+
+    int i, sumBoosts = 0;
+    for (i = BATTLE_STAT_HP; i < BATTLE_STAT_MAX; i++) {
+        if (ATTACKING_MON.statBoosts[i] > DEFAULT_STAT_STAGE) {
+            sumBoosts += ATTACKING_MON.statBoosts[i] - DEFAULT_STAT_STAGE;
+        }
+    }
+
+    battleCtx->movePower = 20 + 20 * sumBoosts;
+    return FALSE;
+}
+//Burn Up/Double Shock
+
+static BOOL BtlCmd_RemoveBattlerType(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+
+    int battler = BattleScript_Battler(battleSys, battleCtx, BattleScript_Read(battleCtx));
+    int type = BattleScript_Read(battleCtx);
+
+    BattleSystem_RemoveBattlerType(battleCtx, battler, type);
+    return FALSE;
+}
 static BOOL BtlCmd_PokemonSendOut(BattleSystem *battleSys, BattleContext *battleCtx)
 {
     int i;
@@ -1998,6 +2132,7 @@ static BOOL BtlCmd_TryFaintMon(BattleSystem *battleSys, BattleContext *battleCtx
         battleCtx->faintedMon = battler;
         battleCtx->battleStatusMask |= (FlagIndex(battler) << SYSCTL_MON_FAINTED_SHIFT);
         battleCtx->totalFainted[battler]++;
+        battleCtx->sideConditions[BattleSystem_GetBattlerSide(battleSys, battler)].retaliatePending = TRUE;
 
         BattleScript_UpdateFriendship(battleSys, battleCtx, battler);
     }
@@ -2869,10 +3004,11 @@ static BOOL BtlCmd_SetMultiHit(BattleSystem *battleSys, BattleContext *battleCtx
     BattleScript_Iter(battleCtx, 1);
     int hits = BattleScript_Read(battleCtx);
     int flags = BattleScript_Read(battleCtx);
+    int ability = Battler_Ability(battleCtx, battleCtx->attacker);
 
     if (battleCtx->multiHitNumHits == 0) {
         if (hits == 0) {
-            if (Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_SKILL_LINK) {
+            if (ability == ABILITY_SKILL_LINK) {
                 hits = 5;
             } else {
                 hits = BattleSystem_RandNext(battleSys) & 3;
@@ -2882,6 +3018,10 @@ static BOOL BtlCmd_SetMultiHit(BattleSystem *battleSys, BattleContext *battleCtx
                     hits = (BattleSystem_RandNext(battleSys) & 3) + 2;
                 }
             }
+        }
+
+        if (flags == SYSCTL_TRIPLE_KICK && ability == ABILITY_SKILL_LINK) {
+            flags = SYSCTL_MULTI_HIT_MOVE;
         }
 
         battleCtx->multiHitCounter = hits;
@@ -5528,7 +5668,7 @@ static BOOL BtlCmd_TryWhirlwind(BattleSystem *battleSys, BattleContext *battleCt
         // Check if there are more eligible mons in the back of the party.
         if (eligibleMons <= maxActiveMons) {
             BattleScript_Iter(battleCtx, jumpOnFail);
-        } else if (BattleSystem_CanWhirlwind(battleSys, battleCtx)) {
+        } else if (battleCtx->moveCur == MOVE_DRAGON_TAIL || BattleSystem_CanWhirlwind(battleSys, battleCtx)) {
             // Pick a random eligible mon from the back of the party.
             do {
                 do {
@@ -5674,6 +5814,24 @@ static BOOL BtlCmd_CheckSpikes(BattleSystem *battleSys, BattleContext *battleCtx
     return FALSE;
 }
 
+static BOOL BtlCmd_CheckStickyWeb(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int inBattler = BattleScript_Read(battleCtx);
+    int jumpNoEffect = BattleScript_Read(battleCtx);
+
+    int battler = BattleScript_Battler(battleSys, battleCtx, inBattler);
+    int side = BattleSystem_GetBattlerSide(battleSys, battler);
+
+    if ((battleCtx->sideConditionsMask[side] & SIDE_CONDITION_STICKY_WEB)
+        && battleCtx->battleMons[battler].curHP) {
+        battleCtx->sideEffectMon = battler;
+    } else {
+        BattleScript_Iter(battleCtx, jumpNoEffect);
+    }
+
+    return FALSE;
+}
 /**
  * @brief Try to execute the Perish Song effect.
  *
@@ -6166,7 +6324,14 @@ static BOOL BtlCmd_RapidSpin(BattleSystem *battleSys, BattleContext *battleCtx)
         battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_TOXIC_SPIKES;
         battleCtx->sideConditions[side].toxicSpikesLayers = 0;
         battleCtx->msgMoveTemp = MOVE_TOXIC_SPIKES;
+        BattleScript_Call(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_blow_away_hazards);
 
+        return FALSE;
+    }
+
+    if (battleCtx->sideConditionsMask[side] & SIDE_CONDITION_STICKY_WEB) {
+        battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_STICKY_WEB;
+        battleCtx->msgMoveTemp = MOVE_STICKY_WEB;
         BattleScript_Call(battleCtx, NARC_INDEX_BATTLE__SKILL__SUB_SEQ, subscript_blow_away_hazards);
 
         return FALSE;
@@ -6255,7 +6420,7 @@ static BOOL BtlCmd_CalcHiddenPowerParams(BattleSystem *battleSys, BattleContext 
         | ((ATTACKING_MON.spAttackIV & 1) << 4)
         | ((ATTACKING_MON.spDefenseIV & 1) << 5);
 
-    battleCtx->movePower = battleCtx->movePower * 40 / 63 + 30;
+    battleCtx->movePower = 70;
     battleCtx->moveType = battleCtx->moveType * 15 / 63 + 1;
 
     if (battleCtx->moveType >= TYPE_MYSTERY) {
@@ -6309,22 +6474,6 @@ static BOOL BtlCmd_TryFutureSight(BattleSystem *battleSys, BattleContext *battle
 
         // Calculate the damage at the time of Future Sight setup.
         // Do not check for type effectiveness nor crits.
-        int damage = BattleSystem_CalcMoveDamage(battleSys,
-                         battleCtx,
-                         battleCtx->moveCur,
-                         battleCtx->sideConditionsMask[side],
-                         battleCtx->fieldConditionsMask,
-                         0,
-                         0,
-                         battleCtx->attacker,
-                         battleCtx->defender,
-                         1)
-            * -1;
-        battleCtx->fieldConditions.futureSightDamage[battleCtx->defender] = BattleSystem_CalcDamageVariance(battleSys, battleCtx, damage);
-
-        if (ATTACKER_TURN_FLAGS.helpingHand) {
-            battleCtx->fieldConditions.futureSightDamage[battleCtx->defender] = battleCtx->fieldConditions.futureSightDamage[battleCtx->defender] * 15 / 10;
-        }
     } else {
         BattleScript_Iter(battleCtx, jumpOnFail);
     }
@@ -6576,9 +6725,7 @@ static BOOL BtlCmd_TrySwapItems(BattleSystem *battleSys, BattleContext *battleCt
     int attacking = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker);
     int defending = BattleSystem_GetBattlerSide(battleSys, battleCtx->defender);
 
-    if (BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker) && (battleType & BATTLE_TYPE_RESTORE_ITEMS_AFTER) == FALSE) {
-        BattleScript_Iter(battleCtx, jumpOnFail);
-    } else if ((battleCtx->sideConditions[attacking].knockedOffItemsMask & FlagIndex(battleCtx->selectedPartySlot[battleCtx->attacker]))
+    if ((battleCtx->sideConditions[attacking].knockedOffItemsMask & FlagIndex(battleCtx->selectedPartySlot[battleCtx->attacker]))
         || (battleCtx->sideConditions[defending].knockedOffItemsMask & FlagIndex(battleCtx->selectedPartySlot[battleCtx->defender]))) {
         BattleScript_Iter(battleCtx, jumpOnFail);
     } else if ((ATTACKING_MON.heldItem == ITEM_NONE && DEFENDING_MON.heldItem == ITEM_NONE)
@@ -7059,6 +7206,56 @@ static BOOL BtlCmd_CalcWeightBasedPower(BattleSystem *battleSys, BattleContext *
 
     return FALSE;
 }
+//This calculates BP for heat crash/heavy slam
+static BOOL BtlCmd_CalcHeatCrashPower(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+
+    if (DEFENDING_MON.weight == 0) {
+        battleCtx->movePower = 40;
+    } else if (ATTACKING_MON.weight >= DEFENDING_MON.weight * 5) {
+        battleCtx->movePower = 120;
+    } else if (ATTACKING_MON.weight >= DEFENDING_MON.weight * 4) {
+        battleCtx->movePower = 100;
+    } else if (ATTACKING_MON.weight >= DEFENDING_MON.weight * 3) {
+        battleCtx->movePower = 80;
+    } else if (ATTACKING_MON.weight >= DEFENDING_MON.weight * 2) {
+        battleCtx->movePower = 60;
+    } else {
+        battleCtx->movePower = 40;
+    }
+
+    return FALSE;
+}
+//Sticky Web-Try
+static BOOL BtlCmd_TryStickyWeb(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int jumpOnFail = BattleScript_Read(battleCtx);
+    int defendingSide = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker) ^ 1;
+
+    if (battleCtx->sideConditionsMask[defendingSide] & SIDE_CONDITION_STICKY_WEB) {
+        ATTACKER_SELF_TURN_FLAGS.skipPressureCheck = TRUE;
+        BattleScript_Iter(battleCtx, jumpOnFail);
+    } else {
+        battleCtx->sideConditionsMask[defendingSide] |= SIDE_CONDITION_STICKY_WEB;
+    }
+
+    return FALSE;
+}
+
+//Belch Logic
+static BOOL BtlCmd_TryBelch(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int jumpOnFail = BattleScript_Read(battleCtx);
+
+    if (ATTACKING_MON.moveEffectsData.ateBerry == FALSE) {
+        BattleScript_Iter(battleCtx, jumpOnFail);
+    }
+
+    return FALSE;
+}
 
 /**
  * @brief Calculate the base power of Weather Ball.
@@ -7436,6 +7633,129 @@ static BOOL BtlCmd_CalcPaybackPower(BattleSystem *battleSys, BattleContext *batt
         battleCtx->movePower = CURRENT_MOVE_DATA.power * 2;
     } else {
         battleCtx->movePower = CURRENT_MOVE_DATA.power;
+    }
+
+    return FALSE;
+}
+//Bolt Beak
+static BOOL BtlCmd_CalcBoltBeakPower(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+
+    if (DEFENDER_ACTION[BATTLE_ACTION_PICK_COMMAND] != BATTLE_CONTROL_MOVE_END
+        || battleCtx->battleMons[battleCtx->defender].moveEffectsData.fakeOutTurnNumber == battleCtx->totalTurns + 1) {
+        battleCtx->movePower = CURRENT_MOVE_DATA.power * 2;
+    } else {
+        battleCtx->movePower = CURRENT_MOVE_DATA.power;
+    }
+
+    return FALSE;
+}
+//Soak
+static BOOL BtlCmd_SetBattlerType(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+
+    int battler = BattleScript_Battler(battleSys, battleCtx, BattleScript_Read(battleCtx));
+    int type = BattleScript_Read(battleCtx);
+
+    BattleSystem_SetBattlerType(battleCtx, battler, type);
+    return FALSE;
+}
+//Forest Curse
+static BOOL BtlCmd_AddBattlerType(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+
+    int battler = BattleScript_Battler(battleSys, battleCtx, BattleScript_Read(battleCtx));
+    int type = BattleScript_Read(battleCtx);
+
+    BattleSystem_AddBattlerType(battleCtx, battler, type);
+    return FALSE;
+}
+//Acrobatics
+static BOOL BtlCmd_CalcAcrobaticsPower(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+
+    battleCtx->movePower = CURRENT_MOVE_DATA.power;
+
+    if (battleCtx->battleMons[battleCtx->attacker].heldItem == ITEM_NONE
+        || Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_KLUTZ
+        || Battler_HeldItemEffect(battleCtx, battleCtx->attacker) == HOLD_EFFECT_GEM_FLYING) {
+        battleCtx->movePower *= 2;
+    }
+
+    return FALSE;
+}
+
+static BOOL BtlCmd_CalcKnockOffPower(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+
+    battleCtx->movePower = CURRENT_MOVE_DATA.power;
+
+    if (BattleSystem_CanKnockOffItem(battleCtx, battleCtx->attacker, battleCtx->defender)) {
+        battleCtx->movePower = battleCtx->movePower * 150 / 100;
+    }
+
+    return FALSE;
+}
+
+static BOOL BtlCmd_CalcRetaliatePower(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+
+    battleCtx->movePower = CURRENT_MOVE_DATA.power;
+
+    if (battleCtx->sideConditions[BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker)].retaliateActive) {
+        battleCtx->movePower *= 2;
+    }
+
+    return FALSE;
+}
+//Fails Coaching if single battle
+static BOOL BtlCmd_TryCoaching(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int jumpOnFail = BattleScript_Read(battleCtx);
+    int battleType = BattleSystem_GetBattleType(battleSys);
+
+    if ((battleType & BATTLE_TYPE_DOUBLES) == 0) {
+        BattleScript_Iter(battleCtx, jumpOnFail);
+        return FALSE;
+    }
+
+    if (battleCtx->defender == battleCtx->attacker
+        || battleCtx->battleMons[battleCtx->defender].curHP == 0) {
+        BattleScript_Iter(battleCtx, jumpOnFail);
+    }
+
+    return FALSE;
+}
+//Topsy Turvy reversal
+static BOOL BtlCmd_TopsyTurvy(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    BattleScript_Iter(battleCtx, 1);
+    int jumpOnFail = BattleScript_Read(battleCtx);
+    int stat;
+    BOOL changed = FALSE;
+
+    for (stat = BATTLE_STAT_ATTACK; stat <= BATTLE_STAT_EVASION; stat++) {
+        if (battleCtx->battleMons[battleCtx->defender].statBoosts[stat] != DEFAULT_STAT_STAGE) {
+            changed = TRUE;
+            break;
+        }
+    }
+
+    if (changed == FALSE) {
+        BattleScript_Iter(battleCtx, jumpOnFail);
+        return FALSE;
+    }
+
+    for (stat = BATTLE_STAT_ATTACK; stat <= BATTLE_STAT_EVASION; stat++) {
+        battleCtx->battleMons[battleCtx->defender].statBoosts[stat]
+            = 12 - battleCtx->battleMons[battleCtx->defender].statBoosts[stat];
     }
 
     return FALSE;
@@ -12284,10 +12604,10 @@ static void BattleScript_LoadPartyLevelUpIcon(BattleSystem *battleSys, BattleScr
     spriteMan = BattleSystem_GetSpriteManager(battleSys);
     paletteData = BattleSystem_GetPaletteData(battleSys);
 
-    SpriteSystem_LoadCharResObj(spriteSys, spriteMan, NARC_INDEX_BATTLE__GRAPHIC__PL_BATT_OBJ, 256, TRUE, NNS_G2D_VRAM_TYPE_2DMAIN, 20021);
-    SpriteSystem_LoadPaletteBuffer(paletteData, PLTTBUF_MAIN_OBJ, spriteSys, spriteMan, NARC_INDEX_BATTLE__GRAPHIC__PL_BATT_OBJ, 82, FALSE, 2, NNS_G2D_VRAM_TYPE_2DMAIN, 20016);
-    SpriteSystem_LoadCellResObj(spriteSys, spriteMan, NARC_INDEX_BATTLE__GRAPHIC__PL_BATT_OBJ, 257, TRUE, 20013);
-    SpriteSystem_LoadAnimResObj(spriteSys, spriteMan, NARC_INDEX_BATTLE__GRAPHIC__PL_BATT_OBJ, 258, TRUE, 20013);
+    SpriteSystem_LoadCharResObj(spriteSys, spriteMan, NARC_INDEX_BATTLE__GRAPHIC__PL_BATT_OBJ, BATTLE_LEVEL_UP_NCGR, TRUE, NNS_G2D_VRAM_TYPE_2DMAIN, 20021);
+    SpriteSystem_LoadPaletteBuffer(paletteData, PLTTBUF_MAIN_OBJ, spriteSys, spriteMan, NARC_INDEX_BATTLE__GRAPHIC__PL_BATT_OBJ, BATTLE_LEVEL_UP_NCLR, FALSE, 2, NNS_G2D_VRAM_TYPE_2DMAIN, 20016);
+    SpriteSystem_LoadCellResObj(spriteSys, spriteMan, NARC_INDEX_BATTLE__GRAPHIC__PL_BATT_OBJ, BATTLE_LEVEL_UP_NCER, TRUE, 20013);
+    SpriteSystem_LoadAnimResObj(spriteSys, spriteMan, NARC_INDEX_BATTLE__GRAPHIC__PL_BATT_OBJ, BATTLE_LEVEL_UP_NANR, TRUE, 20013);
 
     data->sprites[0] = SpriteSystem_NewSprite(spriteSys, spriteMan, &sSpriteTemplate_Unk_ov16_0226E6C4);
 

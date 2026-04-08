@@ -24,8 +24,8 @@
 #define MOVE_EFFECT_MUD_SPORT              (1 << 16)
 #define MOVE_EFFECT_WATER_SPORT            (1 << 17)
 #define MOVE_EFFECT_UNDERWATER             (1 << 18) // Dive
-// unused flag: 1 << 19
-// unused flag: 1 << 20
+#define MOVE_EFFECT_THOUSAND_ARROWS_GROUNDED           (1 << 19) // Thousand Arrows
+#define MOVE_EFFECT_BEAK_BLAST_PRIMED         (1 << 20)
 #define MOVE_EFFECT_ABILITY_SUPPRESSED (1 << 21) // Gastro Acid
 #define MOVE_EFFECT_MIRACLE_EYE        (1 << 22)
 #define MOVE_EFFECT_POWER_TRICK        (1 << 23)

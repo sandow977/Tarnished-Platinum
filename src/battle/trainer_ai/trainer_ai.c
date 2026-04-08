@@ -33,14 +33,9 @@ static const u16 sRiskyMoves[] = {
     BATTLE_EFFECT_CHARGE_TURN_HIGH_CRIT,
     BATTLE_EFFECT_CHARGE_TURN_HIGH_CRIT_FLINCH,
     BATTLE_EFFECT_RECHARGE_AFTER,
-    BATTLE_EFFECT_CHARGE_TURN_DEF_UP,
-    BATTLE_EFFECT_SKIP_CHARGE_TURN_IN_SUN,
-    BATTLE_EFFECT_SPIT_UP,
     BATTLE_EFFECT_HIT_LAST_WHIFF_IF_HIT,
-    BATTLE_EFFECT_LOWER_OWN_ATK_AND_DEF,
-    BATTLE_EFFECT_DECREASE_POWER_WITH_LESS_USER_HP,
     BATTLE_EFFECT_HIT_FIRST_IF_TARGET_ATTACKING,
-    BATTLE_EFFECT_RECOIL_HALF,
+    BATTLE_EFFECT_FINAL_GAMBIT,
     0xFFFF
 };
 
@@ -56,6 +51,8 @@ static const u16 sAltPowerCalcMoves[] = {
     BATTLE_EFFECT_POWER_BASED_ON_LOW_FRIENDSHIP,
     BATTLE_EFFECT_20_DAMAGE_FLAT,
     BATTLE_EFFECT_INCREASE_POWER_WITH_WEIGHT,
+    BATTLE_EFFECT_HEAT_CRASH,
+    BATTLE_EFFECT_STORED_POWER,
     0xFFFF
 };
 
@@ -202,6 +199,7 @@ static BOOL AI_IsAsleepWithNaturalCure(BattleSystem *battleSys, BattleContext *b
 static BOOL AI_IsHeavilyStatBoosted(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
 static BOOL TrainerAI_ShouldSwitch(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
 static BOOL TrainerAI_ShouldUseItem(BattleSystem *battleSys, int battler);
+
 
 static const AICommandFunc sAICommandTable[] = {
     AICmd_IfRandomLessThan,
@@ -598,6 +596,12 @@ static void TrainerAI_EvalMoves(BattleSystem *battleSys, BattleContext *battleCt
                 AI_CONTEXT.move = MOVE_NONE;
             } else {
                 AI_CONTEXT.move = battleCtx->battleMons[AI_CONTEXT.attacker].moves[AI_CONTEXT.moveSlot];
+            }
+
+            if (AI_CONTEXT.move != MOVE_NONE
+                && Battler_IgnorableAbility(battleCtx, AI_CONTEXT.attacker, AI_CONTEXT.defender, ABILITY_SOUNDPROOF) == TRUE
+                && Move_IsSoundBased(AI_CONTEXT.move)) {
+                AI_CONTEXT.move = MOVE_NONE;
             }
 
             AI_CONTEXT.evalStep++;
@@ -2980,6 +2984,7 @@ static s32 TrainerAI_CalcDamage(BattleSystem *battleSys, BattleContext *battleCt
     int type;
     int typeTmp;
     u32 effectivenessFlags;
+    BOOL fixedDamageRespectsType;
     s32 damage;
 
     defendingSide = BattleSystem_GetBattlerSide(battleSys, AI_CONTEXT.defender);
@@ -2987,21 +2992,40 @@ static s32 TrainerAI_CalcDamage(BattleSystem *battleSys, BattleContext *battleCt
     power = 0;
     type = 0;
     effectivenessFlags = 0;
+    fixedDamageRespectsType = FALSE;
+
+    if (move == MOVE_POLTERGEIST
+        && BattleMon_Get(battleCtx, AI_CONTEXT.defender, BATTLEMON_HELD_ITEM, NULL) == ITEM_NONE) {
+        return 0;
+    }
 
     switch (move) {
     case MOVE_NATURAL_GIFT:
-        if (ability != ABILITY_KLUTZ && embargoTurns == 0) {
-            power = BattleSystem_GetItemData(battleCtx, heldItem, ITEM_PARAM_NATURAL_GIFT_POWER);
-
-            if (power) {
-                type = BattleSystem_GetItemData(battleCtx, heldItem, ITEM_PARAM_NATURAL_GIFT_TYPE);
-            } else {
-                type = TYPE_NORMAL;
-            }
+        if (ability == ABILITY_KLUTZ || embargoTurns != 0) {
+            return 0;
         }
+
+        power = BattleSystem_GetItemData(battleCtx, heldItem, ITEM_PARAM_NATURAL_GIFT_POWER);
+        if (power == 0) {
+            return 0;
+        }
+
+        type = BattleSystem_GetItemData(battleCtx, heldItem, ITEM_PARAM_NATURAL_GIFT_TYPE);
         break;
 
+    //AI Should see super fang's damage correctly
+    case MOVE_SUPER_FANG:
+        damage = battleCtx->battleMons[AI_CONTEXT.defender].curHP / 2;
+
+        if (damage == 0) {
+            damage = 1;
+        }
+
+    fixedDamageRespectsType = TRUE;
+    break;
+
     case MOVE_JUDGMENT:
+    case MOVE_MULTI_ATTACK:
         if (ability != ABILITY_KLUTZ && embargoTurns == 0) {
             power = 0;
 
@@ -3109,14 +3133,187 @@ static s32 TrainerAI_CalcDamage(BattleSystem *battleSys, BattleContext *battleCt
         type = TYPE_NORMAL; // default to the base move type
         break;
 
+    case MOVE_ACROBATICS:
+        power = 55;
+
+        if (heldItem == ITEM_NONE
+            || ability == ABILITY_KLUTZ
+            || (embargoTurns == 0
+                && BattleSystem_GetItemData(battleCtx, heldItem, ITEM_PARAM_HOLD_EFFECT) == HOLD_EFFECT_GEM_FLYING)) {
+            power *= 2;
+        }
+
+        type = TYPE_FLYING;
+        break;
+
+    case MOVE_KNOCK_OFF:
+        power = 65;
+
+        if (BattleSystem_CanKnockOffItem(battleCtx, attacker, AI_CONTEXT.defender)) {
+            power = power * 150 / 100;
+        }
+
+        type = TYPE_DARK;
+        break;
+
+    case MOVE_BELCH:
+        if (battleCtx->battleMons[attacker].moveEffectsData.ateBerry == FALSE) {
+            return 0;
+        }
+
+        power = 120;
+        type = TYPE_POISON;
+        break;
+
+    case MOVE_RETALIATE:
+        power = 70;
+
+        if (battleCtx->sideConditions[BattleSystem_GetBattlerSide(battleSys, attacker)].retaliateActive) {
+            power *= 2;
+        }
+
+        type = TYPE_NORMAL;
+        break;
+
+    //Facade BP seen as doubled
+    case MOVE_FACADE:
+        power = 70;
+
+        if (battleCtx->battleMons[attacker].status & MON_CONDITION_FACADE_BOOST) {
+            power *= 2;
+        }
+
+        type = TYPE_NORMAL;
+        break;
+    //Wake Up, Venoshock and Hex see correct statused BP
+    case MOVE_WAKE_UP_SLAP:
+        power = 60;
+
+        if (battleCtx->battleMons[AI_CONTEXT.defender].status & MON_CONDITION_SLEEP) {
+            power *= 2;
+        }
+
+        type = TYPE_NORMAL;
+        break;
+
+    case MOVE_HEX:
+        power = 65;
+
+        if (battleCtx->battleMons[AI_CONTEXT.defender].status & MON_CONDITION_ANY) {
+            power *= 2;
+       }
+
+        type = TYPE_NORMAL;
+        break;
+
+    case MOVE_VENOSHOCK:
+        power = 65;
+
+        if (battleCtx->battleMons[AI_CONTEXT.defender].status
+        & (MON_CONDITION_ANY_POISON)) {
+            power *= 2;
+        }
+
+        type = TYPE_NORMAL;
+        break;
+
+case MOVE_WATER_SPOUT:
+    power = MOVE_DATA(move).power * battleCtx->battleMons[attacker].curHP / battleCtx->battleMons[attacker].maxHP;
+    type = TYPE_WATER;
+    break;
+
+case MOVE_ERUPTION:
+    power = MOVE_DATA(move).power * battleCtx->battleMons[attacker].curHP / battleCtx->battleMons[attacker].maxHP;
+    type = TYPE_FIRE;
+    break;
+//Triple Axel/Triple Kick- Ensure its not glitchy with Technician
+
+    case MOVE_TRIPLE_KICK:
+        power = 60;
+        type = TYPE_FIGHTING;
+        break;
+
+    case MOVE_TRIPLE_AXEL:
+        power = 120;
+        type = TYPE_ICE;
+        break;
+
+    //Final Gambit new logic
+
+    case MOVE_FINAL_GAMBIT:
+    damage = battleCtx->battleMons[attacker].curHP;
+    fixedDamageRespectsType = TRUE;
+    break;
+
+//Stored power damage calc
+    case MOVE_STORED_POWER:
+    case MOVE_POWER_TRIP: {
+        int powerBoosts = 0;
+        int stat;
+
+        for (stat = BATTLEMON_ATTACK_STAGE; stat <= BATTLEMON_EVASION_STAGE; stat++) {
+            int stage = BattleMon_Get(battleCtx, attacker, stat, NULL);
+
+            if (stage > 6) {
+                powerBoosts += stage - 6;
+            }
+        }
+
+        power = 20 + (powerBoosts * 20);
+
+        if (move == MOVE_STORED_POWER) {
+            type = TYPE_PSYCHIC;
+        } else {
+            type = TYPE_DARK;
+        }
+        break;
+    }
+
+    case MOVE_HEAT_CRASH:
+    case MOVE_HEAVY_SLAM: {
+        int attackerWeight = battleCtx->battleMons[attacker].weight;
+        int defenderWeight = battleCtx->battleMons[AI_CONTEXT.defender].weight;
+
+        if (defenderWeight == 0) {
+            power = 40;
+        } else if (attackerWeight >= defenderWeight * 5) {
+            power = 120;
+        } else if (attackerWeight >= defenderWeight * 4) {
+            power = 100;
+        } else if (attackerWeight >= defenderWeight * 3) {
+            power = 80;
+        } else if (attackerWeight >= defenderWeight * 2) {
+            power = 60;
+        } else {
+            power = 40;
+        }
+
+        if (move == MOVE_HEAT_CRASH) {
+            type = TYPE_FIRE;
+        } else {
+            type = TYPE_STEEL;
+        }
+        break;
+    }
+
     case MOVE_DRAGON_RAGE:
         damage = 40;
         break;
+
+
 
     case MOVE_SEISMIC_TOSS:
     case MOVE_NIGHT_SHADE:
         damage = battleCtx->battleMons[attacker].level;
         break;
+    
+    case MOVE_WEATHER_BALL:
+    power = 50;
+
+    if (NO_CLOUD_NINE && (battleCtx->fieldConditionsMask & FIELD_CONDITION_WEATHER)) {
+        power = 100;
+    }
+    break;
 
     case MOVE_PSYWAVE:
         damage = battleCtx->battleMons[attacker].level * (BattleSystem_RandNext(battleSys) % 11 + 5) / 10;
@@ -3196,10 +3393,10 @@ static s32 TrainerAI_CalcDamage(BattleSystem *battleSys, BattleContext *battleCt
             attacker,
             AI_CONTEXT.defender,
             1);
-    } else {
-        battleCtx->battleStatusMask |= SYSCTL_IGNORE_TYPE_CHECKS;
+    }   else if (fixedDamageRespectsType == FALSE) {
+            battleCtx->battleStatusMask |= SYSCTL_IGNORE_TYPE_CHECKS;
     }
-
+    
     damage = BattleSystem_ApplyTypeChart(battleSys,
         battleCtx,
         move,
@@ -3212,11 +3409,32 @@ static s32 TrainerAI_CalcDamage(BattleSystem *battleSys, BattleContext *battleCt
 
     if (effectivenessFlags & MOVE_STATUS_IMMUNE) {
         damage = 0;
+    } else if (move == MOVE_FINAL_GAMBIT) {
+        damage = battleCtx->battleMons[attacker].curHP;
     } else {
         damage = BattleSystem_Divide(damage * variance, 100);
     }
 
-    return damage;
+    switch (MOVE_DATA(move).effect) {
+    case BATTLE_EFFECT_MULTI_HIT:
+    case BATTLE_EFFECT_POISON_MULTI_HIT:
+        if (battleCtx->battleMons[attacker].ability == ABILITY_SKILL_LINK) {
+            damage *= 5;
+        } else {
+            damage *= 3;
+        }
+        break;
+
+    case BATTLE_EFFECT_HIT_TWICE:
+            damage *= 2;
+        break;
+
+    case BATTLE_EFFECT_HIT_THREE_TIMES:
+        damage *= 3;
+        break;
+}
+
+return damage;
 }
 
 /**
@@ -3240,7 +3458,10 @@ static int TrainerAI_MoveType(BattleSystem *battleSys, BattleContext *battleCtx,
         result = Battler_NaturalGiftType(battleCtx, battler);
         break;
 
+    
+
     case MOVE_JUDGMENT:
+    case MOVE_MULTI_ATTACK:
         switch (Battler_HeldItemEffect(battleCtx, battler)) {
         case HOLD_EFFECT_ARCEUS_FIGHTING:
             result = TYPE_FIGHTING;
