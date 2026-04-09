@@ -336,3 +336,5 @@ subscript_eject_button
 subscript_update_hp_debug
 subscript_debug_damage
 subscript_use_move_gem_charge_turn
+subscript_held_item_weakness_policy
+subscript_missed_blunder_policy

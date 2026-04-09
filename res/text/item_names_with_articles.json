@@ -1948,6 +1948,14 @@
                      {
                          "id":  "pl_msg_00000393_00486",
                          "en_US":  "an {COLOR 255}Eject Button{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00487",
+                         "en_US":  "a {COLOR 255}Blunder Policy{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00488",
+                         "en_US":  "a {COLOR 255}Weakness Policy{COLOR 0}"
                      }
                  ]
 }

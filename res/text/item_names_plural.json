@@ -1948,6 +1948,14 @@
                      {
                          "id":  "pl_msg_00000394_00486",
                          "en_US":  "Eject Buttons"
+                     },
+                     {
+                         "id":  "pl_msg_00000394_00487",
+                         "en_US":  "Blunder Policies"
+                     },
+                     {
+                         "id":  "pl_msg_00000394_00488",
+                         "en_US":  "Weakness Policies"
                      }
                  ]
 }

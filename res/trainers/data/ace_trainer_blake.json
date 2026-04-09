@@ -13,9 +13,9 @@
             "species": "SPECIES_GRUMPIG",
             "form": 0,
             "level": 20,
-            "item": "ITEM_EJECT_BUTTON",
+            "item": "ITEM_WEAKNESS_POLICY",
             "moves": [
-                "MOVE_COVET",
+                "MOVE_POISON_STING",
                 "MOVE_SECRET_POWER",
                 "MOVE_NONE",
                 "MOVE_NONE"
@@ -27,10 +27,10 @@
             "species": "SPECIES_MACHAMP",
             "form": 0,
             "level": 30,
-            "item": "ITEM_FLYING_GEM",
+            "item": "ITEM_WEAKNESS_POLICY",
             "moves": [
-                "MOVE_ACROBATICS",
-                "MOVE_AERIAL_ACE",
+                "MOVE_SLUDGE",
+                "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"
             ],

@@ -58,6 +58,7 @@ static BOOL NoImmunityOverrides(BattleContext *battleCtx, int itemEffect, int ch
 static void UpateMoveStatusForTypeMul(int mul, u32 *moveStatusMask);
 static BOOL MoveIsOnDamagingTurn(BattleContext *battleCtx, int move);
 static BOOL BattleSystem_ShouldConsumeGemInternal(BattleContext *battleCtx, int battler, int itemEffect, int move, BOOL delayedImpact);
+static BOOL Battler_CanGainPolicyStat(BattleContext *battleCtx, int battler, int stat);
 static u8 Battler_MonType(BattleContext *battleCtx, int battler, enum BattleMonParam paramID);
 static void BattleAI_ClearKnownMoves(BattleContext *battleCtx, u8 battler);
 static void BattleAI_ClearKnownAbility(BattleContext *battleCtx, u8 battler);
@@ -67,6 +68,13 @@ static BOOL MoveCannotTriggerAnticipation(BattleContext *battleCtx, int move);
 static int CalcMoveType(BattleSystem *battleSys, BattleContext *battleCtx, int item, int move);
 
 static const Fraction sStatStageBoosts[];
+
+static BOOL Battler_CanGainPolicyStat(BattleContext *battleCtx, int battler, int stat)
+{
+    int stage = battleCtx->battleMons[battler].statBoosts[stat];
+
+    return stage < MAX_STAT_STAGE;
+}
 
 void BattleSystem_InitBattleMon(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int partySlot)
 {
@@ -5586,6 +5594,19 @@ BOOL BattleSystem_TriggerHeldItemOnHit(BattleSystem *battleSys, BattleContext *b
               && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
               && (battleCtx->multiHitNumHits == 0 || battleCtx->multiHitCounter == 1)) {
               *subscript = subscript_eject_button;
+              battleCtx->msgBattlerTemp = battleCtx->defender;
+              battleCtx->msgItemTemp = battleCtx->battleMons[battleCtx->defender].heldItem;
+              result = TRUE;
+          }
+          break;
+
+      case HOLD_EFFECT_BOOST_ATK_AND_SPATK_ON_SE:
+          if (DEFENDING_MON.curHP
+              && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
+              && (battleCtx->moveStatusFlags & MOVE_STATUS_SUPER_EFFECTIVE)
+              && (Battler_CanGainPolicyStat(battleCtx, battleCtx->defender, BATTLE_STAT_ATTACK)
+                  || Battler_CanGainPolicyStat(battleCtx, battleCtx->defender, BATTLE_STAT_SP_ATTACK))) {
+              *subscript = subscript_held_item_weakness_policy;
               battleCtx->msgBattlerTemp = battleCtx->defender;
               battleCtx->msgItemTemp = battleCtx->battleMons[battleCtx->defender].heldItem;
               result = TRUE;

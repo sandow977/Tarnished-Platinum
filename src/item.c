@@ -2947,6 +2947,18 @@ const ItemArchiveIDs sItemArchiveIDs[] = {
         .paletteID = eject_button_NCLR,
         .gen3ID = GBA_ITEM_NONE,
     },
+    [ITEM_BLUNDER_POLICY] = {
+        .dataID = 0x1E7,
+        .iconID = blunder_policy_NCGR,
+        .paletteID = blunder_policy_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
+    [ITEM_WEAKNESS_POLICY] = {
+        .dataID = 0x1E8,
+        .iconID = weakness_policy_NCGR,
+        .paletteID = weakness_policy_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
 };
 
 static const u16 sTMHMMoves[] = {

@@ -34,8 +34,8 @@
         "EGG_GROUP_MINERAL"
     ],
     "abilities": [
-        "ABILITY_MOLD_BREAKER",
-        "ABILITY_MOLD_BREAKER"
+        "ABILITY_SIMPLE",
+        "ABILITY_SIMPLE"
     ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_YELLOW",
@@ -46,11 +46,11 @@
             [ 1, "MOVE_TRICK_ROOM" ],
             [ 1, "MOVE_FUTURE_SIGHT" ],
             [ 1, "MOVE_SCALE_SHOT" ],
-            [ 1, "MOVE_SOLAR_BEAM" ],
-            [ 1, "MOVE_DIG" ],
-            [ 1, "MOVE_POWER_UP_PUNCH" ],
-            [ 1, "MOVE_BULLET_SEED" ],
-            [ 1, "MOVE_BEAK_BLAST" ],
+            [ 1, "MOVE_PROTECT" ],
+            [ 1, "MOVE_BITE" ],
+            [ 1, "MOVE_ZAP_CANNON" ],
+            [ 1, "MOVE_DRAGON_DANCE" ],
+            [ 1, "MOVE_THUNDERBOLT" ],
             [ 1, "MOVE_OVERHEAT" ],
             [ 1, "MOVE_THUNDERCLAP" ],
             [ 1, "MOVE_HARD_PRESS" ],

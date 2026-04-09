@@ -3886,6 +3886,22 @@
         "If the holder is hit by an attack,\n",
         "it will be switched out of battle."
       ]
+    },
+    {
+      "id": "pl_msg_00000391_00487",
+      "en_US": [
+        "An item to be held by a Pokemon.\n",
+        "It increases speed if the holder\n",
+        "misses due to low accuracy."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00488",
+      "en_US": [
+        "An item to be held by a Pokemon.\n",
+        "It increases Sp. Atk and Attack when\n",
+        "hit with a super-effective move."
+      ]
     }
   ]
 }

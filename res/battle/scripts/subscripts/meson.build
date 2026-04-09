@@ -339,4 +339,6 @@ subscript_files = files(
     'subscript_eject_button.s',
     'subscript_update_hp_debug.s',
     'subscript_debug_damage.s',
+    'subscript_held_item_weakness_policy.s',
+    'subscript_missed_blunder_policy.s',
 )

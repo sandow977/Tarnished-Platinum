@@ -2,7 +2,7 @@
     "name": "Triple Axel",
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_ICE",
-    "power": 25,
+    "power": 20,
     "accuracy": 90,
     "pp": 10,
     "effect": {

@@ -335,6 +335,8 @@ item_icon_pngs = files(
     'normal_gem.png',
     'fairy_gem.png',
     'eject_button.png',
+    'blunder_policy.png',
+    'weakness_policy.png',
 )
 
 item_icon_pals = files(
@@ -730,6 +732,8 @@ item_icon_pals = files(
     'normal_gem.pal',
     'fairy_gem.pal',
     'eject_button.pal',
+    'blunder_policy.pal',
+    'weakness_policy.pal',
 )
 
 item_icon_anim_jsons = files('generic_anim.json')

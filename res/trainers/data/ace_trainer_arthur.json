@@ -13,9 +13,9 @@
             "species": "SPECIES_SWAMPERT",
             "form": 0,
             "level": 2,
-            "item": "ITEM_LUM_BERRY",
+            "item": "ITEM_BLUNDER_POLICY",
             "moves": [
-                "MOVE_TACKLE",
+                "MOVE_DIG",
                 "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"

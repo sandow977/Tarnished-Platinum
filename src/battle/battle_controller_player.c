@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "constants/battle.h"
+#include "constants/battle/battle_script.h"
 #include "constants/game_options.h"
 #include "constants/heap.h"
 #include "constants/items.h"
@@ -126,6 +127,7 @@ static BOOL BattleControllerPlayer_ToggleSemiInvulnMons(BattleSystem *battleSys,
 static void BattleControllerPlayer_MarkCustapForMixedActions(BattleContext *battleCtx, int maxBattlers);
 static BOOL BattleControllerPlayer_IsLockedSemiInvulnerableImpactTurn(BattleContext *battleCtx);
 static BOOL BattleControllerPlayer_ShouldDeferGemBoostSubscript(BattleContext *battleCtx);
+static BOOL BattleControllerPlayer_CanTriggerBlunderPolicy(BattleContext *battleCtx);
 static void BattleControllerPlayer_InitAI(BattleSystem *battleSys, BattleContext *battleCtx);
 static void BattleSystem_RecordCommand(BattleSystem *battleSys, BattleContext *battleCtx);
 
@@ -1800,9 +1802,11 @@ static void BattleControllerPlayer_CheckSideConditions(BattleSystem *battleSys, 
                 battleCtx->msgAttacker = battleCtx->fieldConditions.futureSightAttacker[battler];
                 battleCtx->msgMoveTemp = battleCtx->fieldConditions.futureSightMove[battler];
                 battleCtx->msgItemTemp = Battler_HeldItem(battleCtx, battleCtx->fieldConditions.futureSightAttacker[battler]);
+                battleCtx->scriptTemp = 0;
                 {
                     int attacker = battleCtx->fieldConditions.futureSightAttacker[battler];
                     int move = battleCtx->fieldConditions.futureSightMove[battler];
+                    int defenderItemEffect;
                     int itemEffect;
                     BOOL shouldConsumeGem;
                     int savedAttacker = battleCtx->attacker;
@@ -1838,8 +1842,18 @@ static void BattleControllerPlayer_CheckSideConditions(BattleSystem *battleSys, 
                         &moveStatusFlags);
                     battleCtx->moveStatusFlags = moveStatusFlags;
                     battleCtx->hpCalcTemp = BattleSystem_CalcDamageVariance(battleSys, battleCtx, damage);
+                    defenderItemEffect = Battler_HeldItemEffect(battleCtx, battler);
                     itemEffect = Battler_HeldItemEffect(battleCtx, attacker);
                     shouldConsumeGem = BattleSystem_ShouldConsumeGemOnDelayedHit(battleCtx, attacker, itemEffect, move);
+
+                    if (defenderItemEffect == HOLD_EFFECT_BOOST_ATK_AND_SPATK_ON_SE
+                        && (moveStatusFlags & MOVE_STATUS_SUPER_EFFECTIVE)
+                        && battleCtx->hpCalcTemp < 0
+                        && (battleCtx->battleMons[battler].curHP + battleCtx->hpCalcTemp) > 0
+                        && (battleCtx->battleMons[battler].statBoosts[BATTLE_STAT_ATTACK] < MAX_STAT_STAGE
+                            || battleCtx->battleMons[battler].statBoosts[BATTLE_STAT_SP_ATTACK] < MAX_STAT_STAGE)) {
+                        battleCtx->scriptTemp = subscript_held_item_weakness_policy;
+                    }
 
                     battleCtx->attacker = savedAttacker;
                     battleCtx->defender = savedDefender;
@@ -3481,6 +3495,40 @@ static void BattleControllerPlayer_PrimaryEffect(BattleSystem *battleSys, Battle
     battleCtx->command = BATTLE_CONTROL_MOVE_FAILED;
 }
 
+static BOOL BattleControllerPlayer_CanTriggerBlunderPolicy(BattleContext *battleCtx)
+{
+    int speedStage;
+
+    if ((battleCtx->moveStatusFlags & MOVE_STATUS_MISSED) == FALSE) {
+        return FALSE;
+    }
+
+    if (battleCtx->defender == BATTLER_NONE) {
+        return FALSE;
+    }
+
+    if (battleCtx->moveStatusFlags & (MOVE_STATUS_LOST_FOCUS
+        | MOVE_STATUS_SEMI_INVULNERABLE
+        | MOVE_STATUS_PROTECTED
+        | MOVE_STATUS_FAILED
+        | MOVE_STATUS_WONDER_GUARD
+        | MOVE_STATUS_INEFFECTIVE
+        | MOVE_STATUS_STURDY
+        | MOVE_STATUS_ONE_HIT_KO_FAILED
+        | MOVE_STATUS_LEVITATED
+        | MOVE_STATUS_MAGNET_RISE)) {
+        return FALSE;
+    }
+
+    if (Battler_HeldItemEffect(battleCtx, battleCtx->attacker) != HOLD_EFFECT_BOOST_SPEED_ON_MISS) {
+        return FALSE;
+    }
+
+    speedStage = ATTACKING_MON.statBoosts[BATTLE_STAT_SPEED];
+
+    return speedStage < MAX_STAT_STAGE;
+}
+
 static void BattleControllerPlayer_CheckMoveFailure(BattleSystem *battleSys, BattleContext *battleCtx)
 {
     if (battleCtx->moveStatusFlags & MOVE_STATUS_NO_MORE_WORK) {
@@ -3507,6 +3555,11 @@ static void BattleControllerPlayer_CheckMoveFailure(BattleSystem *battleSys, Bat
              && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
             && battleCtx->moveProtect[battleCtx->defender] == MOVE_OBSTRUCT) {
             LOAD_SUBSEQ(subscript_protect_obstruct_test);
+        } else if (BattleControllerPlayer_CanTriggerBlunderPolicy(battleCtx) == TRUE) {
+            battleCtx->msgBattlerTemp = battleCtx->attacker;
+            battleCtx->msgItemTemp = Battler_HeldItem(battleCtx, battleCtx->attacker);
+            battleCtx->msgTemp = BATTLE_STAT_SPEED;
+            LOAD_SUBSEQ(subscript_missed_blunder_policy);
         } else {
             LOAD_SUBSEQ(subscript_missed);
         }
