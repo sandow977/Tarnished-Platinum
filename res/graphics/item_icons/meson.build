@@ -337,6 +337,8 @@ item_icon_pngs = files(
     'eject_button.png',
     'blunder_policy.png',
     'weakness_policy.png',
+    'punching_glove.png',
+    'covert_cloak.png',
 )
 
 item_icon_pals = files(
@@ -734,6 +736,8 @@ item_icon_pals = files(
     'eject_button.pal',
     'blunder_policy.pal',
     'weakness_policy.pal',
+    'punching_glove.pal',
+    'covert_cloak.pal',
 )
 
 item_icon_anim_jsons = files('generic_anim.json')

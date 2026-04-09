@@ -467,7 +467,7 @@ static void BattleControllerPlayer_CommandSelectionInput(BattleSystem *battleSys
 
                 case PLAYER_INPUT_ITEM:
                     if (BattleSystem_GetBattleType(battleSys) & BATTLE_TYPE_NO_ITEMS) {
-                        msg.id = 593; // "Items can’t be used here."
+                        msg.id = 593; // "Items can???t be used here."
                         msg.tags = TAG_NONE;
                         BattleController_EmitSetAlertMessage(battleSys, i, msg);
 
@@ -3544,15 +3544,15 @@ static void BattleControllerPlayer_CheckMoveFailure(BattleSystem *battleSys, Bat
         battleCtx->command = BATTLE_CONTROL_AFTER_MOVE_MESSAGE;
     } else if (battleCtx->moveStatusFlags & MOVE_STATUS_DID_NOT_HIT) {
         if ((battleCtx->moveStatusFlags & MOVE_STATUS_PROTECTED)
-            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+            && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)
             && battleCtx->moveProtect[battleCtx->defender] == MOVE_SILK_TRAP) {
             LOAD_SUBSEQ(subscript_protect_silk_trap_test);
         } else if ((battleCtx->moveStatusFlags & MOVE_STATUS_PROTECTED)
-            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+            && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)
             && battleCtx->moveProtect[battleCtx->defender] == MOVE_SPIKY_SHIELD) {
             LOAD_SUBSEQ(subscript_detect_spiky_shield_test);
         } else if ((battleCtx->moveStatusFlags & MOVE_STATUS_PROTECTED)
-             && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+             && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)
             && battleCtx->moveProtect[battleCtx->defender] == MOVE_OBSTRUCT) {
             LOAD_SUBSEQ(subscript_protect_obstruct_test);
         } else if (BattleControllerPlayer_CanTriggerBlunderPolicy(battleCtx) == TRUE) {
@@ -4910,6 +4910,7 @@ static BOOL BattleControllerPlayer_CheckExtraFlinch(BattleSystem *battleSys, Bat
 
     if (battleCtx->defender != BATTLER_NONE
         && itemEffect == HOLD_EFFECT_SOMETIMES_FLINCH
+        && Battler_HeldItemEffect(battleCtx, battleCtx->defender) != HOLD_EFFECT_PREVENT_SECONDARY_EFFECTS
         && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
         && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
         && (BattleSystem_RandNext(battleSys) % 100) < itemPower
@@ -5175,3 +5176,4 @@ static void BattleSystem_RecordCommand(BattleSystem *battleSys, BattleContext *b
         }
     }
 }
+

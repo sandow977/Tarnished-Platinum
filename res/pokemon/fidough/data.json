@@ -34,8 +34,8 @@
         "EGG_GROUP_MINERAL"
     ],
     "abilities": [
-        "ABILITY_SIMPLE",
-        "ABILITY_SIMPLE"
+        "ABILITY_MOLD_BREAKER",
+        "ABILITY_MOLD_BREAKER"
     ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_YELLOW",
@@ -43,12 +43,12 @@
     "icon_palette": 1,
     "learnset": {
         "by_level": [
-            [ 1, "MOVE_TRICK_ROOM" ],
-            [ 1, "MOVE_FUTURE_SIGHT" ],
-            [ 1, "MOVE_SCALE_SHOT" ],
-            [ 1, "MOVE_PROTECT" ],
-            [ 1, "MOVE_BITE" ],
-            [ 1, "MOVE_ZAP_CANNON" ],
+            [ 1, "MOVE_CLEAR_SMOG" ],
+            [ 1, "MOVE_IRON_HEAD" ],
+            [ 1, "MOVE_DISCHARGE" ],
+            [ 1, "MOVE_FIRE_LASH" ],
+            [ 1, "MOVE_SHELL_SMASH" ],
+            [ 1, "MOVE_ICE_PUNCH" ],
             [ 1, "MOVE_DRAGON_DANCE" ],
             [ 1, "MOVE_THUNDERBOLT" ],
             [ 1, "MOVE_OVERHEAT" ],

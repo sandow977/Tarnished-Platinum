@@ -5509,6 +5509,21 @@ static const u16 sProtectSuccessRate[] = {
     0x1FFF, // ~12.5%
 };
 
+static BOOL MoveStartsProtectChain(int move)
+{
+    switch (move) {
+    case MOVE_PROTECT:
+    case MOVE_DETECT:
+    case MOVE_ENDURE:
+    case MOVE_SPIKY_SHIELD:
+    case MOVE_OBSTRUCT:
+    case MOVE_SILK_TRAP:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
 /**
  * @brief Try to execute the Protect or Endure effects.
  *
@@ -5528,9 +5543,7 @@ static BOOL BtlCmd_TryProtection(BattleSystem *battleSys, BattleContext *battleC
     BattleScript_Iter(battleCtx, 1);
     int jumpOnFail = BattleScript_Read(battleCtx);
 
-    if (battleCtx->moveProtect[battleCtx->attacker] != MOVE_PROTECT
-        && battleCtx->moveProtect[battleCtx->attacker] != MOVE_DETECT
-        && battleCtx->moveProtect[battleCtx->attacker] != MOVE_ENDURE) {
+    if (MoveStartsProtectChain(battleCtx->moveProtect[battleCtx->attacker]) == FALSE) {
         battleCtx->battleMons[battleCtx->attacker].moveEffectsData.protectSuccessTurns = 0;
     }
 

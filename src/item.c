@@ -2959,7 +2959,19 @@ const ItemArchiveIDs sItemArchiveIDs[] = {
         .paletteID = weakness_policy_NCLR,
         .gen3ID = GBA_ITEM_NONE,
     },
-};
+    [ITEM_PUNCHING_GLOVE] = {
+        .dataID = 0x1E9,
+        .iconID = punching_glove_NCGR,
+        .paletteID = punching_glove_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
+    [ITEM_COVERT_CLOAK] = {
+        .dataID = 0x1EA,
+        .iconID = covert_cloak_NCGR,
+        .paletteID = covert_cloak_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
+  };
 
 static const u16 sTMHMMoves[] = {
     [TMHM_ID(TM01)] = MOVE_FOCUS_PUNCH,

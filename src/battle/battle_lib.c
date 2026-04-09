@@ -57,8 +57,10 @@ static int ApplyTypeMultiplier(BattleContext *battleCtx, int attacker, int mul, 
 static BOOL NoImmunityOverrides(BattleContext *battleCtx, int itemEffect, int chartEntry);
 static void UpateMoveStatusForTypeMul(int mul, u32 *moveStatusMask);
 static BOOL MoveIsOnDamagingTurn(BattleContext *battleCtx, int move);
+static BOOL MoveIsPunchingMove(int move);
 static BOOL BattleSystem_ShouldConsumeGemInternal(BattleContext *battleCtx, int battler, int itemEffect, int move, BOOL delayedImpact);
 static BOOL Battler_CanGainPolicyStat(BattleContext *battleCtx, int battler, int stat);
+static BOOL Battler_BlocksAdditionalEffects(BattleContext *battleCtx, int attacker, int battler);
 static u8 Battler_MonType(BattleContext *battleCtx, int battler, enum BattleMonParam paramID);
 static void BattleAI_ClearKnownMoves(BattleContext *battleCtx, u8 battler);
 static void BattleAI_ClearKnownAbility(BattleContext *battleCtx, u8 battler);
@@ -74,6 +76,15 @@ static BOOL Battler_CanGainPolicyStat(BattleContext *battleCtx, int battler, int
     int stage = battleCtx->battleMons[battler].statBoosts[stat];
 
     return stage < MAX_STAT_STAGE;
+}
+
+static BOOL Battler_BlocksAdditionalEffects(BattleContext *battleCtx, int attacker, int battler)
+{
+    if (battler == attacker || battler == BATTLER_NONE) {
+        return FALSE;
+    }
+
+    return Battler_HeldItemEffect(battleCtx, battler) == HOLD_EFFECT_PREVENT_SECONDARY_EFFECTS;
 }
 
 void BattleSystem_InitBattleMon(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int partySlot)
@@ -1540,14 +1551,16 @@ BOOL BattleSystem_TriggerSecondaryEffect(BattleSystem *battleSys, BattleContext 
     if (battleCtx->sideEffectIndirectFlags & MOVE_SIDE_EFFECT_ON_HIT) {
         SetupSideEffect(battleCtx, effect, SIDE_EFFECT_TYPE_INDIRECT);
 
-        if ((battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE) {
+        if ((battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
+            && Battler_BlocksAdditionalEffects(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon) == FALSE) {
             result = TRUE;
         }
     } else if (battleCtx->sideEffectIndirectFlags & MOVE_SIDE_EFFECT_CHECK_SUBSTITUTE) {
         SetupSideEffect(battleCtx, effect, SIDE_EFFECT_TYPE_INDIRECT);
 
         if (Battler_SubstituteWasHit(battleCtx, battleCtx->sideEffectMon) == FALSE
-            && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE) {
+            && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
+            && Battler_BlocksAdditionalEffects(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon) == FALSE) {
             result = TRUE;
         }
     } else if (battleCtx->sideEffectIndirectFlags & MOVE_SIDE_EFFECT_CHECK_HP_AND_SUBSTITUTE) {
@@ -1555,13 +1568,15 @@ BOOL BattleSystem_TriggerSecondaryEffect(BattleSystem *battleSys, BattleContext 
 
         if (battleCtx->battleMons[battleCtx->sideEffectMon].curHP
             && Battler_SubstituteWasHit(battleCtx, battleCtx->sideEffectMon) == FALSE
-            && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE) {
+            && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
+            && Battler_BlocksAdditionalEffects(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon) == FALSE) {
             result = TRUE;
         }
     } else if (battleCtx->sideEffectIndirectFlags & MOVE_SIDE_EFFECT_CHECK_HP) {
         SetupSideEffect(battleCtx, effect, SIDE_EFFECT_TYPE_INDIRECT);
 
-        if (battleCtx->battleMons[battleCtx->sideEffectMon].curHP) {
+        if (battleCtx->battleMons[battleCtx->sideEffectMon].curHP
+            && Battler_BlocksAdditionalEffects(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon) == FALSE) {
             result = TRUE;
         }
     } else if (battleCtx->sideEffectIndirectFlags & MOVE_SIDE_EFFECT_PROBABILISTIC) {
@@ -1582,7 +1597,11 @@ BOOL BattleSystem_TriggerSecondaryEffect(BattleSystem *battleSys, BattleContext 
             battleCtx->battleStatusMask &= ~SYSCTL_APPLY_SECONDARY_EFFECT;
         }
 
-        result = TRUE;
+        if (Battler_BlocksAdditionalEffects(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon) == FALSE) {
+            result = TRUE;
+        } else {
+            battleCtx->battleStatusMask &= ~SYSCTL_APPLY_SECONDARY_EFFECT;
+        }
     } else if (battleCtx->sideEffectIndirectFlags) {
         if (Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_SERENE_GRACE) {
             effectChance = CURRENT_MOVE_DATA.effectChance * 2;
@@ -1597,7 +1616,8 @@ BOOL BattleSystem_TriggerSecondaryEffect(BattleSystem *battleSys, BattleContext 
 
             if (battleCtx->battleMons[battleCtx->sideEffectMon].curHP
                 && Battler_SubstituteWasHit(battleCtx, battleCtx->sideEffectMon) == FALSE
-                && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE) {
+                && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
+                && Battler_BlocksAdditionalEffects(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon) == FALSE) {
                 result = TRUE;
             }
         }
@@ -4354,7 +4374,7 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
         && (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN) == FALSE
         && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
         && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
-        && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+        && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)
         && (DEFENDING_MON.moveEffectsMask & MOVE_EFFECT_BEAK_BLAST_PRIMED)) {
         battleCtx->sideEffectType = SIDE_EFFECT_TYPE_MOVE_EFFECT;
         battleCtx->sideEffectMon = battleCtx->attacker;
@@ -4372,7 +4392,7 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
             && (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN) == FALSE
             && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
             && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
-            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+            && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)
             && BattleSystem_RandNext(battleSys) % 10 < 3) {
             battleCtx->sideEffectType = SIDE_EFFECT_TYPE_ABILITY;
             battleCtx->sideEffectMon = battleCtx->attacker;
@@ -4415,7 +4435,7 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
             && (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN) == FALSE
             && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
             && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
-            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)) {
+            && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)) {
             battleCtx->hpCalcTemp = BattleSystem_Divide(ATTACKING_MON.maxHP * -1, 8);
             battleCtx->msgBattlerTemp = battleCtx->attacker;
 
@@ -4431,7 +4451,7 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
             && (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN) == FALSE
             && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
             && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
-            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+            && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)
             && BattleSystem_RandNext(battleSys) % 10 < 3) {
             switch (BattleSystem_RandNext(battleSys) % 3) {
             case 0:
@@ -4461,7 +4481,7 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
             && (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN) == FALSE
             && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
             && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
-            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+            && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)
             && BattleSystem_RandNext(battleSys) % 10 < 3) {
             battleCtx->sideEffectType = SIDE_EFFECT_TYPE_ABILITY;
             battleCtx->sideEffectMon = battleCtx->attacker;
@@ -4479,7 +4499,7 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
             && (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN) == FALSE
             && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
             && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
-            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+            && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)
             && BattleSystem_RandNext(battleSys) % 10 < 3) {
             battleCtx->sideEffectType = SIDE_EFFECT_TYPE_ABILITY;
             battleCtx->sideEffectMon = battleCtx->attacker;
@@ -4497,7 +4517,7 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
             && (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN) == FALSE
             && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
             && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
-            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)
+            && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)
             && DEFENDING_MON.curHP
             && BattleSystem_RandNext(battleSys) % 10 < 3) {
             battleCtx->sideEffectType = SIDE_EFFECT_TYPE_ABILITY;
@@ -4516,7 +4536,7 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
             && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
             && ATTACKING_MON.curHP
             && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
-            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)) {
+            && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)) {
             battleCtx->hpCalcTemp = BattleSystem_Divide(ATTACKING_MON.maxHP * -1, 4);
             battleCtx->msgBattlerTemp = battleCtx->attacker;
 
@@ -5552,7 +5572,7 @@ BOOL BattleSystem_TriggerHeldItemOnHit(BattleSystem *battleSys, BattleContext *b
             && battleCtx->moveCur != MOVE_KNOCK_OFF
             && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
             && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
-            && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)) {
+            && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)) {
             *subscript = subscript_transfer_sticky_barb;
             result = TRUE;
         }
@@ -6882,6 +6902,33 @@ static const u16 sPunchingMoves[] = {
     MOVE_SKY_UPPERCUT
 };
 
+static BOOL MoveIsPunchingMove(int move)
+{
+    int i;
+
+    for (i = 0; i < NELEMS(sPunchingMoves); i++) {
+        if (sPunchingMoves[i] == move) {
+            return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+BOOL BattleSystem_MoveMakesContact(BattleContext *battleCtx, int attacker, int move)
+{
+    if ((MoveTable_LoadParam(move, MOVEATTRIBUTE_FLAGS) & MOVE_FLAG_MAKES_CONTACT) == FALSE) {
+        return FALSE;
+    }
+
+    if (Battler_HeldItemEffect(battleCtx, attacker) == HOLD_EFFECT_INCREASE_PUNCHING_MOVE_DMG
+        && MoveIsPunchingMove(move) == TRUE) {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
 typedef struct DamageCalcParams {
     u16 species;
     s16 curHP;
@@ -7239,6 +7286,11 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
         && attackerParams.gender != GENDER_NONE
         && defenderParams.gender != GENDER_NONE) {
         movePower = movePower * 75 / 100;
+    }
+
+    if (attackerParams.heldItemEffect == HOLD_EFFECT_INCREASE_PUNCHING_MOVE_DMG
+        && MoveIsPunchingMove(move) == TRUE) {
+        movePower = movePower * (100 + attackerParams.heldItemPower) / 100;
     }
 
     for (i = 0; i < NELEMS(sPunchingMoves); i++) {
@@ -7811,7 +7863,7 @@ BOOL BattleSystem_TriggerHeldItemOnPivotMove(BattleSystem *battleSys, BattleCont
         && ATTACKING_MON.heldItem == ITEM_NONE
         && (battleCtx->sideConditions[attackingSide].knockedOffItemsMask & FlagIndex(battleCtx->selectedPartySlot[battleCtx->attacker])) == FALSE
         && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
-        && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_MAKES_CONTACT)) {
+        && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)) {
         *subscript = subscript_transfer_sticky_barb;
         result = TRUE;
     }
@@ -8653,3 +8705,4 @@ int Move_CalcVariableType(BattleSystem *battleSys, BattleContext *battleCtx, Pok
 
     return type;
 }
+

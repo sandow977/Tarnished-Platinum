@@ -795,3 +795,7 @@ blunder_policy.NCGR
 blunder_policy.NCLR
 weakness_policy.NCGR
 weakness_policy.NCLR
+punching_glove.NCGR
+punching_glove.NCLR
+covert_cloak.NCGR
+covert_cloak.NCLR

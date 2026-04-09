@@ -1956,6 +1956,14 @@
                      {
                          "id":  "pl_msg_00000394_00488",
                          "en_US":  "Weakness Policies"
+                     },
+                     {
+                         "id":  "pl_msg_00000394_00489",
+                         "en_US":  "Punching Gloves"
+                     },
+                     {
+                         "id":  "pl_msg_00000394_00490",
+                         "en_US":  "Covert Cloaks"
                      }
                  ]
 }

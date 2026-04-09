@@ -1956,6 +1956,14 @@
                      {
                          "id":  "pl_msg_00000393_00488",
                          "en_US":  "a {COLOR 255}Weakness Policy{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00489",
+                         "en_US":  "a {COLOR 255}Punching Glove{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00490",
+                         "en_US":  "a {COLOR 255}Covert Cloak{COLOR 0}"
                      }
                  ]
 }

@@ -239,6 +239,7 @@ BOOL BattleSystem_TriggerPrimaryEffect(BattleSystem *battleSys, BattleContext *b
  * ignored.
  */
 BOOL BattleSystem_TriggerSecondaryEffect(BattleSystem *battleSys, BattleContext *battleCtx, int *effect);
+BOOL BattleSystem_MoveMakesContact(BattleContext *battleCtx, int attacker, int move);
 
 /**
  * @brief Find the defender for the move.

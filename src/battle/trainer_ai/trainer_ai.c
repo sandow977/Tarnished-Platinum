@@ -200,6 +200,20 @@ static BOOL AI_IsHeavilyStatBoosted(BattleSystem *battleSys, BattleContext *batt
 static BOOL TrainerAI_ShouldSwitch(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
 static BOOL TrainerAI_ShouldUseItem(BattleSystem *battleSys, int battler);
 
+static BOOL MoveStartsProtectChain(int move)
+{
+    switch (move) {
+    case MOVE_PROTECT:
+    case MOVE_DETECT:
+    case MOVE_ENDURE:
+    case MOVE_SPIKY_SHIELD:
+    case MOVE_OBSTRUCT:
+    case MOVE_SILK_TRAP:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
 
 static const AICommandFunc sAICommandTable[] = {
     AICmd_IfRandomLessThan,
@@ -2653,9 +2667,7 @@ static void AICmd_LoadProtectChain(BattleSystem *battleSys, BattleContext *battl
     int inBattler = AIScript_Read(battleCtx);
     u8 battler = AIScript_Battler(battleCtx, inBattler);
 
-    if (battleCtx->moveProtect[battler] != MOVE_PROTECT
-        && battleCtx->moveProtect[battler] != MOVE_DETECT
-        && battleCtx->moveProtect[battler] != MOVE_ENDURE) {
+    if (MoveStartsProtectChain(battleCtx->moveProtect[battler]) == FALSE) {
         AI_CONTEXT.calcTemp = 0;
     } else {
         AI_CONTEXT.calcTemp = battleCtx->battleMons[battler].moveEffectsData.protectSuccessTurns;

@@ -3902,6 +3902,22 @@
         "It increases Sp. Atk and Attack when\n",
         "hit with a super-effective move."
       ]
+    },
+    {
+      "id": "pl_msg_00000391_00489",
+      "en_US": [
+        "An item to be held by a Pokemon.\n",
+        "This glove boosts the power of punching\n",
+        "moves and prevents direct contact."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00490",
+      "en_US": [
+        "An item to be held by a Pokemon.\n",
+        "This cloak protects the holder from\n",
+        "the additional effects of moves."
+      ]
     }
   ]
 }
