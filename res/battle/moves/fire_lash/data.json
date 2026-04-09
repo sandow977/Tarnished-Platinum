@@ -1,13 +1,13 @@
 {
-    "name": "Smart Strike",
+    "name": "Fire Lash",
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_STEEL",
+    "type": "TYPE_FIRE",
     "power": 70,
-    "accuracy": 0,
+    "accuracy": 100,
     "pp": 10,
     "effect": {
-        "type": "BATTLE_EFFECT_BYPASS_ACCURACY",
-        "chance": 0
+        "type": "BATTLE_EFFECT_LOWER_DEFENSE_HIT",
+        "chance": 100
     },
     "range": "RANGE_SINGLE_TARGET",
     "priority": 0,

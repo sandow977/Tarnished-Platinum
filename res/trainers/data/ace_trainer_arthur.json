@@ -13,23 +13,9 @@
             "species": "SPECIES_SWAMPERT",
             "form": 0,
             "level": 2,
-            "item": "ITEM_POWER_HERB",
+            "item": "ITEM_LUM_BERRY",
             "moves": [
-                "MOVE_BOUNCE",
-                "MOVE_NONE",
-                "MOVE_NONE",
-                "MOVE_NONE"
-            ],
-            "iv_scale": 50,
-            "ball_seal": 0
-        },
-            {
-            "species": "SPECIES_EMPOLEON",
-            "form": 0,
-            "level": 2,
-            "item": "ITEM_POWER_HERB",
-            "moves": [
-                "MOVE_SOLAR_BLADE",
+                "MOVE_TACKLE",
                 "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"

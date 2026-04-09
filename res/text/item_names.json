@@ -1944,6 +1944,10 @@
                      {
                          "id":  "pl_msg_00000392_00485",
                          "en_US":  "Fairy Gem"
+                     },
+                     {
+                         "id":  "pl_msg_00000392_00486",
+                         "en_US":  "Eject Button"
                      }
                  ]
 }

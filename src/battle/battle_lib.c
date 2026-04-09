@@ -57,6 +57,7 @@ static int ApplyTypeMultiplier(BattleContext *battleCtx, int attacker, int mul, 
 static BOOL NoImmunityOverrides(BattleContext *battleCtx, int itemEffect, int chartEntry);
 static void UpateMoveStatusForTypeMul(int mul, u32 *moveStatusMask);
 static BOOL MoveIsOnDamagingTurn(BattleContext *battleCtx, int move);
+static BOOL BattleSystem_ShouldConsumeGemInternal(BattleContext *battleCtx, int battler, int itemEffect, int move, BOOL delayedImpact);
 static u8 Battler_MonType(BattleContext *battleCtx, int battler, enum BattleMonParam paramID);
 static void BattleAI_ClearKnownMoves(BattleContext *battleCtx, u8 battler);
 static void BattleAI_ClearKnownAbility(BattleContext *battleCtx, u8 battler);
@@ -5570,19 +5571,30 @@ BOOL BattleSystem_TriggerHeldItemOnHit(BattleSystem *battleSys, BattleContext *b
         }
         break;
 
-    case HOLD_EFFECT_HP_RESTORE_SE:
-        if (DEFENDING_MON.curHP && (battleCtx->moveStatusFlags & MOVE_STATUS_SUPER_EFFECTIVE)) {
-            battleCtx->hpCalcTemp = BattleSystem_Divide(DEFENDING_MON.maxHP, itemPower);
-            *subscript = subscript_held_item_hp_restore;
-            battleCtx->msgBattlerTemp = battleCtx->defender;
-            battleCtx->msgItemTemp = battleCtx->battleMons[battleCtx->defender].heldItem;
-            result = TRUE;
-        }
-        break;
+      case HOLD_EFFECT_HP_RESTORE_SE:
+          if (DEFENDING_MON.curHP && (battleCtx->moveStatusFlags & MOVE_STATUS_SUPER_EFFECTIVE)) {
+              battleCtx->hpCalcTemp = BattleSystem_Divide(DEFENDING_MON.maxHP, itemPower);
+              *subscript = subscript_held_item_hp_restore;
+              battleCtx->msgBattlerTemp = battleCtx->defender;
+              battleCtx->msgItemTemp = battleCtx->battleMons[battleCtx->defender].heldItem;
+              result = TRUE;
+          }
+          break;
 
-    default:
-        break;
-    }
+      case HOLD_EFFECT_SWITCH_OUT_WHEN_HIT:
+          if (DEFENDING_MON.curHP
+              && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
+              && (battleCtx->multiHitNumHits == 0 || battleCtx->multiHitCounter == 1)) {
+              *subscript = subscript_eject_button;
+              battleCtx->msgBattlerTemp = battleCtx->defender;
+              battleCtx->msgItemTemp = battleCtx->battleMons[battleCtx->defender].heldItem;
+              result = TRUE;
+          }
+          break;
+
+      default:
+          break;
+      }
 
     if (result == TRUE) {
         if (Item_IsBerry(battleCtx->battleMons[battleCtx->defender].heldItem) == TRUE) {
@@ -6765,7 +6777,7 @@ static inline BOOL BattleSystem_IsGemEffect(int itemEffect)
     }
 }
 
-BOOL BattleSystem_ShouldConsumeGem(BattleContext *battleCtx, int battler, int itemEffect)
+static BOOL BattleSystem_ShouldConsumeGemInternal(BattleContext *battleCtx, int battler, int itemEffect, int move, BOOL delayedImpact)
 {
     if (battler != battleCtx->attacker) {
         return FALSE;
@@ -6775,7 +6787,15 @@ BOOL BattleSystem_ShouldConsumeGem(BattleContext *battleCtx, int battler, int it
         return FALSE;
     }
 
-    if (CURRENT_MOVE_DATA.class == CLASS_STATUS) {
+    if (MOVE_DATA(move).class == CLASS_STATUS) {
+        return FALSE;
+    }
+
+    if (delayedImpact == FALSE && MoveIsOnDamagingTurn(battleCtx, move) == FALSE) {
+        return FALSE;
+    }
+
+    if (delayedImpact == FALSE && (move == MOVE_FUTURE_SIGHT || move == MOVE_DOOM_DESIRE)) {
         return FALSE;
     }
 
@@ -6795,6 +6815,16 @@ BOOL BattleSystem_ShouldConsumeGem(BattleContext *battleCtx, int battler, int it
     }
 
     return FALSE;
+}
+
+BOOL BattleSystem_ShouldConsumeGem(BattleContext *battleCtx, int battler, int itemEffect)
+{
+    return BattleSystem_ShouldConsumeGemInternal(battleCtx, battler, itemEffect, battleCtx->moveCur, FALSE);
+}
+
+BOOL BattleSystem_ShouldConsumeGemOnDelayedHit(BattleContext *battleCtx, int battler, int itemEffect, int move)
+{
+    return BattleSystem_ShouldConsumeGemInternal(battleCtx, battler, itemEffect, move, TRUE);
 }
 
 static const Fraction sStatStageBoosts[] = {
@@ -6925,6 +6955,13 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     itemTmp = Battler_HeldItem(battleCtx, attacker);
     attackerParams.heldItemEffect = BattleSystem_GetItemData(battleCtx, itemTmp, ITEM_PARAM_HOLD_EFFECT);
     attackerParams.heldItemPower = BattleSystem_GetItemData(battleCtx, itemTmp, ITEM_PARAM_HOLD_EFFECT_PARAM);
+
+    if (battleCtx->gemBoostPower != 0
+        && battleCtx->gemBoostBattler == attacker
+        && battleCtx->gemBoostMove == move) {
+        attackerParams.heldItemEffect = battleCtx->gemBoostItemEffect;
+        attackerParams.heldItemPower = battleCtx->gemBoostPower;
+    }
 
     itemTmp = Battler_HeldItem(battleCtx, defender);
     defenderParams.heldItemEffect = BattleSystem_GetItemData(battleCtx, itemTmp, ITEM_PARAM_HOLD_EFFECT);
@@ -7971,6 +8008,7 @@ static BOOL MoveIsOnDamagingTurn(BattleContext *battleCtx, int move)
     case BATTLE_EFFECT_DIVE:
     case BATTLE_EFFECT_DIG:
     case BATTLE_EFFECT_BOUNCE:
+    case BATTLE_EFFECT_SHADOW_FORCE:
     case BATTLE_EFFECT_BEAK_BLAST:
     case BATTLE_EFFECT_FLINCH_BURN_HIT: // BUG: Fire Fang Always Bypasses Wonder Guard (see docs/bugs_and_glitches.md)
         return battleCtx->battleStatusMask & SYSCTL_LAST_OF_MULTI_TURN;

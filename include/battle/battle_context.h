@@ -191,6 +191,8 @@ struct BattleContext {
     int msgTemp;
     int calcTemp;
     int scriptTemp;
+    int postSwitchSavedAttacker;
+    int postSwitchSavedDefender;
 
     u32 battlerStatusFlags[MAX_BATTLERS];
     u32 payDayCount;
@@ -228,6 +230,10 @@ struct BattleContext {
     int hpCalcTemp;
     int moveType;
     int moveEffectChance;
+    int gemBoostBattler;
+    int gemBoostMove;
+    int gemBoostItemEffect;
+    int gemBoostPower;
     int prizeMoneyMul;
     u32 moveStatusFlags;
     u32 sideEffectDirectFlags;
@@ -304,6 +310,7 @@ struct BattleContext {
     u8 partyOrder[MAX_BATTLERS][MAX_PARTY_SIZE];
 
     BOOL expJinglePlayed;
+    BOOL restorePostSwitchContext;
 
     int linkBattleTimeout;
 

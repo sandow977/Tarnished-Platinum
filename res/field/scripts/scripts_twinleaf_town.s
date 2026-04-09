@@ -38,6 +38,7 @@ TwinleafTown_Guitarist:
     PlayFanfare SEQ_SE_CONFIRM
     MakePartyMonShiny 0, VAR_RESULT
     GivePokedex
+    AddItem ITEM_EJECT_BUTTON, 999, VAR_RESULT
     AddItem ITEM_ADAMANT_MINT, 999, VAR_RESULT
     AddItem ITEM_JOLLY_MINT, 99, VAR_RESULT
     AddItem ITEM_BOLD_MINT, 99, VAR_RESULT
@@ -75,6 +76,7 @@ TwinleafTown_Guitarist:
     AddItem ITEM_ELECTRIC_GEM, 99, VAR_RESULT
     AddItem ITEM_GRASS_GEM, 99, VAR_RESULT
     AddItem ITEM_GHOST_GEM, 99, VAR_RESULT
+    AddItem ITEM_DRAGON_GEM, 99, VAR_RESULT
     AddItem ITEM_DARK_GEM, 99, VAR_RESULT
     AddItem ITEM_CHOICE_SCARF, 1, VAR_RESULT
     FillSinnohDexCaught

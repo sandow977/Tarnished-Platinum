@@ -5369,9 +5369,9 @@
                          "en_US":  [
                                        " The user strikes the\n",
                                        " target with a burning\n",
-                                       " lash.\n",
-                                       " This also lowers the\n",
-                                       " target’s Defense stat.\n"
+                                       " lash. This also\n",
+                                       " lowers the target’s\n",
+                                       " Defense stat.\n"
                                    ]
                      },
                      {
@@ -5417,10 +5417,10 @@
                          "id":  "pl_msg_00000646_00557",
                          "en_US":  [
                                        " The user heats up its\n",
-                                       " beak before attacking.\n",
-                                       " Making contact before\n",
-                                       " the user attacks\n",
-                                       " results in a burn.\n"
+                                       " beak before\n",
+                                       " attacking.Making\n",
+                                       " contact results in\n",
+                                       "  in a burn.\n"
                                    ]
                      },
                      {

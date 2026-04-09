@@ -2941,6 +2941,12 @@ const ItemArchiveIDs sItemArchiveIDs[] = {
         .paletteID = fairy_gem_NCLR,
         .gen3ID = GBA_ITEM_NONE,
     },
+    [ITEM_EJECT_BUTTON] = {
+        .dataID = 0x1E6,
+        .iconID = eject_button_NCGR,
+        .paletteID = eject_button_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
 };
 
 static const u16 sTMHMMoves[] = {

@@ -297,7 +297,6 @@ subscript_overworld_trick_room
 subscript_giratina_form_change
 subscript_protect_silk_trap_test
 subscript_detect_spiky_shield_test
-subscript_protect_obstruct_test
 subscript_chilly_reception
 subscript_clear_smog
 subscript_coil
@@ -329,7 +328,11 @@ subscript_growth
 subscript_tail_glow
 subscript_draining_kiss
 subscript_psychic_noise
+subscript_future_sight_damage_gem
+subscript_protect_obstruct_test
 subscript_gem_boost
 subscript_use_move_gem
+subscript_eject_button
 subscript_update_hp_debug
 subscript_debug_damage
+subscript_use_move_gem_charge_turn

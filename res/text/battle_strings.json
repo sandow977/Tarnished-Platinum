@@ -8662,6 +8662,27 @@
                                        "DEBUG: The foe’s {STRVAR_1 1, 0, 0} took\n",
                                        "{STRVAR_1 54, 1, 0} damage!"
                                    ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonWasSwitchedOutByItsItem_Ally",
+                         "en_US":  [
+                                       "{STRVAR_1 1, 0, 0} was switched\n",
+                                       "out by its {STRVAR_1 8, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonWasSwitchedOutByItsItem_Wild",
+                         "en_US":  [
+                                       "The wild {STRVAR_1 1, 0, 0} was switched\n",
+                                       "out by its {STRVAR_1 8, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonWasSwitchedOutByItsItem_Foe",
+                         "en_US":  [
+                                       "The foe {STRVAR_1 1, 0, 0} was switched\n",
+                                       "out by its {STRVAR_1 8, 1, 0}!"
+                                   ]
                      }
                  ]
 }

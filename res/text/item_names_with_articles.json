@@ -1944,6 +1944,10 @@
                      {
                          "id":  "pl_msg_00000393_00485",
                          "en_US":  "a {COLOR 255}Fairy Gem{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00486",
+                         "en_US":  "an {COLOR 255}Eject Button{COLOR 0}"
                      }
                  ]
 }

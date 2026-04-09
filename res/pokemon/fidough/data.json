@@ -34,8 +34,8 @@
         "EGG_GROUP_MINERAL"
     ],
     "abilities": [
-        "ABILITY_WATER_ABSORB",
-        "ABILITY_WATER_ABSORB"
+        "ABILITY_MOLD_BREAKER",
+        "ABILITY_MOLD_BREAKER"
     ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_YELLOW",
@@ -43,16 +43,15 @@
     "icon_palette": 1,
     "learnset": {
         "by_level": [
-            [ 1, "MOVE_PLAY_ROUGH" ],
-            [ 1, "MOVE_WATER_GUN" ],
-            [ 1, "MOVE_WATER_SPORT" ],
-            [ 1, "MOVE_TOXIC" ],
-            [ 1, "MOVE_ACROBATICS" ],
-            [ 1, "MOVE_TOXIC_THREAD" ],
-            [ 1, "MOVE_SOLAR_BLADE" ],
-            [ 1, "MOVE_TWIN_BEAM" ],
-            [ 1, "MOVE_ARMOR_CANNON" ],
-            [ 1, "MOVE_GIGATON_HAMMER" ],
+            [ 1, "MOVE_TRICK_ROOM" ],
+            [ 1, "MOVE_FUTURE_SIGHT" ],
+            [ 1, "MOVE_SCALE_SHOT" ],
+            [ 1, "MOVE_SOLAR_BEAM" ],
+            [ 1, "MOVE_DIG" ],
+            [ 1, "MOVE_POWER_UP_PUNCH" ],
+            [ 1, "MOVE_BULLET_SEED" ],
+            [ 1, "MOVE_BEAK_BLAST" ],
+            [ 1, "MOVE_OVERHEAT" ],
             [ 1, "MOVE_THUNDERCLAP" ],
             [ 1, "MOVE_HARD_PRESS" ],
             [ 1, "MOVE_APPLE_ACID" ]

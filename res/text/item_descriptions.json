@@ -3878,6 +3878,14 @@
         "When held, it strengthens the power\n",
         "of a Fairy-type move one time."
       ]
+    },
+    {
+      "id": "pl_msg_00000391_00486",
+      "en_US": [
+        "An item to be held by a Pokemon.\n",
+        "If the holder is hit by an attack,\n",
+        "it will be switched out of battle."
+      ]
     }
   ]
 }

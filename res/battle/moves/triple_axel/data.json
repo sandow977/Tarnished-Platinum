@@ -1,7 +1,7 @@
 {
     "name": "Triple Axel",
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_FIGHTING",
+    "type": "TYPE_ICE",
     "power": 25,
     "accuracy": 90,
     "pp": 10,

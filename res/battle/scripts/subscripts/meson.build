@@ -123,6 +123,7 @@ subscript_files = files(
     'subscript_boost_all_stats.s',
     'subscript_belly_drum.s',
     'subscript_future_sight_damage.s',
+    'subscript_future_sight_damage_gem.s',
     'subscript_teleport.s',
     'subscript_future_sight_start.s',
     'subscript_stockpile.s',
@@ -334,6 +335,8 @@ subscript_files = files(
     'subscript_psychic_noise.s',
     'subscript_gem_boost.s',
     'subscript_use_move_gem.s',
+    'subscript_use_move_gem_charge_turn.s',
+    'subscript_eject_button.s',
     'subscript_update_hp_debug.s',
     'subscript_debug_damage.s',
 )

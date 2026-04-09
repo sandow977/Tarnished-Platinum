@@ -949,6 +949,7 @@ BOOL BattleSystem_SynchronizeStatus(BattleSystem *battleSys, BattleContext *batt
 BOOL BattleSystem_TriggerHeldItem(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
 
 BOOL BattleSystem_ShouldConsumeGem(BattleContext *battleCtx, int battler, int itemEffect);
+BOOL BattleSystem_ShouldConsumeGemOnDelayedHit(BattleContext *battleCtx, int battler, int itemEffect, int move);
 
 /**
  * @brief Check if a Leftovers-type item should trigger at the end of the turn.
