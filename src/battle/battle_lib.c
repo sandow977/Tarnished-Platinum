@@ -5344,6 +5344,14 @@ BOOL BattleSystem_TriggerHeldItemOnStatus(BattleSystem *battleSys, BattleContext
             break;
         }
 
+        case HOLD_EFFECT_SWITCH_OUT_ON_STAT_DROP:
+            if ((battleCtx->selfTurnFlags[battler].statusFlags & SELF_TURN_FLAG_STAT_LOWERED)
+                && BattleSystem_AnyReplacementMons(battleSys, battleCtx, battler) == TRUE) {
+                *subscript = subscript_eject_button;
+                result = TRUE;
+            }
+            break;
+
         case HOLD_EFFECT_HEAL_INFATUATION:
             if (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_ATTRACT) {
                 battleCtx->msgTemp = MSGCOND_INFATUATION;
@@ -5628,6 +5636,66 @@ BOOL Battler_MovedThisTurn(BattleContext *battleCtx, int battler)
     return battleCtx->battlerActions[battler][BATTLE_ACTION_PICK_COMMAND] == BATTLE_CONTROL_MOVE_END;
 }
 
+static BOOL BattleSystem_SetupForcedSwitch(BattleSystem *battleSys, BattleContext *battleCtx, int battler)
+{
+    u32 battleType = BattleSystem_GetBattleType(battleSys);
+
+    if ((battleType & BATTLE_TYPE_TRAINER) == 0) {
+        return TRUE;
+    }
+
+    Party *party = BattleSystem_GetParty(battleSys, battler);
+    int partyCount = BattleSystem_GetPartyCount(battleSys, battler);
+    Pokemon *mon;
+    int eligibleMons = 0;
+    int maxActiveMons;
+    int selectedSlot1;
+    int selectedSlot2;
+    int i;
+
+    if ((battleType & BATTLE_TYPE_2vs2)
+        || ((battleType & BATTLE_TYPE_TAG) && BattleSystem_GetBattlerSide(battleSys, battler))) {
+        maxActiveMons = 1;
+        selectedSlot1 = battleCtx->selectedPartySlot[battler];
+        selectedSlot2 = battleCtx->selectedPartySlot[battler];
+    } else if (battleType & BATTLE_TYPE_DOUBLES) {
+        maxActiveMons = 2;
+        selectedSlot1 = battleCtx->selectedPartySlot[battler];
+        selectedSlot2 = battleCtx->selectedPartySlot[BattleSystem_GetPartner(battleSys, battler)];
+    } else {
+        maxActiveMons = 1;
+        selectedSlot1 = battleCtx->selectedPartySlot[battler];
+        selectedSlot2 = battleCtx->selectedPartySlot[battler];
+    }
+
+    for (i = 0; i < partyCount; i++) {
+        mon = Party_GetPokemonBySlotIndex(party, i);
+
+        if (Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL)
+            && Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL) == FALSE
+            && Pokemon_GetValue(mon, MON_DATA_HP, NULL)) {
+            eligibleMons++;
+        }
+    }
+
+    if (eligibleMons <= maxActiveMons) {
+        return FALSE;
+    }
+
+    do {
+        do {
+            i = BattleSystem_RandNext(battleSys) % partyCount;
+        } while (i == selectedSlot1 || i == selectedSlot2);
+
+        mon = Party_GetPokemonBySlotIndex(party, i);
+    } while (Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL) == SPECIES_NONE
+        || Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL) == TRUE
+        || Pokemon_GetValue(mon, MON_DATA_HP, NULL) == 0);
+
+    battleCtx->switchedPartySlot[battler] = i;
+    return TRUE;
+}
+
 BOOL BattleSystem_TriggerHeldItemOnHit(BattleSystem *battleSys, BattleContext *battleCtx, int *subscript)
 {
     BOOL result = FALSE;
@@ -5704,8 +5772,25 @@ BOOL BattleSystem_TriggerHeldItemOnHit(BattleSystem *battleSys, BattleContext *b
       case HOLD_EFFECT_SWITCH_OUT_WHEN_HIT:
           if (DEFENDING_MON.curHP
               && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
-              && (battleCtx->multiHitNumHits == 0 || battleCtx->multiHitCounter == 1)) {
+              && (battleCtx->multiHitNumHits == 0 || battleCtx->multiHitCounter == 1)
+              && BattleSystem_AnyReplacementMons(battleSys, battleCtx, battleCtx->defender) == TRUE) {
               *subscript = subscript_eject_button;
+              battleCtx->msgBattlerTemp = battleCtx->defender;
+              battleCtx->msgItemTemp = battleCtx->battleMons[battleCtx->defender].heldItem;
+              result = TRUE;
+          }
+          break;
+
+      case HOLD_EFFECT_FORCE_SWITCH_ON_DAMAGE:
+          if (DEFENDING_MON.curHP
+              && ATTACKING_MON.curHP
+              && battleCtx->attacker != battleCtx->defender
+              && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
+              && (battleCtx->multiHitNumHits == 0 || battleCtx->multiHitCounter == 1)
+              && Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_SUCTION_CUPS
+              && (ATTACKING_MON.moveEffectsMask & MOVE_EFFECT_INGRAIN) == FALSE
+              && BattleSystem_SetupForcedSwitch(battleSys, battleCtx, battleCtx->attacker) == TRUE) {
+              *subscript = subscript_red_card;
               battleCtx->msgBattlerTemp = battleCtx->defender;
               battleCtx->msgItemTemp = battleCtx->battleMons[battleCtx->defender].heldItem;
               result = TRUE;

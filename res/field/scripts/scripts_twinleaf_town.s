@@ -38,10 +38,12 @@ TwinleafTown_Guitarist:
     PlayFanfare SEQ_SE_CONFIRM
     MakePartyMonShiny 0, VAR_RESULT
     GivePokedex
-    AddItem ITEM_BINDING_BAND, 999, VAR_RESULT
-    AddItem ITEM_SAFETY_GOGGLES, 999, VAR_RESULT
-    AddItem ITEM_BOOSTER_ENERGY, 999, VAR_RESULT
-    AddItem ITEM_PIXIE_PLATE, 999, VAR_RESULT
+    AddItem ITEM_MENTAL_HERB, 999, VAR_RESULT
+    AddItem ITEM_IRON_BALL, 999, VAR_RESULT
+    AddItem ITEM_LIFE_ORB, 999, VAR_RESULT
+    AddItem ITEM_LIGHT_BALL, 999, VAR_RESULT
+    AddItem ITEM_METRONOME, 999, VAR_RESULT
+    AddItem ITEM_FIGY_BERRY, 999, VAR_RESULT
     FillSinnohDexCaught
     GoTo _TwinleafTown_Guitarist_AfterDexFill
     SetSpeciesSeen SPECIES_SQUIRTLE

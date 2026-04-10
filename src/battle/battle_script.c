@@ -3353,6 +3353,8 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
         if (mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] < MIN_STAT_STAGE) {
             mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] = MIN_STAT_STAGE;
         }
+
+        battleCtx->selfTurnFlags[battleCtx->sideEffectMon].statusFlags |= SELF_TURN_FLAG_STAT_LOWERED;
     }
 
     return FALSE;

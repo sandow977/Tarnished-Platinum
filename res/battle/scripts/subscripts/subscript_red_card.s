@@ -1,0 +1,61 @@
+#include "macros/btlcmd.inc"
+
+
+_000:
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_MSG_TEMP, BATTLEMON_CUR_HP, 0, _095
+    Call BATTLE_SUBSCRIPT_PUSH_ATTACKER_AND_DEFENDER
+    UpdateVarFromVar OPCODE_SET, BTLVAR_ATTACKER, BTLVAR_MSG_BATTLER_TEMP
+    UpdateVarFromVar OPCODE_SET, BTLVAR_DEFENDER, BTLVAR_ATTACKER_TEMP
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_DEFENDER, BATTLEMON_CUR_HP, 0, _090
+    CheckIgnorableAbility CHECK_HAVE, BTLSCR_DEFENDER, ABILITY_SUCTION_CUPS, _070
+    CompareMonDataToValue OPCODE_EQU, BTLSCR_DEFENDER, BATTLEMON_MOVE_EFFECTS_MASK, MOVE_EFFECT_INGRAIN, _078
+    PlayBattleAnimation BTLSCR_ATTACKER, BATTLE_ANIMATION_HELD_ITEM
+    Wait
+    PrintMessage BattleStrings_Text_TheItemWasActivated, TAG_ITEM, BTLSCR_ATTACKER
+    Wait
+    RemoveItem BTLSCR_ATTACKER
+    TryRestoreStatusOnSwitch BTLSCR_DEFENDER, _026
+    UpdateMonData OPCODE_SET, BTLSCR_DEFENDER, BATTLEMON_STATUS, MON_CONDITION_NONE
+
+_026:
+    DeletePokemon BTLSCR_DEFENDER
+    Wait
+    CompareVarToValue OPCODE_FLAG_NOT, BTLVAR_BATTLE_TYPE, BATTLE_TYPE_TRAINER, _056
+    HealthbarSlideOut BTLSCR_DEFENDER
+    Wait
+    SwitchAndUpdateMon BTLSCR_FORCED_OUT
+    Wait
+    PokemonSendOut BTLSCR_DEFENDER
+    WaitTime 72
+    HealthbarSlideIn BTLSCR_DEFENDER
+    Wait
+    PrintMessage BattleStrings_Text_PokemonWasDraggedOut_Ally, TAG_NICKNAME, BTLSCR_DEFENDER
+    Wait
+    WaitButtonABTime 30
+    UpdateVarFromVar OPCODE_SET, BTLVAR_SWITCHED_MON, BTLVAR_DEFENDER
+    Call BATTLE_SUBSCRIPT_HAZARDS_CHECK
+    GoTo _090
+
+_056:
+    FadeOutBattle
+    Wait
+    UpdateVar OPCODE_FLAG_ON, BTLVAR_RESULT_MASK, BATTLE_RESULT_PLAYER_FLED
+    GoTo _090
+
+_070:
+    BufferMessage BattleStrings_Text_PokemonAnchorsItselfWithAbility_Ally, TAG_NICKNAME_ABILITY, BTLSCR_DEFENDER, BTLSCR_DEFENDER
+    GoTo _082
+
+_078:
+    BufferMessage BattleStrings_Text_PokemonAnchoredItselfWithItsRoots_Ally, TAG_NICKNAME, BTLSCR_DEFENDER
+
+_082:
+    PrintBufferedMessage
+    Wait
+    WaitButtonABTime 30
+
+_090:
+    Call BATTLE_SUBSCRIPT_POP_ATTACKER_AND_DEFENDER
+
+_095:
+    End

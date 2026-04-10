@@ -8698,6 +8698,13 @@
                                        "{STRVAR_1 6, 1, 0} thanks to its\n",
                                        "{STRVAR_1 8, 0, 0}!"
                                    ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_TheItemWasActivated",
+                         "en_US":  [
+                                       "The {STRVAR_1 8, 0, 0} was\n",
+                                       "activated!"
+                                   ]
                      }
                  ]
 }

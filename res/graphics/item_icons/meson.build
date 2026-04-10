@@ -348,6 +348,8 @@ item_icon_pngs = files(
     'booster_energy.png',
     'pixie_plate.png',
     'safety_goggles.png',
+    'eject_pack.png',
+    'red_card.png',
 )
 
 item_icon_pals = files(
@@ -756,6 +758,8 @@ item_icon_pals = files(
     'booster_energy.pal',
     'pixie_plate.pal',
     'safety_goggles.pal',
+    'eject_pack.pal',
+    'red_card.pal',
 )
 
 item_icon_anim_jsons = files('generic_anim.json')

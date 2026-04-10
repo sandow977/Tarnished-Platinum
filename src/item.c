@@ -3025,6 +3025,18 @@ const ItemArchiveIDs sItemArchiveIDs[] = {
         .paletteID = safety_goggles_NCLR,
         .gen3ID = GBA_ITEM_NONE,
     },
+    [ITEM_EJECT_PACK] = {
+        .dataID = 0x1F4,
+        .iconID = eject_pack_NCGR,
+        .paletteID = eject_pack_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
+    [ITEM_RED_CARD] = {
+        .dataID = 0x1F5,
+        .iconID = red_card_NCGR,
+        .paletteID = red_card_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
   };
 
 static const u16 sTMHMMoves[] = {

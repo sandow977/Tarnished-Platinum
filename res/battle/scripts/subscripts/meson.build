@@ -344,4 +344,5 @@ subscript_files = files(
     'subscript_rocky_helmet.s',
     'subscript_room_service.s',
     'subscript_safety_goggles.s',
+    'subscript_red_card.s',
 )

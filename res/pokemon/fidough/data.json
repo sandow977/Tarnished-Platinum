@@ -34,8 +34,8 @@
         "EGG_GROUP_MINERAL"
     ],
     "abilities": [
-        "ABILITY_MOLD_BREAKER",
-        "ABILITY_MOLD_BREAKER"
+        "ABILITY_BATTLE_ARMOR",
+        "ABILITY_BATTLE_ARMOR"
     ],
     "safari_flee_rate": 0,
     "body_color": "MON_COLOR_YELLOW",
@@ -50,7 +50,7 @@
             [ 1, "MOVE_COVET" ],
             [ 1, "MOVE_ICE_PUNCH" ],
             [ 1, "MOVE_KNOCK_OFF" ],
-            [ 1, "MOVE_WHIRLPOOL" ],
+            [ 1, "MOVE_BULLDOZE" ],
             [ 1, "MOVE_SPORE" ],
             [ 1, "MOVE_HAIL" ],
             [ 1, "MOVE_HARD_PRESS" ],

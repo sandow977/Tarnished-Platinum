@@ -1735,6 +1735,12 @@ static void BattleControllerPlayer_CheckMonConditions(BattleSystem *battleSys, B
             if (BattleSystem_TriggerHeldItemOnStatus(battleSys, battleCtx, battler, &nextSeq) == TRUE) {
                 battleCtx->msgBattlerTemp = battler;
 
+                if (nextSeq == subscript_eject_button) {
+                    battleCtx->postSwitchSavedAttacker = battleCtx->attacker;
+                    battleCtx->postSwitchSavedDefender = battleCtx->defender;
+                    battleCtx->restorePostSwitchContext = TRUE;
+                }
+
                 PrepareSubroutineSequence(battleCtx, nextSeq);
                 state = STATE_BREAK_OUT;
             }
@@ -4078,6 +4084,12 @@ static void BattleControllerPlayer_AfterMoveEffects(BattleSystem *battleSys, Bat
             if (BattleSystem_TriggerHeldItemOnStatus(battleSys, battleCtx, battler, &nextSeq) == TRUE) {
                 battleCtx->msgBattlerTemp = battler;
 
+                if (nextSeq == subscript_eject_button) {
+                    battleCtx->postSwitchSavedAttacker = battleCtx->attacker;
+                    battleCtx->postSwitchSavedDefender = battleCtx->defender;
+                    battleCtx->restorePostSwitchContext = TRUE;
+                }
+
                 LOAD_SUBSEQ(nextSeq);
                 battleCtx->commandNext = battleCtx->command;
                 battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
@@ -5243,4 +5255,3 @@ static void BattleSystem_RecordCommand(BattleSystem *battleSys, BattleContext *b
         }
     }
 }
-

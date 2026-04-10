@@ -2000,6 +2000,14 @@
                      {
                          "id":  "pl_msg_00000392_00499",
                          "en_US":  "Safety Goggles"
+                     },
+                     {
+                         "id":  "pl_msg_00000392_00500",
+                         "en_US":  "Eject Pack"
+                     },
+                     {
+                         "id":  "pl_msg_00000392_00501",
+                         "en_US":  "Red Card"
                      }
                  ]
 }

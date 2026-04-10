@@ -10,13 +10,13 @@
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_SANDSLASH",
+            "species": "SPECIES_CRADILY",
             "form": 0,
             "level": 30,
-            "item": "ITEM_SAFETY_GOGGLES",
+            "item": "ITEM_RED_CARD",
             "moves": [
-                "MOVE_BULLDOZE",
-                "MOVE_TAIL_WHIP",
+                "MOVE_TACKLE",
+                "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"
             ],
@@ -24,12 +24,26 @@
             "ball_seal": 0
         },
         {
-            "species": "SPECIES_MACHAMP",
+            "species": "SPECIES_CRADILY",
             "form": 0,
             "level": 30,
             "item": "ITEM_EJECT_BUTTON",
             "moves": [
-                "MOVE_KNOCK_OFF",
+                "MOVE_LEAF_STORM",
+                "MOVE_NONE",
+                "MOVE_NONE",
+                "MOVE_NONE"
+            ],
+            "iv_scale": 50,
+            "ball_seal": 0
+        },
+        {
+            "species": "SPECIES_CRADILY",
+            "form": 0,
+            "level": 1,
+            "item": "ITEM_EJECT_PACK",
+            "moves": [
+                "MOVE_SPLASH",
                 "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"

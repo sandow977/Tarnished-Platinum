@@ -2000,6 +2000,14 @@
                      {
                          "id":  "pl_msg_00000393_00499",
                          "en_US":  "the {COLOR 255}pair of Safety Goggles{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00500",
+                         "en_US":  "an {COLOR 255}Eject Pack{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00501",
+                         "en_US":  "a {COLOR 255}Red Card{COLOR 0}"
                      }
                  ]
 }
