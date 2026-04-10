@@ -8690,6 +8690,14 @@
                                        "The {STRVAR_1 8, 0, 0} prevents the use\n",
                                        "of status moves!"
                                    ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonIsNotAffectedByMoveThanksToItsItem",
+                         "en_US":  [
+                                       "{STRVAR_1 0, 0, 0} isn’t affected by\n",
+                                       "{STRVAR_1 6, 1, 0} thanks to its\n",
+                                       "{STRVAR_1 8, 0, 0}!"
+                                   ]
                      }
                  ]
 }

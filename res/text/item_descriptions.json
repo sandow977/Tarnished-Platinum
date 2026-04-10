@@ -3958,6 +3958,38 @@
         "It raises both Defense and Sp. Def when\n",
         "held by a Pokemon that can evolve."
       ]
+    },
+    {
+      "id": "pl_msg_00000391_00496",
+      "en_US": [
+        "An item to be held by a Pokemon.\n",
+        "This band boosts the power of\n",
+        "the user's binding moves"
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00497",
+      "en_US": [
+        "An item to be held by a Pokemon.\n",
+        "The energy within this capsule boosts\n",
+        "the strength of certain Pokemon."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00498",
+      "en_US": [
+        "An item to be held by a Pokemon.\n",
+        "It’s a stone tablet that boosts\n",
+        "the power of Fairy-type moves."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00499",
+      "en_US": [
+        "An item to be held by a Pokemon.\n",
+        "These goggles protect the holder from\n",
+        "weather-related damage and powder."
+      ]
     }
   ]
 }

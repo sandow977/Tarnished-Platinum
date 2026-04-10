@@ -1984,6 +1984,22 @@
                      {
                          "id":  "pl_msg_00000394_00495",
                          "en_US":  "Eviolites"
+                     },
+                     {
+                         "id":  "pl_msg_00000394_00496",
+                         "en_US":  "Binding Bands"
+                     },
+                     {
+                         "id":  "pl_msg_00000394_00497",
+                         "en_US":  "capsules of Booster Energy"
+                     },
+                     {
+                         "id":  "pl_msg_00000394_00498",
+                         "en_US":  "Pixie Plates"
+                     },
+                     {
+                         "id":  "pl_msg_00000394_00499",
+                         "en_US":  "pairs of Safety Goggles"
                      }
                  ]
 }

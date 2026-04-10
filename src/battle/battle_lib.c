@@ -6867,7 +6867,8 @@ static const ItemEffectTypePair sTypeBoostingItems[] = {
     { HOLD_EFFECT_GEM_DARK, TYPE_DARK },
     { HOLD_EFFECT_GEM_STEEL, TYPE_STEEL },
     { HOLD_EFFECT_GEM_NORMAL, TYPE_NORMAL },
-    { HOLD_EFFECT_GEM_FAIRY, TYPE_FAIRY }
+    { HOLD_EFFECT_GEM_FAIRY, TYPE_FAIRY },
+    { HOLD_EFFECT_ARCEUS_FAIRY, TYPE_FAIRY }
 };
 
 static inline int BattleSystem_CurrentMoveType(BattleContext *battleCtx)
@@ -8286,6 +8287,10 @@ static u8 Battler_MonType(BattleContext *battleCtx, int battler, enum BattleMonP
             type = TYPE_DARK;
             break;
 
+        case HOLD_EFFECT_ARCEUS_FAIRY:
+            type = TYPE_FAIRY;
+            break;
+
         case HOLD_EFFECT_ARCEUS_STEEL:
             type = TYPE_STEEL;
             break;
@@ -8483,6 +8488,9 @@ static int CalcMoveType(BattleSystem *battleSys, BattleContext *battleCtx, int i
             break;
         case HOLD_EFFECT_ARCEUS_DARK:
             type = TYPE_DARK;
+            break;
+        case HOLD_EFFECT_ARCEUS_FAIRY:
+            type = TYPE_FAIRY;
             break;
         default:
             type = TYPE_NORMAL;
@@ -8766,6 +8774,9 @@ int Move_CalcVariableType(BattleSystem *battleSys, BattleContext *battleCtx, Pok
             break;
         case HOLD_EFFECT_ARCEUS_DARK:
             type = TYPE_DARK;
+            break;
+        case HOLD_EFFECT_ARCEUS_FAIRY:
+            type = TYPE_FAIRY;
             break;
         default:
             type = TYPE_NORMAL;

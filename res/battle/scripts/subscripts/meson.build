@@ -343,4 +343,5 @@ subscript_files = files(
     'subscript_missed_blunder_policy.s',
     'subscript_rocky_helmet.s',
     'subscript_room_service.s',
+    'subscript_safety_goggles.s',
 )

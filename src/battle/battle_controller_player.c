@@ -128,6 +128,7 @@ static void BattleControllerPlayer_MarkCustapForMixedActions(BattleContext *batt
 static BOOL BattleControllerPlayer_IsLockedSemiInvulnerableImpactTurn(BattleContext *battleCtx);
 static BOOL BattleControllerPlayer_ShouldDeferGemBoostSubscript(BattleContext *battleCtx);
 static BOOL BattleControllerPlayer_CanTriggerBlunderPolicy(BattleContext *battleCtx);
+static BOOL BattleControllerPlayer_TriggerSafetyGoggles(BattleContext *battleCtx);
 static void BattleControllerPlayer_InitAI(BattleSystem *battleSys, BattleContext *battleCtx);
 static void BattleSystem_RecordCommand(BattleSystem *battleSys, BattleContext *battleCtx);
 
@@ -1477,10 +1478,19 @@ static void BattleControllerPlayer_CheckMonConditions(BattleSystem *battleSys, B
 
         case MON_COND_CHECK_STATE_BIND:
             if ((battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_BIND) && battleCtx->battleMons[battler].curHP) {
+                int bindDivisor = 8;
+                int bindSource = battleCtx->battleMons[battler].moveEffectsData.bindTarget;
+
                 battleCtx->battleMons[battler].statusVolatile -= (1 << VOLATILE_CONDITION_BIND_SHIFT);
 
                 if (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_BIND) {
-                    battleCtx->hpCalcTemp = BattleSystem_Divide(battleCtx->battleMons[battler].maxHP * -1, 16);
+                    if (bindSource != BATTLER_NONE
+                        && bindSource < MAX_BATTLERS
+                        && Battler_HeldItemEffect(battleCtx, bindSource) == HOLD_EFFECT_TRAPPING_DAMAGE_UP) {
+                        bindDivisor = 6;
+                    }
+
+                    battleCtx->hpCalcTemp = BattleSystem_Divide(battleCtx->battleMons[battler].maxHP * -1, bindDivisor);
                     LOAD_SUBSEQ(subscript_bind_effect);
                 } else {
                     LOAD_SUBSEQ(subscript_bind_end);
@@ -2887,6 +2897,14 @@ static BOOL BattleControllerPlayer_TriggerImmunityAbilities(BattleSystem *battle
     do {
         switch (battleCtx->abilityCheckState) {
         case IMMUNITY_ABILITY_STATE_CHECK:
+            if (BattleControllerPlayer_TriggerSafetyGoggles(battleCtx) == TRUE) {
+                battleCtx->commandNext = battleCtx->command;
+                battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
+                battleCtx->abilityCheckState++;
+                result = STATE_BREAK_OUT;
+                break;
+            }
+
             int nextSeq = BattleSystem_TriggerImmunityAbility(battleCtx, battleCtx->attacker, battleCtx->defender);
 
             if ((nextSeq && (battleCtx->moveStatusFlags & MOVE_STATUS_DID_NOT_HIT) == FALSE)
@@ -3527,6 +3545,34 @@ static BOOL BattleControllerPlayer_CanTriggerBlunderPolicy(BattleContext *battle
     speedStage = ATTACKING_MON.statBoosts[BATTLE_STAT_SPEED];
 
     return speedStage < MAX_STAT_STAGE;
+}
+
+static BOOL BattleControllerPlayer_TriggerSafetyGoggles(BattleContext *battleCtx)
+{
+    if (battleCtx->defender == BATTLER_NONE) {
+        return FALSE;
+    }
+
+    if (Battler_HeldItemEffect(battleCtx, battleCtx->defender) != HOLD_EFFECT_SPORE_POWDER_IMMUNITY) {
+        return FALSE;
+    }
+
+    switch (battleCtx->moveCur) {
+    case MOVE_POISON_POWDER:
+    case MOVE_SLEEP_POWDER:
+    case MOVE_STUN_SPORE:
+    case MOVE_SPORE:
+    case MOVE_COTTON_SPORE:
+    case MOVE_MAGIC_POWDER:
+        battleCtx->msgBattlerTemp = battleCtx->defender;
+        battleCtx->msgItemTemp = Battler_HeldItem(battleCtx, battleCtx->defender);
+        battleCtx->msgMoveTemp = battleCtx->moveCur;
+        LOAD_SUBSEQ(subscript_safety_goggles);
+        battleCtx->moveStatusFlags |= MOVE_STATUS_NO_MORE_WORK;
+        return TRUE;
+    default:
+        return FALSE;
+    }
 }
 
 static void BattleControllerPlayer_CheckMoveFailure(BattleSystem *battleSys, BattleContext *battleCtx)

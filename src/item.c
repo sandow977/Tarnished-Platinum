@@ -3001,6 +3001,30 @@ const ItemArchiveIDs sItemArchiveIDs[] = {
         .paletteID = eviolite_NCLR,
         .gen3ID = GBA_ITEM_NONE,
     },
+    [ITEM_BINDING_BAND] = {
+        .dataID = 0x1F0,
+        .iconID = binding_band_NCGR,
+        .paletteID = binding_band_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
+    [ITEM_BOOSTER_ENERGY] = {
+        .dataID = 0x1F1,
+        .iconID = booster_energy_NCGR,
+        .paletteID = booster_energy_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
+    [ITEM_PIXIE_PLATE] = {
+        .dataID = 0x1F2,
+        .iconID = pixie_plate_NCGR,
+        .paletteID = pixie_plate_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
+    [ITEM_SAFETY_GOGGLES] = {
+        .dataID = 0x1F3,
+        .iconID = safety_goggles_NCGR,
+        .paletteID = safety_goggles_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
   };
 
 static const u16 sTMHMMoves[] = {

@@ -344,6 +344,10 @@ item_icon_pngs = files(
     'loaded_dice.png',
     'assault_vest.png',
     'eviolite.png',
+    'binding_band.png',
+    'booster_energy.png',
+    'pixie_plate.png',
+    'safety_goggles.png',
 )
 
 item_icon_pals = files(
@@ -748,6 +752,10 @@ item_icon_pals = files(
     'loaded_dice.pal',
     'assault_vest.pal',
     'eviolite.pal',
+    'binding_band.pal',
+    'booster_energy.pal',
+    'pixie_plate.pal',
+    'safety_goggles.pal',
 )
 
 item_icon_anim_jsons = files('generic_anim.json')

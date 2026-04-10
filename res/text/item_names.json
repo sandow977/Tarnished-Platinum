@@ -1984,6 +1984,22 @@
                      {
                          "id":  "pl_msg_00000392_00495",
                          "en_US":  "Eviolite"
+                     },
+                     {
+                         "id":  "pl_msg_00000392_00496",
+                         "en_US":  "Binding Band"
+                     },
+                     {
+                         "id":  "pl_msg_00000392_00497",
+                         "en_US":  "Booster Energy"
+                     },
+                     {
+                         "id":  "pl_msg_00000392_00498",
+                         "en_US":  "Pixie Plate"
+                     },
+                     {
+                         "id":  "pl_msg_00000392_00499",
+                         "en_US":  "Safety Goggles"
                      }
                  ]
 }

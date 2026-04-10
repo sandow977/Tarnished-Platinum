@@ -1984,6 +1984,22 @@
                      {
                          "id":  "pl_msg_00000393_00495",
                          "en_US":  "an {COLOR 255}Eviolite{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00496",
+                         "en_US":  "a {COLOR 255}Binding Band{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00497",
+                         "en_US":  "a {COLOR 255}capsule of Booster Energy{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00498",
+                         "en_US":  "a {COLOR 255}Pixie Plate{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00499",
+                         "en_US":  "the {COLOR 255}pair of Safety Goggles{COLOR 0}"
                      }
                  ]
 }

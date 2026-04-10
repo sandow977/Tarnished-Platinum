@@ -13,7 +13,7 @@
             "species": "SPECIES_SANDSLASH",
             "form": 0,
             "level": 30,
-            "item": "ITEM_EJECT_BUTTON",
+            "item": "ITEM_SAFETY_GOGGLES",
             "moves": [
                 "MOVE_BULLDOZE",
                 "MOVE_TAIL_WHIP",
