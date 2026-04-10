@@ -1675,8 +1675,6 @@ static BOOL BtlCmd_Wait(BattleSystem *battleSys, BattleContext *battleCtx)
  *
  * Aside from the standard damage calc, this is where the following effects
  * have their damage amplification properties applied:
- * - Life Orb
- * - Metronome
  * - Me First
  *
  * @param battleSys
@@ -1704,14 +1702,6 @@ static void BattleScript_CalcMoveDamage(BattleSystem *battleSys, BattleContext *
         battleCtx->defender,
         battleCtx->criticalMul);
     battleCtx->damage *= battleCtx->criticalMul;
-
-    if (Battler_HeldItemEffect(battleCtx, battleCtx->attacker) == HOLD_EFFECT_HP_DRAIN_ON_ATK) {
-        battleCtx->damage = battleCtx->damage * (100 + Battler_HeldItemPower(battleCtx, battleCtx->attacker, 0)) / 100;
-    }
-
-    if (Battler_HeldItemEffect(battleCtx, battleCtx->attacker) == HOLD_EFFECT_BOOST_REPEATED) {
-        battleCtx->damage = battleCtx->damage * (10 + ATTACKING_MON.moveEffectsData.metronomeTurns) / 10;
-    }
 
     if (ATTACKING_MON.moveEffectsData.meFirst) {
         // TODO: Document how this works after documenting the Me First behavior.
@@ -3300,7 +3290,8 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
                 } else if (Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon, ABILITY_SHIELD_DUST) == TRUE
                     && battleCtx->sideEffectType == SIDE_EFFECT_TYPE_INDIRECT) {
                     result = 1;
-                } else if (battleCtx->battleMons[battleCtx->sideEffectMon].statusVolatile & VOLATILE_CONDITION_SUBSTITUTE) {
+                } else if ((battleCtx->battleMons[battleCtx->sideEffectMon].statusVolatile & VOLATILE_CONDITION_SUBSTITUTE)
+                    && Move_IsSoundBased(battleCtx->moveCur) == FALSE) {
                     result = 2;
                 }
             } else if (mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] == MIN_STAT_STAGE) {
@@ -9756,7 +9747,8 @@ static BOOL BtlCmd_CheckSubstitute(BattleSystem *battleSys, BattleContext *battl
     int jumpSubActive = BattleScript_Read(battleCtx);
 
     int battler = BattleScript_Battler(battleSys, battleCtx, inBattler);
-    if ((battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_SUBSTITUTE)
+    if (((battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_SUBSTITUTE)
+            && Move_IsSoundBased(battleCtx->moveCur) == FALSE)
         || (battleCtx->selfTurnFlags[battler].statusFlags & SELF_TURN_FLAG_SUBSTITUTE_HIT)) {
         BattleScript_Iter(battleCtx, jumpSubActive);
     }

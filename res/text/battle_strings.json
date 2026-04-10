@@ -8618,21 +8618,21 @@
                          "id":  "BattleStrings_Text_ThroatChopPreventsMove_Ally",
                          "en_US":  [
                                        "Throat Chop prevents {STRVAR_1 2, 1, 0} from\n",
-                                       "using certain moves!"
+                                       "using sound-based moves!"
                                    ]
                      },
                      {
                          "id":  "BattleStrings_Text_ThroatChopPreventsMove_Wild",
                          "en_US":  [
                                        "Throat Chop prevents {STRVAR_1 1, 0, 0} from\n",
-                                       "using certain moves!"
+                                       "using sound-based moves!"
                                    ]
                      },
                      {
                          "id":  "BattleStrings_Text_ThroatChopPreventsMove_Foe",
                          "en_US":  [
                                        "Throat Chop prevents {STRVAR_1 1, 0, 0} from\n",
-                                       "using certain moves!"
+                                       "using sound-based moves!"
                                    ]
                      },
                      {
@@ -8704,6 +8704,13 @@
                          "en_US":  [
                                        "The {STRVAR_1 8, 0, 0} was\n",
                                        "activated!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonCuredItsStatusUsingItsMentalHerb",
+                         "en_US":  [
+                                       "{STRVAR_1 1, 0, 0} cured its status\n",
+                                       "using its {STRVAR_1 8, 1, 0}!"
                                    ]
                      }
                  ]

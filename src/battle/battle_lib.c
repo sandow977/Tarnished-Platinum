@@ -56,6 +56,7 @@ static BOOL BasicTypeMulApplies(BattleContext *battleCtx, int attacker, int defe
 static int MapSideEffectToSubscript(BattleContext *battleCtx, enum BattleSideEffectType type, u32 effect);
 static int ApplyTypeMultiplier(BattleContext *battleCtx, int attacker, int mul, int damage, BOOL update, u32 *moveStatus);
 static BOOL NoImmunityOverrides(BattleContext *battleCtx, int itemEffect, int chartEntry);
+static BOOL IronBallForcesNeutralGround(int moveType, int itemEffect, int defenderType1, int defenderType2);
 static void UpateMoveStatusForTypeMul(int mul, u32 *moveStatusMask);
 static BOOL MoveIsOnDamagingTurn(BattleContext *battleCtx, int move);
 static BOOL MoveIsPunchingMove(int move);
@@ -2732,7 +2733,10 @@ int BattleSystem_ApplyTypeChart(BattleSystem *battleSys, BattleContext *battleCt
         && defenderItemEffect != HOLD_EFFECT_SPEED_DOWN_GROUNDED
         && ignoreGroundImmunity == FALSE) {
         *moveStatusMask |= MOVE_STATUS_MAGNET_RISE;
-    } else {
+    } else if (IronBallForcesNeutralGround(moveType,
+                   defenderItemEffect,
+                   BattleMon_Get(battleCtx, defender, BATTLEMON_TYPE_1, NULL),
+                   BattleMon_Get(battleCtx, defender, BATTLEMON_TYPE_2, NULL)) == FALSE) {
         chartEntry = 0;
 
         while (sTypeMatchupMultipliers[chartEntry][0] != 0xFF) {
@@ -2849,7 +2853,7 @@ void BattleSystem_CalcEffectiveness(BattleContext *battleCtx, int move, int inTy
         && (battleCtx->fieldConditionsMask & FIELD_CONDITION_GRAVITY) == FALSE
         && defenderItemEffect != HOLD_EFFECT_SPEED_DOWN_GROUNDED) {
         *moveStatusMask |= MOVE_STATUS_INEFFECTIVE;
-    } else {
+    } else if (IronBallForcesNeutralGround(moveType, defenderItemEffect, defenderType1, defenderType2) == FALSE) {
         chartEntry = 0;
 
         while (sTypeMatchupMultipliers[chartEntry][0] != 0xFF) {
@@ -2918,6 +2922,23 @@ static BOOL NoImmunityOverrides(BattleContext *battleCtx, int itemEffect, int ch
     }
 
     return result;
+}
+
+static BOOL IronBallForcesNeutralGround(int moveType, int itemEffect, int defenderType1, int defenderType2)
+{
+    if (moveType != TYPE_GROUND) {
+        return FALSE;
+    }
+
+    if (itemEffect != HOLD_EFFECT_SPEED_DOWN_GROUNDED) {
+        return FALSE;
+    }
+
+    if (defenderType1 != TYPE_FLYING && defenderType2 != TYPE_FLYING) {
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 /**
@@ -5128,9 +5149,21 @@ BOOL BattleSystem_TriggerHeldItem(BattleSystem *battleSys, BattleContext *battle
         }
 
         case HOLD_EFFECT_HEAL_INFATUATION:
-            if (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_ATTRACT) {
-                battleCtx->msgTemp = MSGCOND_INFATUATION;
-                subscript = subscript_held_item_heal_infatuation;
+            if ((battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_ATTRACT)
+                || (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_TORMENT)
+                || battleCtx->battleMons[battler].moveEffectsData.tauntedTurns
+                || battleCtx->battleMons[battler].moveEffectsData.encoredTurns
+                || battleCtx->battleMons[battler].moveEffectsData.healBlockTurns
+                || battleCtx->battleMons[battler].moveEffectsData.disabledTurns) {
+                battleCtx->battleMons[battler].statusVolatile &= ~(VOLATILE_CONDITION_ATTRACT | VOLATILE_CONDITION_TORMENT);
+                battleCtx->battleMons[battler].moveEffectsData.tauntedTurns = 0;
+                battleCtx->battleMons[battler].moveEffectsData.encoredTurns = 0;
+                battleCtx->battleMons[battler].moveEffectsData.encoredMove = MOVE_NONE;
+                battleCtx->battleMons[battler].moveEffectsData.encoredMoveSlot = 0;
+                battleCtx->battleMons[battler].moveEffectsData.healBlockTurns = 0;
+                battleCtx->battleMons[battler].moveEffectsData.disabledTurns = 0;
+                battleCtx->battleMons[battler].moveEffectsData.disabledMove = MOVE_NONE;
+                subscript = subscript_mental_herb;
                 result = TRUE;
             }
             break;
@@ -5353,9 +5386,21 @@ BOOL BattleSystem_TriggerHeldItemOnStatus(BattleSystem *battleSys, BattleContext
             break;
 
         case HOLD_EFFECT_HEAL_INFATUATION:
-            if (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_ATTRACT) {
-                battleCtx->msgTemp = MSGCOND_INFATUATION;
-                *subscript = subscript_held_item_heal_infatuation;
+            if ((battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_ATTRACT)
+                || (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_TORMENT)
+                || battleCtx->battleMons[battler].moveEffectsData.tauntedTurns
+                || battleCtx->battleMons[battler].moveEffectsData.encoredTurns
+                || battleCtx->battleMons[battler].moveEffectsData.healBlockTurns
+                || battleCtx->battleMons[battler].moveEffectsData.disabledTurns) {
+                battleCtx->battleMons[battler].statusVolatile &= ~(VOLATILE_CONDITION_ATTRACT | VOLATILE_CONDITION_TORMENT);
+                battleCtx->battleMons[battler].moveEffectsData.tauntedTurns = 0;
+                battleCtx->battleMons[battler].moveEffectsData.encoredTurns = 0;
+                battleCtx->battleMons[battler].moveEffectsData.encoredMove = MOVE_NONE;
+                battleCtx->battleMons[battler].moveEffectsData.encoredMoveSlot = 0;
+                battleCtx->battleMons[battler].moveEffectsData.healBlockTurns = 0;
+                battleCtx->battleMons[battler].moveEffectsData.disabledTurns = 0;
+                battleCtx->battleMons[battler].moveEffectsData.disabledMove = MOVE_NONE;
+                *subscript = subscript_mental_herb;
                 result = TRUE;
             }
             break;
@@ -5372,7 +5417,7 @@ BOOL BattleSystem_TriggerHeldItemOnStatus(BattleSystem *battleSys, BattleContext
             break;
 
         case HOLD_EFFECT_HP_RESTORE_SPICY:
-            if (battleCtx->battleMons[battler].curHP <= battleCtx->battleMons[battler].maxHP / 2) {
+            if (battleCtx->battleMons[battler].curHP <= battleCtx->battleMons[battler].maxHP / 4) {
                 battleCtx->hpCalcTemp = BattleSystem_Divide(battleCtx->battleMons[battler].maxHP, itemPower);
                 battleCtx->msgTemp = FLAVOR_SPICY;
 
@@ -5387,7 +5432,7 @@ BOOL BattleSystem_TriggerHeldItemOnStatus(BattleSystem *battleSys, BattleContext
             break;
 
         case HOLD_EFFECT_HP_RESTORE_DRY:
-            if (battleCtx->battleMons[battler].curHP <= battleCtx->battleMons[battler].maxHP / 2) {
+            if (battleCtx->battleMons[battler].curHP <= battleCtx->battleMons[battler].maxHP / 4) {
                 battleCtx->hpCalcTemp = BattleSystem_Divide(battleCtx->battleMons[battler].maxHP, itemPower);
                 battleCtx->msgTemp = FLAVOR_DRY;
 
@@ -5402,7 +5447,7 @@ BOOL BattleSystem_TriggerHeldItemOnStatus(BattleSystem *battleSys, BattleContext
             break;
 
         case HOLD_EFFECT_HP_RESTORE_SWEET:
-            if (battleCtx->battleMons[battler].curHP <= battleCtx->battleMons[battler].maxHP / 2) {
+            if (battleCtx->battleMons[battler].curHP <= battleCtx->battleMons[battler].maxHP / 4) {
                 battleCtx->hpCalcTemp = BattleSystem_Divide(battleCtx->battleMons[battler].maxHP, itemPower);
                 battleCtx->msgTemp = FLAVOR_SWEET;
 
@@ -5417,7 +5462,7 @@ BOOL BattleSystem_TriggerHeldItemOnStatus(BattleSystem *battleSys, BattleContext
             break;
 
         case HOLD_EFFECT_HP_RESTORE_BITTER:
-            if (battleCtx->battleMons[battler].curHP <= battleCtx->battleMons[battler].maxHP / 2) {
+            if (battleCtx->battleMons[battler].curHP <= battleCtx->battleMons[battler].maxHP / 4) {
                 battleCtx->hpCalcTemp = BattleSystem_Divide(battleCtx->battleMons[battler].maxHP, itemPower);
                 battleCtx->msgTemp = FLAVOR_BITTER;
 
@@ -5432,7 +5477,7 @@ BOOL BattleSystem_TriggerHeldItemOnStatus(BattleSystem *battleSys, BattleContext
             break;
 
         case HOLD_EFFECT_HP_RESTORE_SOUR:
-            if (battleCtx->battleMons[battler].curHP <= battleCtx->battleMons[battler].maxHP / 2) {
+            if (battleCtx->battleMons[battler].curHP <= battleCtx->battleMons[battler].maxHP / 4) {
                 battleCtx->hpCalcTemp = BattleSystem_Divide(battleCtx->battleMons[battler].maxHP, itemPower);
                 battleCtx->msgTemp = FLAVOR_SOUR;
 
@@ -7294,7 +7339,12 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     }
     if (attackerParams.heldItemEffect == HOLD_EFFECT_PIKA_SPATK_UP
         && attackerParams.species == SPECIES_PIKACHU) {
-        movePower *= 2;
+        attackStat *= 2;
+        spAttackStat *= 2;
+    }
+    if (defenderParams.heldItemEffect == HOLD_EFFECT_PIKA_SPATK_UP
+        && defenderParams.species == SPECIES_PIKACHU) {
+        defenderAttackStat *= 2;
     }
     if (defenderParams.heldItemEffect == HOLD_EFFECT_DITTO_DEF_UP
         && defenderParams.species == SPECIES_DITTO) {
@@ -7679,6 +7729,20 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
         damage = damage * 15 / 10;
     }
 
+    if (attackerParams.heldItemEffect == HOLD_EFFECT_HP_DRAIN_ON_ATK) {
+        damage = damage * (100 + attackerParams.heldItemPower) / 100;
+    }
+
+    if (attackerParams.heldItemEffect == HOLD_EFFECT_BOOST_REPEATED) {
+        int metronomeBoost = attackerParams.heldItemPower * ATTACKING_MON.moveEffectsData.metronomeTurns;
+
+        if (metronomeBoost > 100) {
+            metronomeBoost = 100;
+        }
+
+        damage = damage * (100 + metronomeBoost) / 100;
+    }
+
     return damage + 2;
 }
 
@@ -8027,12 +8091,13 @@ BOOL BattleSystem_TriggerHeldItemOnPivotMove(BattleSystem *battleSys, BattleCont
 
     if (attackerItemEffect == HOLD_EFFECT_HP_DRAIN_ON_ATK
         && Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_MAGIC_GUARD
-        && (battleCtx->battleStatusMask & SYSCTL_MOVE_HIT)
+        && ((battleCtx->battleStatusMask & SYSCTL_MOVE_HIT)
+            || (DEFENDER_SELF_TURN_FLAGS.statusFlags & SELF_TURN_FLAG_SUBSTITUTE_HIT))
         && CURRENT_MOVE_DATA.class != CLASS_STATUS
         && ATTACKING_MON.curHP) {
         battleCtx->hpCalcTemp = BattleSystem_Divide(ATTACKING_MON.maxHP * -1, 10);
         battleCtx->msgBattlerTemp = battleCtx->attacker;
-        *subscript = subscript_lose_hp_from_item;
+        *subscript = subscript_lose_hp_from_item_no_animation;
         result = TRUE;
     }
 

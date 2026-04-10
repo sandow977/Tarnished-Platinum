@@ -13,9 +13,9 @@
             "species": "SPECIES_SANDSHREW",
             "form": 0,
             "level": 2,
-            "item": "ITEM_RED_CARD",
+            "item": "ITEM_FOCUS_SASH",
             "moves": [
-                "MOVE_DISABLE",
+                "MOVE_SUBSTITUTE",
                 "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"
@@ -24,7 +24,7 @@
             "ball_seal": 0
         },
         {
-            "species": "SPECIES_YANMA",
+            "species": "SPECIES_CHARIZARD",
             "form": 0,
             "level": 2,
             "item": "ITEM_IRON_BALL",

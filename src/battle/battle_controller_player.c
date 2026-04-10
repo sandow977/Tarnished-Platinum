@@ -3662,7 +3662,9 @@ static void BattleControllerPlayer_UpdateHP(BattleSystem *battleSys, BattleConte
 
         battleCtx->lastHitByBattler[battleCtx->defender] = battleCtx->attacker;
 
-        if ((DEFENDING_MON.statusVolatile & VOLATILE_CONDITION_SUBSTITUTE) && battleCtx->damage < 0) {
+        if ((DEFENDING_MON.statusVolatile & VOLATILE_CONDITION_SUBSTITUTE)
+            && Move_IsSoundBased(battleCtx->moveCur) == FALSE
+            && battleCtx->damage < 0) {
             if (DEFENDING_MON.moveEffectsData.substituteHP + battleCtx->damage <= 0) {
                 ATTACKER_SELF_TURN_FLAGS.shellBellDamageDealt += DEFENDING_MON.moveEffectsData.substituteHP * -1;
                 DEFENDING_MON.statusVolatile &= ~VOLATILE_CONDITION_SUBSTITUTE;
@@ -3689,17 +3691,19 @@ static void BattleControllerPlayer_UpdateHP(BattleSystem *battleSys, BattleConte
             battleCtx->damage = (DEFENDING_MON.curHP - 1) * -1;
         }
 
+        BOOL focusItemActivated = FALSE;
+
         if (DEFENDER_TURN_FLAGS.enduring == 0) {
             if (itemEffect == HOLD_EFFECT_MAYBE_ENDURE && (BattleSystem_RandNext(battleSys) % 100) < itemPower) {
-                DEFENDER_SELF_TURN_FLAGS.focusItemActivated = TRUE;
+                focusItemActivated = TRUE;
             }
 
             if (itemEffect == HOLD_EFFECT_ENDURE && DEFENDING_MON.curHP == DEFENDING_MON.maxHP) {
-                DEFENDER_SELF_TURN_FLAGS.focusItemActivated = TRUE;
+                focusItemActivated = TRUE;
             }
         }
 
-        if ((DEFENDER_TURN_FLAGS.enduring || DEFENDER_SELF_TURN_FLAGS.focusItemActivated)
+        if ((DEFENDER_TURN_FLAGS.enduring || focusItemActivated)
             && DEFENDING_MON.curHP + battleCtx->damage <= 0) {
             battleCtx->damage = (DEFENDING_MON.curHP - 1) * -1;
 
@@ -5154,13 +5158,14 @@ static BOOL BattleControllerPlayer_TriggerAfterMoveHitEffects(BattleSystem *batt
             if (itemEffect == HOLD_EFFECT_HP_DRAIN_ON_ATK
                 && Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_MAGIC_GUARD
                 && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
-                && (battleCtx->battleStatusMask & SYSCTL_MOVE_HIT)
+                && ((battleCtx->battleStatusMask & SYSCTL_MOVE_HIT)
+                    || (DEFENDER_SELF_TURN_FLAGS.statusFlags & SELF_TURN_FLAG_SUBSTITUTE_HIT))
                 && CURRENT_MOVE_DATA.class != CLASS_STATUS
                 && ATTACKING_MON.curHP) {
                 battleCtx->hpCalcTemp = BattleSystem_Divide(battleCtx->battleMons[battleCtx->attacker].maxHP * -1, 10);
                 battleCtx->msgBattlerTemp = battleCtx->attacker;
 
-                LOAD_SUBSEQ(subscript_lose_hp_from_item);
+                LOAD_SUBSEQ(subscript_lose_hp_from_item_no_animation);
                 battleCtx->commandNext = battleCtx->command;
                 battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
 

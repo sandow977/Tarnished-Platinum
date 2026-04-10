@@ -218,6 +218,7 @@ subscript_files = files(
     'subscript_restore_a_little_hp.s',
     'subscript_lose_hp_from_item.s',
     'subscript_lose_hp_from_item_with_message.s',
+    'subscript_lose_hp_from_item_no_animation.s',
     'subscript_transfer_sticky_barb.s',
     'subscript_item_skip_charge_turn.s',
     'subscript_embargo_start.s',
@@ -345,4 +346,5 @@ subscript_files = files(
     'subscript_room_service.s',
     'subscript_safety_goggles.s',
     'subscript_red_card.s',
+    'subscript_mental_herb.s',
 )
