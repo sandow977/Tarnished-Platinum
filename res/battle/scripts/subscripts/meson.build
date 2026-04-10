@@ -341,4 +341,6 @@ subscript_files = files(
     'subscript_debug_damage.s',
     'subscript_held_item_weakness_policy.s',
     'subscript_missed_blunder_policy.s',
+    'subscript_rocky_helmet.s',
+    'subscript_room_service.s',
 )

@@ -2992,6 +2992,7 @@ static s32 TrainerAI_CalcDamage(BattleSystem *battleSys, BattleContext *battleCt
 {
     // must declare C89-style to match
     int defendingSide;
+    int itemEffect;
     int power;
     int type;
     int typeTmp;
@@ -3005,6 +3006,7 @@ static s32 TrainerAI_CalcDamage(BattleSystem *battleSys, BattleContext *battleCt
     type = 0;
     effectivenessFlags = 0;
     fixedDamageRespectsType = FALSE;
+    itemEffect = BattleSystem_GetItemData(battleCtx, heldItem, ITEM_PARAM_HOLD_EFFECT);
 
     if (move == MOVE_POLTERGEIST
         && BattleMon_Get(battleCtx, AI_CONTEXT.defender, BATTLEMON_HELD_ITEM, NULL) == ITEM_NONE) {
@@ -3432,6 +3434,8 @@ case MOVE_ERUPTION:
     case BATTLE_EFFECT_POISON_MULTI_HIT:
         if (battleCtx->battleMons[attacker].ability == ABILITY_SKILL_LINK) {
             damage *= 5;
+        } else if (itemEffect == HOLD_EFFECT_INCREASE_MULTI_STRIKE_MINIMUM) {
+            damage = damage * 9 / 2;
         } else {
             damage *= 3;
         }

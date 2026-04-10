@@ -3880,6 +3880,7 @@ enum AfterMoveEffectState {
     AFTER_MOVE_EFFECT_TOGGLE_VANISH_FLAG = AFTER_MOVE_EFFECT_START,
     AFTER_MOVE_EFFECT_SYNCHRONIZE_STATUS,
     AFTER_MOVE_EFFECT_TRIGGER_SWITCH_IN_EFFECTS,
+    AFTER_MOVE_EFFECT_ROOM_SERVICE,
     AFTER_MOVE_EFFECT_ATTACKER_ITEM,
     AFTER_MOVE_EFFECT_DEFENDER_ITEM,
     AFTER_MOVE_EFFECT_TRIGGER_ITEMS_ON_HIT,
@@ -3940,6 +3941,26 @@ static void BattleControllerPlayer_AfterMoveEffects(BattleSystem *battleSys, Bat
         }
 
         battleCtx->afterMoveEffectState++;
+
+    case AFTER_MOVE_EFFECT_ROOM_SERVICE:
+        while (battleCtx->afterMoveEffectTemp < BattleSystem_GetMaxBattlers(battleSys)) {
+            int battler = battleCtx->monSpeedOrder[battleCtx->afterMoveEffectTemp];
+
+            battleCtx->afterMoveEffectTemp++;
+
+            if (CURRENT_MOVE_DATA.effect == BATTLE_EFFECT_TRICK_ROOM
+                && (battleCtx->fieldConditionsMask & FIELD_CONDITION_TRICK_ROOM)
+                && BattleSystem_TriggerRoomService(battleCtx, battler, &switchinSeq) == TRUE) {
+                LOAD_SUBSEQ(switchinSeq);
+                battleCtx->commandNext = battleCtx->command;
+                battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
+
+                return;
+            }
+        }
+
+        battleCtx->afterMoveEffectState++;
+        battleCtx->afterMoveEffectTemp = 0;
 
     case AFTER_MOVE_EFFECT_ATTACKER_ITEM:
         battleCtx->afterMoveEffectState++;

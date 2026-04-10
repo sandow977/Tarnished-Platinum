@@ -43,11 +43,11 @@
     "icon_palette": 1,
     "learnset": {
         "by_level": [
-            [ 1, "MOVE_CLEAR_SMOG" ],
+            [ 1, "MOVE_TRICK_ROOM" ],
             [ 1, "MOVE_IRON_HEAD" ],
-            [ 1, "MOVE_DISCHARGE" ],
-            [ 1, "MOVE_FIRE_LASH" ],
-            [ 1, "MOVE_SHELL_SMASH" ],
+            [ 1, "MOVE_TRIPLE_AXEL" ],
+            [ 1, "MOVE_BULLET_SEED" ],
+            [ 1, "MOVE_DOUBLE_HIT" ],
             [ 1, "MOVE_ICE_PUNCH" ],
             [ 1, "MOVE_DRAGON_DANCE" ],
             [ 1, "MOVE_THUNDERBOLT" ],

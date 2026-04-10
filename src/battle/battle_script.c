@@ -3018,6 +3018,11 @@ static BOOL BtlCmd_SetMultiHit(BattleSystem *battleSys, BattleContext *battleCtx
                     hits = (BattleSystem_RandNext(battleSys) & 3) + 2;
                 }
             }
+
+            if (Battler_HeldItemEffect(battleCtx, battleCtx->attacker) == HOLD_EFFECT_INCREASE_MULTI_STRIKE_MINIMUM
+                && hits < 4) {
+                hits = 5 - (BattleSystem_RandNext(battleSys) & 1);
+            }
         }
 
         if (flags == SYSCTL_TRIPLE_KICK && ability == ABILITY_SKILL_LINK) {

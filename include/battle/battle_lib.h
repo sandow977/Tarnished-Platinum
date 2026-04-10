@@ -948,6 +948,7 @@ BOOL BattleSystem_SynchronizeStatus(BattleSystem *battleSys, BattleContext *batt
  * otherwise.
  */
 BOOL BattleSystem_TriggerHeldItem(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
+BOOL BattleSystem_TriggerRoomService(BattleContext *battleCtx, int battler, int *subscript);
 
 BOOL BattleSystem_ShouldConsumeGem(BattleContext *battleCtx, int battler, int itemEffect);
 BOOL BattleSystem_ShouldConsumeGemOnDelayedHit(BattleContext *battleCtx, int battler, int itemEffect, int move);

@@ -2971,6 +2971,24 @@ const ItemArchiveIDs sItemArchiveIDs[] = {
         .paletteID = covert_cloak_NCLR,
         .gen3ID = GBA_ITEM_NONE,
     },
+    [ITEM_ROCKY_HELMET] = {
+        .dataID = 0x1EB,
+        .iconID = rocky_helmet_NCGR,
+        .paletteID = rocky_helmet_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
+    [ITEM_ROOM_SERVICE] = {
+        .dataID = 0x1EC,
+        .iconID = room_service_NCGR,
+        .paletteID = room_service_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
+    [ITEM_LOADED_DICE] = {
+        .dataID = 0x1ED,
+        .iconID = loaded_dice_NCGR,
+        .paletteID = loaded_dice_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
   };
 
 static const u16 sTMHMMoves[] = {

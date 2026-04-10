@@ -1964,6 +1964,18 @@
                      {
                          "id":  "pl_msg_00000392_00490",
                          "en_US":  "Covert Cloak"
+                     },
+                     {
+                         "id":  "pl_msg_00000392_00491",
+                         "en_US":  "Rocky Helmet"
+                     },
+                     {
+                         "id":  "pl_msg_00000392_00492",
+                         "en_US":  "Room Service"
+                     },
+                     {
+                         "id":  "pl_msg_00000392_00493",
+                         "en_US":  "Loaded Dice"
                      }
                  ]
 }

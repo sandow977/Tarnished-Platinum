@@ -339,6 +339,9 @@ item_icon_pngs = files(
     'weakness_policy.png',
     'punching_glove.png',
     'covert_cloak.png',
+    'rocky_helmet.png',
+    'room_service.png',
+    'loaded_dice.png',
 )
 
 item_icon_pals = files(
@@ -738,6 +741,9 @@ item_icon_pals = files(
     'weakness_policy.pal',
     'punching_glove.pal',
     'covert_cloak.pal',
+    'rocky_helmet.pal',
+    'room_service.pal',
+    'loaded_dice.pal',
 )
 
 item_icon_anim_jsons = files('generic_anim.json')

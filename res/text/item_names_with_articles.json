@@ -1964,6 +1964,18 @@
                      {
                          "id":  "pl_msg_00000393_00490",
                          "en_US":  "a {COLOR 255}Covert Cloak{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00491",
+                         "en_US":  "a {COLOR 255}Rocky Helmet{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00492",
+                         "en_US":  "a {COLOR 255}Room Service{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00493",
+                         "en_US":  "a {COLOR 255}Loaded Dice{COLOR 0}"
                      }
                  ]
 }

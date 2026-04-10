@@ -61,6 +61,7 @@ static BOOL MoveIsPunchingMove(int move);
 static BOOL BattleSystem_ShouldConsumeGemInternal(BattleContext *battleCtx, int battler, int itemEffect, int move, BOOL delayedImpact);
 static BOOL Battler_CanGainPolicyStat(BattleContext *battleCtx, int battler, int stat);
 static BOOL Battler_BlocksAdditionalEffects(BattleContext *battleCtx, int attacker, int battler);
+static BOOL Battler_CanActivateRoomService(BattleContext *battleCtx, int battler);
 static u8 Battler_MonType(BattleContext *battleCtx, int battler, enum BattleMonParam paramID);
 static void BattleAI_ClearKnownMoves(BattleContext *battleCtx, u8 battler);
 static void BattleAI_ClearKnownAbility(BattleContext *battleCtx, u8 battler);
@@ -85,6 +86,15 @@ static BOOL Battler_BlocksAdditionalEffects(BattleContext *battleCtx, int attack
     }
 
     return Battler_HeldItemEffect(battleCtx, battler) == HOLD_EFFECT_PREVENT_SECONDARY_EFFECTS;
+}
+
+static BOOL Battler_CanActivateRoomService(BattleContext *battleCtx, int battler)
+{
+    return battler != BATTLER_NONE
+        && battleCtx->battleMons[battler].curHP
+        && (battleCtx->fieldConditionsMask & FIELD_CONDITION_TRICK_ROOM)
+        && Battler_HeldItemEffect(battleCtx, battler) == HOLD_EFFECT_DROP_SPEED_IN_TRICK_ROOM
+        && battleCtx->battleMons[battler].statBoosts[BATTLE_STAT_SPEED] > MIN_STAT_STAGE;
 }
 
 void BattleSystem_InitBattleMon(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int partySlot)
@@ -3795,6 +3805,7 @@ enum SwitchInCheckState {
     SWITCH_IN_CHECK_STATE_AMULET_COIN,
     SWITCH_IN_CHECK_STATE_FORBIDDEN_STATUS,
     SWITCH_IN_CHECK_STATE_HELD_ITEM_STATUS,
+    SWITCH_IN_CHECK_STATE_ROOM_SERVICE,
 
     SWITCH_IN_CHECK_STATE_DONE,
 };
@@ -4313,6 +4324,22 @@ int BattleSystem_TriggerEffectOnSwitch(BattleSystem *battleSys, BattleContext *b
 
                 if (BattleSystem_TriggerHeldItemOnStatus(battleSys, battleCtx, battler, &subscript) == TRUE) {
                     battleCtx->msgBattlerTemp = battler;
+                    result = SWITCH_IN_CHECK_RESULT_BREAK;
+                    break;
+                }
+            }
+
+            if (i == maxBattlers) {
+                battleCtx->switchInCheckState++;
+            }
+            break;
+
+        case SWITCH_IN_CHECK_STATE_ROOM_SERVICE:
+            for (i = 0; i < maxBattlers; i++) {
+                battler = battleCtx->monSpeedOrder[i];
+
+                if (Battler_CanActivateRoomService(battleCtx, battler) == TRUE
+                    && BattleSystem_TriggerRoomService(battleCtx, battler, &subscript) == TRUE) {
                     result = SWITCH_IN_CHECK_RESULT_BREAK;
                     break;
                 }
@@ -5485,6 +5512,19 @@ BOOL BattleSystem_TriggerHeldItemOnStatus(BattleSystem *battleSys, BattleContext
 
     return result;
 }
+
+BOOL BattleSystem_TriggerRoomService(BattleContext *battleCtx, int battler, int *subscript)
+{
+    if (Battler_CanActivateRoomService(battleCtx, battler) == FALSE) {
+        return FALSE;
+    }
+
+    battleCtx->msgBattlerTemp = battler;
+    battleCtx->msgItemTemp = Battler_HeldItem(battleCtx, battler);
+    *subscript = subscript_room_service;
+    return TRUE;
+}
+
 BOOL BattleSystem_TriggerDetrimentalHeldItem(BattleSystem *battleSys, BattleContext *battleCtx, int battler)
 {
     BOOL result = FALSE;
@@ -5565,6 +5605,18 @@ BOOL BattleSystem_TriggerHeldItemOnHit(BattleSystem *battleSys, BattleContext *b
     int side = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker);
 
     switch (itemEffect) {
+    case HOLD_EFFECT_DAMAGE_ON_CONTACT:
+        if (ATTACKING_MON.curHP
+            && Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_MAGIC_GUARD
+            && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
+            && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
+            && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)) {
+            battleCtx->hpCalcTemp = BattleSystem_Divide(ATTACKING_MON.maxHP * -1, itemPower);
+            *subscript = subscript_rocky_helmet;
+            result = TRUE;
+        }
+        break;
+
     case HOLD_EFFECT_DMG_USER_CONTACT_XFR:
         if (ATTACKING_MON.curHP
             && ATTACKING_MON.heldItem == ITEM_NONE
@@ -7855,6 +7907,16 @@ BOOL BattleSystem_TriggerHeldItemOnPivotMove(BattleSystem *battleSys, BattleCont
         && DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken) {
         battleCtx->hpCalcTemp = BattleSystem_Divide(ATTACKING_MON.maxHP * -1, defenderItemPower);
         *subscript = subscript_held_item_recoil_when_hit;
+        result = TRUE;
+    }
+
+    if (defenderItemEffect == HOLD_EFFECT_DAMAGE_ON_CONTACT
+        && battleCtx->battleMons[battleCtx->attacker].curHP
+        && Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_MAGIC_GUARD
+        && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
+        && BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur)) {
+        battleCtx->hpCalcTemp = BattleSystem_Divide(ATTACKING_MON.maxHP * -1, defenderItemPower);
+        *subscript = subscript_rocky_helmet;
         result = TRUE;
     }
 
