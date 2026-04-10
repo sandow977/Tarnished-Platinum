@@ -10,12 +10,12 @@
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_SWAMPERT",
+            "species": "SPECIES_SANDSHREW",
             "form": 0,
             "level": 2,
-            "item": "ITEM_BLUNDER_POLICY",
+            "item": "ITEM_SAFETY_GOGGLES",
             "moves": [
-                "MOVE_DIG",
+                "MOVE_SPLASH",
                 "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"

@@ -3435,7 +3435,7 @@ case MOVE_ERUPTION:
         if (battleCtx->battleMons[attacker].ability == ABILITY_SKILL_LINK) {
             damage *= 5;
         } else if (itemEffect == HOLD_EFFECT_INCREASE_MULTI_STRIKE_MINIMUM) {
-            damage = damage * 9 / 2;
+            damage *= 4;
         } else {
             damage *= 3;
         }

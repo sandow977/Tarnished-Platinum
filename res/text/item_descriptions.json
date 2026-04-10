@@ -3939,8 +3939,24 @@
       "id": "pl_msg_00000391_00493",
       "en_US": [
         "An item to be held by a Pokemon.\n",
-        "This dice always ensures multistrike,\n",
-        " moves hit more times."
+        "This dice always ensures multistrike\n",
+        "moves hit more times."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00494",
+      "en_US": [
+        "An item to be held by a Pokemon.\n",
+        "This vest vest raises Sp. Def but\n",
+        "prevents the use of status moves."
+      ]
+    },
+    {
+      "id": "pl_msg_00000391_00495",
+      "en_US": [
+        "A mysterious evolutionary lump.\n",
+        "It raises both Defense and Sp. Def when\n",
+        "held by a Pokemon that can evolve."
       ]
     }
   ]

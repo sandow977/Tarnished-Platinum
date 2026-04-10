@@ -1976,6 +1976,14 @@
                      {
                          "id":  "pl_msg_00000394_00493",
                          "en_US":  "Loaded Dice"
+                     },
+                     {
+                         "id":  "pl_msg_00000394_00494",
+                         "en_US":  "Assault Vests"
+                     },
+                     {
+                         "id":  "pl_msg_00000394_00495",
+                         "en_US":  "Eviolites"
                      }
                  ]
 }

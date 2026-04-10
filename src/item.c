@@ -2989,6 +2989,18 @@ const ItemArchiveIDs sItemArchiveIDs[] = {
         .paletteID = loaded_dice_NCLR,
         .gen3ID = GBA_ITEM_NONE,
     },
+    [ITEM_ASSAULT_VEST] = {
+        .dataID = 0x1EE,
+        .iconID = assault_vest_NCGR,
+        .paletteID = assault_vest_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
+    [ITEM_EVIOLITE] = {
+        .dataID = 0x1EF,
+        .iconID = eviolite_NCGR,
+        .paletteID = eviolite_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
   };
 
 static const u16 sTMHMMoves[] = {

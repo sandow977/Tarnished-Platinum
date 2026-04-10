@@ -1976,6 +1976,14 @@
                      {
                          "id":  "pl_msg_00000393_00493",
                          "en_US":  "a {COLOR 255}Loaded Dice{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00494",
+                         "en_US":  "an {COLOR 255}Assault Vest{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00495",
+                         "en_US":  "an {COLOR 255}Eviolite{COLOR 0}"
                      }
                  ]
 }

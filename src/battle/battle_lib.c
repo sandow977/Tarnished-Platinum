@@ -12,6 +12,7 @@
 #include "constants/species.h"
 #include "constants/string.h"
 #include "generated/abilities.h"
+#include "generated/evolution_methods.h"
 #include "generated/game_records.h"
 #include "generated/genders.h"
 
@@ -62,6 +63,7 @@ static BOOL BattleSystem_ShouldConsumeGemInternal(BattleContext *battleCtx, int 
 static BOOL Battler_CanGainPolicyStat(BattleContext *battleCtx, int battler, int stat);
 static BOOL Battler_BlocksAdditionalEffects(BattleContext *battleCtx, int attacker, int battler);
 static BOOL Battler_CanActivateRoomService(BattleContext *battleCtx, int battler);
+static BOOL Species_CanStillEvolve(int species);
 static u8 Battler_MonType(BattleContext *battleCtx, int battler, enum BattleMonParam paramID);
 static void BattleAI_ClearKnownMoves(BattleContext *battleCtx, u8 battler);
 static void BattleAI_ClearKnownAbility(BattleContext *battleCtx, u8 battler);
@@ -95,6 +97,33 @@ static BOOL Battler_CanActivateRoomService(BattleContext *battleCtx, int battler
         && (battleCtx->fieldConditionsMask & FIELD_CONDITION_TRICK_ROOM)
         && Battler_HeldItemEffect(battleCtx, battler) == HOLD_EFFECT_DROP_SPEED_IN_TRICK_ROOM
         && battleCtx->battleMons[battler].statBoosts[BATTLE_STAT_SPEED] > MIN_STAT_STAGE;
+}
+
+static BOOL Species_CanStillEvolve(int species)
+{
+    static u8 sEvolutionCache[NATIONAL_DEX_COUNT + 1];
+    SpeciesEvolution evolutions[MAX_EVOLUTIONS];
+
+    if (species <= SPECIES_NONE || species > NATIONAL_DEX_COUNT) {
+        return FALSE;
+    }
+
+    if (sEvolutionCache[species] != 0) {
+        return sEvolutionCache[species] == 2;
+    }
+
+    NARC_ReadWholeMemberByIndexPair(evolutions, NARC_INDEX_POKETOOL__PERSONAL__EVO, species);
+
+    for (int i = 0; i < MAX_EVOLUTIONS; i++) {
+        if (evolutions[i].method != EVO_NONE
+            && evolutions[i].targetSpecies != SPECIES_NONE) {
+            sEvolutionCache[species] = 2;
+            return TRUE;
+        }
+    }
+
+    sEvolutionCache[species] = 1;
+    return FALSE;
 }
 
 void BattleSystem_InitBattleMon(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int partySlot)
@@ -2369,6 +2398,12 @@ int BattleSystem_CheckInvalidMoves(BattleSystem *battleSys, BattleContext *battl
                 invalidMoves |= FlagIndex(i);
             }
         }
+
+        if (itemEffect == HOLD_EFFECT_SPDEF_BOOST_NO_STATUS_MOVES
+            && (opMask & CHECK_INVALID_ASSAULT_VEST)
+            && MOVE_DATA(battleCtx->battleMons[battler].moves[i]).class == CLASS_STATUS) {
+            invalidMoves |= FlagIndex(i);
+        }
     }
 
     return invalidMoves;
@@ -2425,6 +2460,11 @@ BOOL BattleSystem_CanUseMove(BattleSystem *battleSys, BattleContext *battleCtx, 
         msgOut->id = BattleStrings_Text_TheItemAllowsTheUseOfOnlyMove; // "The {0} allows the use of only {1}!"
         msgOut->params[0] = battleCtx->battleMons[battler].heldItem;
         msgOut->params[1] = battleCtx->battleMons[battler].moveEffectsData.choiceLockedMove;
+        result = FALSE;
+    } else if (BattleSystem_CheckInvalidMoves(battleSys, battleCtx, battler, 0, CHECK_INVALID_ASSAULT_VEST) & FlagIndex(moveSlot)) {
+        msgOut->tags = TAG_ITEM;
+        msgOut->id = BattleStrings_Text_TheEffectsOfTheItemPreventStatusMoves;
+        msgOut->params[0] = battleCtx->battleMons[battler].heldItem;
         result = FALSE;
     } else if (BattleSystem_CheckInvalidMoves(battleSys, battleCtx, battler, 0, CHECK_INVALID_NO_PP) & FlagIndex(moveSlot)) {
         msgOut->tags = TAG_NONE;
@@ -7201,6 +7241,15 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     if (attackerParams.heldItemEffect == HOLD_EFFECT_POWER_UP_SPEC
         && moveClass == CLASS_SPECIAL) {
         movePower = movePower * (100 + attackerParams.heldItemPower) / 100;
+    }
+    if (defenderParams.heldItemEffect == HOLD_EFFECT_SPDEF_BOOST_NO_STATUS_MOVES
+        && moveClass == CLASS_SPECIAL) {
+        spDefenseStat = spDefenseStat * (100 + defenderParams.heldItemPower) / 100;
+    }
+    if (defenderParams.heldItemEffect == HOLD_EFFECT_DEF_AND_SPDEF_BOOST_IF_EVOLVES
+        && Species_CanStillEvolve(defenderParams.species) == TRUE) {
+        defenseStat = defenseStat * 15 / 10;
+        spDefenseStat = spDefenseStat * 15 / 10;
     }
 
     if (Battler_IgnorableAbility(battleCtx, attacker, defender, ABILITY_THICK_FAT) == TRUE

@@ -407,6 +407,7 @@ void BattleSystem_SetupNextTurn(BattleSystem *battleSys, BattleContext *battleCt
  * - CHECK_INVALID_GRAVITY -> flag any of the battler's moves which fail in high gravity
  * - CHECK_INVALID_HEAL_BLOCK -> flag any of the battler's healing moves
  * - CHECK_INVALID_CHOICE_ITEM -> flag any of the battler's moves other than their choice-locked move
+ * - CHECK_INVALID_ASSAULT_VEST -> flag any of the battler's status moves while holding an Assault Vest
  *
  * @param battleSys
  * @param battleCtx

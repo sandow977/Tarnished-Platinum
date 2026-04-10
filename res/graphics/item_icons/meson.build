@@ -342,6 +342,8 @@ item_icon_pngs = files(
     'rocky_helmet.png',
     'room_service.png',
     'loaded_dice.png',
+    'assault_vest.png',
+    'eviolite.png',
 )
 
 item_icon_pals = files(
@@ -744,6 +746,8 @@ item_icon_pals = files(
     'rocky_helmet.pal',
     'room_service.pal',
     'loaded_dice.pal',
+    'assault_vest.pal',
+    'eviolite.pal',
 )
 
 item_icon_anim_jsons = files('generic_anim.json')

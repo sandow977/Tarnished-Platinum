@@ -47,18 +47,24 @@
             [ 1, "MOVE_IRON_HEAD" ],
             [ 1, "MOVE_TRIPLE_AXEL" ],
             [ 1, "MOVE_BULLET_SEED" ],
-            [ 1, "MOVE_DOUBLE_HIT" ],
+            [ 1, "MOVE_COVET" ],
             [ 1, "MOVE_ICE_PUNCH" ],
-            [ 1, "MOVE_DRAGON_DANCE" ],
-            [ 1, "MOVE_THUNDERBOLT" ],
-            [ 1, "MOVE_OVERHEAT" ],
-            [ 1, "MOVE_THUNDERCLAP" ],
+            [ 1, "MOVE_KNOCK_OFF" ],
+            [ 1, "MOVE_WHIRLPOOL" ],
+            [ 1, "MOVE_SPORE" ],
+            [ 1, "MOVE_HAIL" ],
             [ 1, "MOVE_HARD_PRESS" ],
             [ 1, "MOVE_APPLE_ACID" ]
         ],
         "by_tm": []
     },
-    "evolutions": [],
+    "evolutions": [
+        [
+            "EVO_LEVEL",
+            99,
+            "SPECIES_DACHSBUN"
+        ]
+    ],
     "pokedex_data": {
         "height": 3,
         "weight": 109,

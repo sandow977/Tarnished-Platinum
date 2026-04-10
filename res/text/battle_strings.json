@@ -8683,6 +8683,13 @@
                                        "The foe {STRVAR_1 1, 0, 0} was switched\n",
                                        "out by its {STRVAR_1 8, 1, 0}!"
                                    ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_TheEffectsOfTheItemPreventStatusMoves",
+                         "en_US":  [
+                                       "The {STRVAR_1 8, 0, 0} prevents the use\n",
+                                       "of status moves!"
+                                   ]
                      }
                  ]
 }
