@@ -2008,6 +2008,10 @@
                      {
                          "id":  "pl_msg_00000393_00501",
                          "en_US":  "a {COLOR 255}Red Card{COLOR 0}"
+                     },
+                     {
+                         "id":  "pl_msg_00000393_00502",
+                         "en_US":  "an {COLOR 255}Ability Capsule{COLOR 0}"
                      }
                  ]
 }

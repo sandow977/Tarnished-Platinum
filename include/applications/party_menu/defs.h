@@ -316,6 +316,7 @@ typedef struct PartyMenuApplication {
     u8 currPartySlot;
     u8 prevPartySlot;
     u8 unk_B13;
+    u16 pendingAbility;
     u16 monStats[6];
     HeightWeightData *heightWeight;
     PartyMenuFormChange *formChanger;

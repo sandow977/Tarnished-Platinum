@@ -34,9 +34,9 @@
                        "EGG_GROUP_GRASS"
                    ],
     "abilities":  [
-                       "ABILITY_CLOUD_NINE",
-                       "ABILITY_CLOUD_NINE"
-                   ],
+                      "ABILITY_CLOUD_NINE",
+                      "ABILITY_PURIFYING_SALT"
+                  ],
     "safari_flee_rate":  0,
     "body_color":  "MON_COLOR_PURPLE",
     "flip_sprite":  false,

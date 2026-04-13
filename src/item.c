@@ -3037,6 +3037,12 @@ const ItemArchiveIDs sItemArchiveIDs[] = {
         .paletteID = red_card_NCLR,
         .gen3ID = GBA_ITEM_NONE,
     },
+    [ITEM_ABILITY_CAPSULE] = {
+        .dataID = 0x1F6,
+        .iconID = ability_capsule_NCGR,
+        .paletteID = ability_capsule_NCLR,
+        .gen3ID = GBA_ITEM_NONE,
+    },
   };
 
 static const u16 sTMHMMoves[] = {

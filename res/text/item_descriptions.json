@@ -4006,6 +4006,14 @@
         "When the holder is hit by an attack,\n",
         "the attacker is removed from battle."
       ]
+    },
+    {
+      "id": "pl_msg_00000391_00502",
+      "en_US": [
+        "A capsule that allows a Pokemon to\n",
+        "switch its current Ability to the\n",
+        "other Ability its species can have."
+      ]
     }
   ]
 }

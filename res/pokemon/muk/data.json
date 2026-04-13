@@ -186,7 +186,7 @@
                          "pokemon_pos_m":  6,
                          "en":  {
                                     "name":  "MUK",
-                                    "category":  "Sludge PokÃ©mon",
+                                    "category":  "Sludge Pokémon",
                                     "entry_text":  [
                                                        "A toxic fluid seeps from its body.\n",
                                                        "The fluid instantly kills plants and\n",
@@ -195,10 +195,10 @@
                                 },
                          "fr":  {
                                     "name":  "GROTADMORV",
-                                    "category":  "PokÃ©mon DÃ©gueu",
+                                    "category":  "Pokémon Dégueu",
                                     "entry_text":  [
                                                        "Son corps exsude un fluide toxique\n",
-                                                       "qui tue instantanÃ©ment les plantes\n",
+                                                       "qui tue instantanément les plantes\n",
                                                        "et les arbres au contact."
                                                    ]
                                 },
@@ -206,36 +206,36 @@
                                     "name":  "SLEIMOK",
                                     "category":  "Schlamm",
                                     "entry_text":  [
-                                                       "Sein KÃ¶rper sondert eine giftige\n",
+                                                       "Sein Körper sondert eine giftige\n",
                                                        "Substanz ab, die bei Kontakt\n",
-                                                       "Pflanzen und BÃ¤ume vernichtet."
+                                                       "Pflanzen und Bäume vernichtet."
                                                    ]
                                 },
                          "it":  {
                                     "name":  "MUK",
-                                    "category":  "PokÃ©mon Melma",
+                                    "category":  "Pokémon Melma",
                                     "entry_text":  [
                                                        "Dal suo corpo filtra un fluido tos-\n",
-                                                       "sico che uccide allâ€™istante piante e\n",
+                                                       "sico che uccide all’istante piante e\n",
                                                        "alberi con cui viene a contatto."
                                                    ]
                                 },
                          "es":  {
                                     "name":  "MUK",
-                                    "category":  "PokÃ©mon Lodo",
+                                    "category":  "Pokémon Lodo",
                                     "entry_text":  [
                                                        "Su cuerpo segrega un fluido\n",
-                                                       "tÃ³xico que elimina la vida vegetal\n",
+                                                       "tóxico que elimina la vida vegetal\n",
                                                        "cuando la toca."
                                                    ]
                                 },
                          "jp":  {
-                                    "name":  "ãƒ™ãƒˆãƒ™ãƒˆãƒ³",
-                                    "category":  "ãƒ˜ãƒ‰ãƒ­ãƒã‚±ãƒ¢ãƒ³",
+                                    "name":  "ベトベトン",
+                                    "category":  "ヘドロポケモン",
                                     "entry_text":  [
-                                                       "ã‹ã‚‰ã ã‹ã‚‰ã€€ã‚‚ã†ã©ãã®ã€€ãŸã„ãˆããŒ\n",
-                                                       "ã—ã¿ã§ã¦ã„ã‚‹ã€‚ãã®ã€€ãˆãã«ã€€ãµã‚ŒãŸ\n",
-                                                       "ãã•ãã¯ã€€ã‚ã£ã¨ã„ã†ã¾ã«ã€€ã‹ã‚Œã‚‹ã€‚"
+                                                       "からだから　もうどくの　たいえきが\n",
+                                                       "しみでている。その　えきに　ふれた\n",
+                                                       "くさきは　あっというまに　かれる。"
                                                    ]
                                 }
                      },

@@ -128,6 +128,9 @@ static u8 HandleSpecialInput(PartyMenuApplication *application);
 static int ApplyItemEffectOnPokemon(PartyMenuApplication *application);
 static u8 CheckItemUsageValidity(PartyMenuApplication *application);
 static int ProcessItemApplication(PartyMenuApplication *application);
+static int ApplyAbilityCapsuleEffect(PartyMenuApplication *application);
+static int ConfirmAbilityCapsuleChange(void *applicationPtr);
+static int CancelAbilityCapsuleChange(void *applicationPtr);
 static int UpdatePokemonWithItem(PartyMenuApplication *application, Pokemon *param1, int *param2);
 static int HandleMessageCompletion(PartyMenuApplication *application);
 static int FinalizeMessageProcessing(PartyMenuApplication *application);
@@ -2638,7 +2641,56 @@ static int ApplyItemEffectOnPokemon(PartyMenuApplication *app)
 {
     ItemData *itemData = Item_Load(app->partyMenu->usedItemID, 0, HEAP_ID_PARTY_MENU);
     Pokemon *mon = Party_GetPokemonBySlotIndex(app->partyMenu->party, app->currPartySlot);
+    u16 monSpecies;
+    u8 monForm;
+    u16 monAbility;
+    u16 monAbility1;
+    u16 monAbility2;
+    u16 newAbility;
     u8 mintNature;
+
+    if (app->partyMenu->usedItemID == ITEM_ABILITY_CAPSULE) {
+        monSpecies = Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL);
+        monForm = Pokemon_GetValue(mon, MON_DATA_FORM, NULL);
+        monAbility = Pokemon_GetValue(mon, MON_DATA_ABILITY, NULL);
+        monAbility1 = SpeciesData_GetFormValue(monSpecies, monForm, SPECIES_DATA_ABILITY_1);
+        monAbility2 = SpeciesData_GetFormValue(monSpecies, monForm, SPECIES_DATA_ABILITY_2);
+        newAbility = ABILITY_NONE;
+
+        if (Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL)
+            || monAbility2 == ABILITY_NONE
+            || monAbility1 == monAbility2) {
+            PartyMenu_PrintLongMessage(app, pl_msg_00000453_00105, TRUE);
+            app->currPartySlot = 7;
+            app->unk_B00 = sub_02085348;
+            Heap_Free(itemData);
+            return 5;
+        }
+
+        if (monAbility == monAbility1) {
+            newAbility = monAbility2;
+        } else if (monAbility == monAbility2) {
+            newAbility = monAbility1;
+        } else {
+            PartyMenu_PrintLongMessage(app, pl_msg_00000453_00105, TRUE);
+            app->currPartySlot = 7;
+            app->unk_B00 = sub_02085348;
+            Heap_Free(itemData);
+            return 5;
+        }
+
+        app->pendingAbility = newAbility;
+        MessageLoader_GetString(app->messageLoader, pl_msg_00000453_00206, app->tmpFormat);
+        StringTemplate_SetNickname(app->template, 0, Pokemon_GetBoxPokemon(mon));
+        StringTemplate_SetAbilityName(app->template, 1, newAbility);
+        StringTemplate_Format(app->template, app->tmpString, app->tmpFormat);
+        PartyMenu_PrintLongMessage(app, PRINT_MESSAGE_PRELOADED, TRUE);
+        app->unk_B04.unk_00 = ConfirmAbilityCapsuleChange;
+        app->unk_B04.unk_04 = CancelAbilityCapsuleChange;
+        app->unk_B0E = 26;
+        Heap_Free(itemData);
+        return 24;
+    }
 
     switch (app->partyMenu->usedItemID) {
     case ITEM_ADAMANT_MINT:
@@ -2935,6 +2987,51 @@ static int UpdatePokemonWithItem(PartyMenuApplication *application, Pokemon *mon
     }
 
     return 11;
+}
+
+static int ApplyAbilityCapsuleEffect(PartyMenuApplication *application)
+{
+    Pokemon *mon = Party_GetPokemonBySlotIndex(application->partyMenu->party, application->currPartySlot);
+    u16 newAbility = application->pendingAbility;
+
+    Bag_TryRemoveItem(application->partyMenu->bag, application->partyMenu->usedItemID, 1, HEAP_ID_PARTY_MENU);
+    Pokemon_SetValue(mon, MON_DATA_ABILITY, &newAbility);
+
+    PartyMenu_LoadMember(application, application->currPartySlot);
+    PartyMenu_DrawMemberPanelData(application, application->currPartySlot);
+    PartyMenu_LoadMemberWindowTiles(application, application->currPartySlot);
+    PartyMenu_DrawMemberStatusCondition(application, application->currPartySlot, application->partyMembers[application->currPartySlot].statusIcon);
+
+    MessageLoader_GetString(application->messageLoader, pl_msg_00000453_00205, application->tmpFormat);
+    StringTemplate_SetNickname(application->template, 0, Pokemon_GetBoxPokemon(mon));
+    StringTemplate_SetAbilityName(application->template, 1, newAbility);
+    StringTemplate_Format(application->template, application->tmpString, application->tmpFormat);
+    PartyMenu_PrintLongMessage(application, PRINT_MESSAGE_PRELOADED, TRUE);
+    Sound_PlayEffect(SEQ_SE_DP_KAIFUKU);
+
+    application->pendingAbility = ABILITY_NONE;
+    application->unk_B00 = sub_02085348;
+    return 5;
+}
+
+static int ConfirmAbilityCapsuleChange(void *applicationPtr)
+{
+    PartyMenuApplication *application = applicationPtr;
+
+    Window_EraseMessageBox(&application->windows[PARTY_MENU_WIN_LONG_MESSAGE], 1);
+    return ApplyAbilityCapsuleEffect(application);
+}
+
+static int CancelAbilityCapsuleChange(void *applicationPtr)
+{
+    PartyMenuApplication *application = applicationPtr;
+
+    application->pendingAbility = ABILITY_NONE;
+    Window_EraseMessageBox(&application->windows[PARTY_MENU_WIN_LONG_MESSAGE], 1);
+    PartyMenu_PrintShortMessage(application, PartyMenu_Text_ChooseAPokemon, TRUE);
+    Sprite_SetExplicitPalette2(application->sprites[PARTY_MENU_SPRITE_CURSOR_NORMAL], 0);
+
+    return 4;
 }
 
 static void SwapPokemonItem(PartyMenuApplication *application, Pokemon *mon, u32 oldItem, u32 newItem)

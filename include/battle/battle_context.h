@@ -234,6 +234,7 @@ struct BattleContext {
     int hpCalcTemp;
     int moveType;
     int moveEffectChance;
+    BOOL sheerForceActive;
     int gemBoostBattler;
     int gemBoostMove;
     int gemBoostItemEffect;

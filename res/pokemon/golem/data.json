@@ -182,20 +182,20 @@
                          "pokemon_pos_m":  7,
                          "en":  {
                                     "name":  "GOLEM",
-                                    "category":  "Megaton PokÃ©mon",
+                                    "category":  "Megaton Pokémon",
                                     "entry_text":  [
-                                                       "Even dynamite canâ€™t harm its hard,\n",
+                                                       "Even dynamite can’t harm its hard,\n",
                                                        "boulderlike body. It sheds its hide\n",
                                                        "just once a year."
                                                    ]
                                 },
                          "fr":  {
                                     "name":  "GROLEM",
-                                    "category":  "PokÃ©mon Titanesque",
+                                    "category":  "Pokémon Titanesque",
                                     "entry_text":  [
                                                        "Il mue une fois par an. Son corps\n",
-                                                       "rocailleux est si dur quâ€™il rÃ©siste\n",
-                                                       "mÃªme Ã  la dynamite."
+                                                       "rocailleux est si dur qu’il résiste\n",
+                                                       "même à la dynamite."
                                                    ]
                                 },
                          "de":  {
@@ -203,35 +203,35 @@
                                     "category":  "Urgestein",
                                     "entry_text":  [
                                                        "Einmal im Jahr wechselt es seine\n",
-                                                       "Haut. Seinem KÃ¶rper kann\n",
+                                                       "Haut. Seinem Körper kann\n",
                                                        "selbst Dynamit nichts anhaben."
                                                    ]
                                 },
                          "it":  {
                                     "name":  "GOLEM",
-                                    "category":  "PokÃ©mon Megatone",
+                                    "category":  "Pokémon Megatone",
                                     "entry_text":  [
-                                                       "Muta il guscio una volta allâ€™anno. Il\n",
+                                                       "Muta il guscio una volta all’anno. Il\n",
                                                        "suo corpo duro come la roccia non\n",
-                                                       "Ã¨ scalfito neanche dalla dinamite."
+                                                       "è scalfito neanche dalla dinamite."
                                                    ]
                                 },
                          "es":  {
                                     "name":  "GOLEM",
-                                    "category":  "PokÃ©mon MegatÃ³n",
+                                    "category":  "Pokémon Megatón",
                                     "entry_text":  [
-                                                       "Muda su piel una vez al aÃ±o.\n",
+                                                       "Muda su piel una vez al año.\n",
                                                        "Su cuerpo rocoso es tan duro\n",
-                                                       "que ni la dinamita lo daÃ±a."
+                                                       "que ni la dinamita lo daña."
                                                    ]
                                 },
                          "jp":  {
-                                    "name":  "ã‚´ãƒ­ï¼ãƒ‹ãƒ£",
-                                    "category":  "ãƒ¡ã‚¬ãƒˆãƒ³ãƒã‚±ãƒ¢ãƒ³",
+                                    "name":  "ゴロ－ニャ",
+                                    "category":  "メガトンポケモン",
                                     "entry_text":  [
-                                                       "ï¼‘ã­ã‚“ã«ã€€ï¼‘ã‹ã„ã€€ã ã£ã´ã™ã‚‹ã€‚\n",
-                                                       "ãŒã‚“ã›ãã®ã‚ˆã†ãªã€€ã‹ãŸã„ã€€ã‹ã‚‰ã ã¯\n",
-                                                       "ãƒ€ã‚¤ãƒŠãƒžã‚¤ãƒˆã§ã‚‚ã€€ããšã¤ã‹ãªã„ã€‚"
+                                                       "１ねんに　１かい　だっぴする。\n",
+                                                       "がんせきのような　かたい　からだは\n",
+                                                       "ダイナマイトでも　きずつかない。"
                                                    ]
                                 }
                      },

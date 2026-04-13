@@ -3780,6 +3780,7 @@ static void BattleControllerPlayer_UpdateHP(BattleSystem *battleSys, BattleConte
 
         if (CURRENT_MOVE_DATA.class != CLASS_STATUS
             && battleCtx->attacker != battleCtx->defender
+            && battleCtx->sheerForceActive == FALSE
             && hpBefore > DEFENDING_MON.maxHP / 2
             && hpBefore + battleCtx->damage <= DEFENDING_MON.maxHP / 2) {
             DEFENDER_SELF_TURN_FLAGS.berserkTriggered = TRUE;
@@ -5363,6 +5364,7 @@ static BOOL BattleControllerPlayer_TriggerAfterMoveHitEffects(BattleSystem *batt
         case AFTER_MOVE_HIT_STATE_LIFE_ORB:
             if (itemEffect == HOLD_EFFECT_HP_DRAIN_ON_ATK
                 && Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_MAGIC_GUARD
+                && battleCtx->sheerForceActive == FALSE
                 && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
                 && ((battleCtx->battleStatusMask & SYSCTL_MOVE_HIT)
                     || (DEFENDER_SELF_TURN_FLAGS.statusFlags & SELF_TURN_FLAG_SUBSTITUTE_HIT))

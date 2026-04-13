@@ -1011,6 +1011,20 @@
                                        "The {STRVAR_1 8, 0, 0} cannot be\n",
                                        "given here.\n"
                                    ]
+                     },
+                     {
+                         "id":  "pl_msg_00000453_00205",
+                         "en_US":  [
+                                       "{STRVAR_1 1, 0, 0}’s ability was\n",
+                                       "changed to {STRVAR_1 5, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "pl_msg_00000453_00206",
+                         "en_US":  [
+                                       "Would you like to change {STRVAR_1 1, 0, 0}’s\n",
+                                       "Ability to {STRVAR_1 5, 1, 0}?"
+                                   ]
                      }
                  ]
 }

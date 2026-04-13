@@ -241,6 +241,7 @@ BOOL BattleSystem_TriggerPrimaryEffect(BattleSystem *battleSys, BattleContext *b
  */
 BOOL BattleSystem_TriggerSecondaryEffect(BattleSystem *battleSys, BattleContext *battleCtx, int *effect);
 BOOL BattleSystem_MoveMakesContact(BattleContext *battleCtx, int attacker, int move);
+BOOL BattleSystem_MoveIsSheerForceBoosted(BattleContext *battleCtx, int attacker, int move);
 int BattleSystem_GetMoveType(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int move);
 int BattleSystem_CurrentMoveType(BattleContext *battleCtx);
 

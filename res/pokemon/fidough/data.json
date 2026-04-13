@@ -133,7 +133,7 @@
                          "pokemon_pos_m":  22,
                          "en":  {
                                     "name":  "FIDOUGH",
-                                    "category":  "Puppy PokÃƒÂ©mon",
+                                    "category":  "Puppy PokÃ©mon",
                                     "entry_text":  [
                                                        "This Pokemon kneads its body to\n",
                                                        "absorb moisture from the air.\n",
@@ -142,10 +142,10 @@
                                 },
                          "fr":  {
                                     "name":  "BULBIZARRE",
-                                    "category":  "PokÃƒÂ©mon Graine",
+                                    "category":  "PokÃ©mon Graine",
                                     "entry_text":  [
                                                        "Au matin de sa vie, la graine sur\n",
-                                                       "son dos lui fournit les ÃƒÂ©lÃƒÂ©ments\n",
+                                                       "son dos lui fournit les Ã©lÃ©ments\n",
                                                        "dont il a besoin pour grandir."
                                                    ]
                                 },
@@ -153,14 +153,14 @@
                                     "name":  "BISASAM",
                                     "category":  "Samen",
                                     "entry_text":  [
-                                                       "Nach der Geburt nimmt es fÃƒÂ¼r eine\n",
-                                                       "Weile NÃƒÂ¤hrstoffe ÃƒÂ¼ber den Samen\n",
-                                                       "auf seinem RÃƒÂ¼cken auf."
+                                                       "Nach der Geburt nimmt es fÃ¼r eine\n",
+                                                       "Weile NÃ¤hrstoffe Ã¼ber den Samen\n",
+                                                       "auf seinem RÃ¼cken auf."
                                                    ]
                                 },
                          "it":  {
                                     "name":  "BULBASAUR",
-                                    "category":  "PokÃƒÂ©mon Seme",
+                                    "category":  "PokÃ©mon Seme",
                                     "entry_text":  [
                                                        "Dopo la nascita, cresce traendo\n",
                                                        "nutrimento dal seme piantato\n",
@@ -169,20 +169,20 @@
                                 },
                          "es":  {
                                     "name":  "BULBASAUR",
-                                    "category":  "PokÃƒÂ©mon Semilla",
+                                    "category":  "PokÃ©mon Semilla",
                                     "entry_text":  [
-                                                       "DespuÃƒÂ©s de nacer, crece\n",
-                                                       "alimentÃƒÂ¡ndose de las semillas\n",
+                                                       "DespuÃ©s de nacer, crece\n",
+                                                       "alimentÃ¡ndose de las semillas\n",
                                                        "de su lomo."
                                                    ]
                                 },
                          "jp":  {
-                                    "name":  "Ã£Æ’â€¢Ã£â€šÂ·Ã£â€šÂ®Ã£Æ’â‚¬Ã£Æ’Â",
-                                    "category":  "Ã£ÂÅ¸Ã£ÂÂ­Ã£Æ’ÂÃ£â€šÂ±Ã£Æ’Â¢Ã£Æ’Â³",
+                                    "name":  "ãƒ•ã‚·ã‚®ãƒ€ãƒ",
+                                    "category":  "ãŸã­ãƒã‚±ãƒ¢ãƒ³",
                                     "entry_text":  [
-                                                       "Ã£Ââ€ Ã£ÂÂ¾Ã£â€šÅ’Ã£ÂÂ¦Ã£Ââ€¹Ã£â€šâ€°Ã£â‚¬â‚¬Ã£Ââ€”Ã£ÂÂ°Ã£â€šâ€°Ã£ÂÂÃ£ÂÂ®Ã£â‚¬â‚¬Ã£Ââ€šÃ£Ââ€žÃ£ÂÂ Ã£ÂÂ¯\n",
-                                                       "Ã£Ââ€ºÃ£ÂÂªÃ£Ââ€¹Ã£ÂÂ®Ã£â‚¬â‚¬Ã£â€šÂ¿Ã£Æ’ÂÃ£Ââ€¹Ã£â€šâ€°Ã£â‚¬â‚¬Ã£ÂË†Ã£Ââ€žÃ£â€šË†Ã£Ââ€ Ã£â€šâ€™\n",
-                                                       "Ã£â€šâ€šÃ£â€šâ€°Ã£ÂÂ£Ã£ÂÂ¦Ã£â‚¬â‚¬Ã£ÂÅ Ã£ÂÅ Ã£ÂÂÃ£ÂÂÃ£â‚¬â‚¬Ã£ÂÂÃ£ÂÂ Ã£ÂÂ¤Ã£â‚¬â€š"
+                                                       "ã†ã¾ã‚Œã¦ã‹ã‚‰ã€€ã—ã°ã‚‰ãã®ã€€ã‚ã„ã ã¯\n",
+                                                       "ã›ãªã‹ã®ã€€ã‚¿ãƒã‹ã‚‰ã€€ãˆã„ã‚ˆã†ã‚’\n",
+                                                       "ã‚‚ã‚‰ã£ã¦ã€€ãŠãŠããã€€ãã ã¤ã€‚"
                                                    ]
                                 }
                      }

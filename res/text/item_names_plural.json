@@ -2008,6 +2008,10 @@
                      {
                          "id":  "pl_msg_00000394_00501",
                          "en_US":  "Red Cards"
+                     },
+                     {
+                         "id":  "pl_msg_00000394_00502",
+                         "en_US":  "Ability Capsules"
                      }
                  ]
 }

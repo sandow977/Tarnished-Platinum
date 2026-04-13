@@ -38,7 +38,7 @@ TwinleafTown_Guitarist:
     PlayFanfare SEQ_SE_CONFIRM
     MakePartyMonShiny 0, VAR_RESULT
     GivePokedex
-    AddItem ITEM_MENTAL_HERB, 999, VAR_RESULT
+    AddItem ITEM_ABILITY_CAPSULE, 999, VAR_RESULT
     AddItem ITEM_IRON_BALL, 999, VAR_RESULT
     AddItem ITEM_LIFE_ORB, 999, VAR_RESULT
     AddItem ITEM_LIGHT_BALL, 999, VAR_RESULT

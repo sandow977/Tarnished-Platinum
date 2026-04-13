@@ -190,20 +190,20 @@
                          "pokemon_pos_m":  13,
                          "en":  {
                                     "name":  "BANETTE",
-                                    "category":  "Marionette PokÃ©mon",
+                                    "category":  "Marionette Pokémon",
                                     "entry_text":  [
-                                                       "A doll that became a PokÃ©mon over\n",
+                                                       "A doll that became a Pokémon over\n",
                                                        "its grudge from being junked. It\n",
                                                        "seeks the child that disowned it."
                                                    ]
                                 },
                          "fr":  {
                                     "name":  "BRANETTE",
-                                    "category":  "PokÃ©mon Marionnette",
+                                    "category":  "Pokémon Marionnette",
                                     "entry_text":  [
-                                                       "Une poupÃ©e mue par la tristesse qui\n",
-                                                       "la ronge depuis quâ€™on lâ€™a dÃ©laissÃ©e.\n",
-                                                       "Elle recherche son propriÃ©taire."
+                                                       "Une poupée mue par la tristesse qui\n",
+                                                       "la ronge depuis qu’on l’a délaissée.\n",
+                                                       "Elle recherche son propriétaire."
                                                    ]
                                 },
                          "de":  {
@@ -217,29 +217,29 @@
                                 },
                          "it":  {
                                     "name":  "BANETTE",
-                                    "category":  "PokÃ©mon Marionetta",
+                                    "category":  "Pokémon Marionetta",
                                     "entry_text":  [
-                                                       "Un peluche divenuto PokÃ©mon per la\n",
+                                                       "Un peluche divenuto Pokémon per la\n",
                                                        "rabbia di essere stato buttato via\n",
-                                                       "da un bimbo, di cui Ã¨ alla ricerca."
+                                                       "da un bimbo, di cui è alla ricerca."
                                                    ]
                                 },
                          "es":  {
                                     "name":  "BANETTE",
-                                    "category":  "PokÃ©mon Marioneta",
+                                    "category":  "Pokémon Marioneta",
                                     "entry_text":  [
-                                                       "Este muÃ±eco se convirtiÃ³ en un\n",
-                                                       "PokÃ©mon cuando lo tiraron a la\n",
-                                                       "basura. Busca a su antiguo dueÃ±o."
+                                                       "Este muñeco se convirtió en un\n",
+                                                       "Pokémon cuando lo tiraron a la\n",
+                                                       "basura. Busca a su antiguo dueño."
                                                    ]
                                 },
                          "jp":  {
-                                    "name":  "ã‚¸ãƒ¥ãƒšãƒƒã‚¿",
-                                    "category":  "ã¬ã„ãã‚‹ã¿ãƒã‚±ãƒ¢ãƒ³",
+                                    "name":  "ジュペッタ",
+                                    "category":  "ぬいぐるみポケモン",
                                     "entry_text":  [
-                                                       "ã™ã¦ã‚‰ã‚ŒãŸã€€ã¬ã„ãã‚‹ã¿ã«ã€€ãŠã‚“ã­ã‚“ãŒ\n",
-                                                       "ã‚„ã©ã‚Šã€€ãƒã‚±ãƒ¢ãƒ³ã«ãªã£ãŸã€‚ã˜ã¶ã‚“ã‚’\n",
-                                                       "ã™ã¦ãŸã€€ã“ã©ã‚‚ã‚’ã€€ã•ãŒã—ã¦ã„ã‚‹ã€‚"
+                                                       "すてられた　ぬいぐるみに　おんねんが\n",
+                                                       "やどり　ポケモンになった。じぶんを\n",
+                                                       "すてた　こどもを　さがしている。"
                                                    ]
                                 }
                      },

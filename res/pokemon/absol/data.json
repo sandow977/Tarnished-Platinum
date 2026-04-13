@@ -225,7 +225,7 @@
                          "pokemon_pos_m":  14,
                          "en":  {
                                     "name":  "ABSOL",
-                                    "category":  "Disaster PokÃ©mon",
+                                    "category":  "Disaster Pokémon",
                                     "entry_text":  [
                                                        "Rumored to sense disasters with its\n",
                                                        "horn, it became a target. It fled\n",
@@ -234,34 +234,34 @@
                                 },
                          "fr":  {
                                     "name":  "ABSOL",
-                                    "category":  "PokÃ©mon DÃ©sastre",
+                                    "category":  "Pokémon Désastre",
                                     "entry_text":  [
                                                        "Il pressent les catastrophes et\n",
-                                                       "nâ€™apparaÃ®t aux gens que pour les\n",
-                                                       "prÃ©venir dâ€™un danger imminent."
+                                                       "n’apparaît aux gens que pour les\n",
+                                                       "prévenir d’un danger imminent."
                                                    ]
                                 },
                          "de":  {
                                     "name":  "ABSOL",
                                     "category":  "Desaster",
                                     "entry_text":  [
-                                                       "Es spÃ¼rt drohende Katastrophen\n",
+                                                       "Es spürt drohende Katastrophen\n",
                                                        "und erscheint nur dann, wenn es\n",
                                                        "andere vor der Gefahr warnen will."
                                                    ]
                                 },
                          "it":  {
                                     "name":  "ABSOL",
-                                    "category":  "PokÃ©mon Catastrofe",
+                                    "category":  "Pokémon Catastrofe",
                                     "entry_text":  [
-                                                       "Percepisce lâ€™arrivo di disastri na-\n",
+                                                       "Percepisce l’arrivo di disastri na-\n",
                                                        "turali e appare alla gente solo per\n",
                                                        "avvisarla del pericolo imminente."
                                                    ]
                                 },
                          "es":  {
                                     "name":  "ABSOL",
-                                    "category":  "PokÃ©mon CatÃ¡strofe",
+                                    "category":  "Pokémon Catástrofe",
                                     "entry_text":  [
                                                        "Presiente desastres inminentes\n",
                                                        "y se aparece a la gente para\n",
@@ -269,12 +269,12 @@
                                                    ]
                                 },
                          "jp":  {
-                                    "name":  "ã‚¢ãƒ–ã‚½ãƒ«",
-                                    "category":  "ã‚ã–ã‚ã„ãƒã‚±ãƒ¢ãƒ³",
+                                    "name":  "アブソル",
+                                    "category":  "わざわいポケモン",
                                     "entry_text":  [
-                                                       "ã•ã„ãŒã„ã®ã€€ã‚ˆã‹ã‚“ã‚’ã€€ã‹ã‚“ã˜ã¨ã‚‹ã€‚\n",
-                                                       "ãã‘ã‚“ã‚’ã€€ã—ã‚‰ã›ã‚‹ã€€ã¨ãã ã‘\n",
-                                                       "ã²ã¨ã¾ãˆã«ã€€ã‚ã‚‰ã‚ã‚Œã‚‹ã¨ã„ã†ã€‚"
+                                                       "さいがいの　よかんを　かんじとる。\n",
+                                                       "きけんを　しらせる　ときだけ\n",
+                                                       "ひとまえに　あらわれるという。"
                                                    ]
                                 }
                      },

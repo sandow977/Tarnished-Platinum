@@ -648,6 +648,10 @@
                      {
                          "id":  "pl_msg_00000610_00161",
                          "en_US":  "Slush Rush"
+                     },
+                     {
+                         "id":  "pl_msg_00000610_00162",
+                         "en_US":  "Sheer Force"
                      }
                  ]
 }

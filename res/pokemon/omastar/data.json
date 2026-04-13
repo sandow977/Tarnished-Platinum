@@ -176,20 +176,20 @@
                          "pokemon_pos_m":  14,
                          "en":  {
                                     "name":  "OMASTAR",
-                                    "category":  "Spiral PokÃ©mon",
+                                    "category":  "Spiral Pokémon",
                                     "entry_text":  [
-                                                       "It is thought that this PokÃ©mon\n",
+                                                       "It is thought that this Pokémon\n",
                                                        "became extinct because its spiral\n",
                                                        "shell grew too large."
                                                    ]
                                 },
                          "fr":  {
                                     "name":  "AMONISTAR",
-                                    "category":  "PokÃ©mon Spirale",
+                                    "category":  "Pokémon Spirale",
                                     "entry_text":  [
-                                                       "On pense que ce PokÃ©mon a\n",
+                                                       "On pense que ce Pokémon a\n",
                                                        "disparu parce que sa coquille en\n",
-                                                       "spirale Ã©tait devenue trop grosse."
+                                                       "spirale était devenue trop grosse."
                                                    ]
                                 },
                          "de":  {
@@ -198,34 +198,34 @@
                                     "entry_text":  [
                                                        "Man geht davon aus, dass das PKMN\n",
                                                        "ausgestorben ist, weil seine spiral-\n",
-                                                       "fÃ¶rmige Schale zu groÃŸ wurde."
+                                                       "förmige Schale zu groß wurde."
                                                    ]
                                 },
                          "it":  {
                                     "name":  "OMASTAR",
-                                    "category":  "PokÃ©mon Spirale",
+                                    "category":  "Pokémon Spirale",
                                     "entry_text":  [
-                                                       "Si pensa che questo PokÃ©mon si\n",
-                                                       "sia estinto perchÃ© la sua conchiglia\n",
-                                                       "a spirale Ã¨ cresciuta troppo."
+                                                       "Si pensa che questo Pokémon si\n",
+                                                       "sia estinto perché la sua conchiglia\n",
+                                                       "a spirale è cresciuta troppo."
                                                    ]
                                 },
                          "es":  {
                                     "name":  "OMASTAR",
-                                    "category":  "PokÃ©mon Espiral",
+                                    "category":  "Pokémon Espiral",
                                     "entry_text":  [
-                                                       "Se cree que este PokÃ©mon se\n",
-                                                       "extinguiÃ³ porque su concha\n",
-                                                       "espiral creciÃ³ demasiado."
+                                                       "Se cree que este Pokémon se\n",
+                                                       "extinguió porque su concha\n",
+                                                       "espiral creció demasiado."
                                                    ]
                                 },
                          "jp":  {
-                                    "name":  "ã‚ªãƒ ã‚¹ã‚¿ï¼",
-                                    "category":  "ã†ãšã¾ããƒã‚±ãƒ¢ãƒ³",
+                                    "name":  "オムスタ－",
+                                    "category":  "うずまきポケモン",
                                     "entry_text":  [
-                                                       "ã‚‰ã›ã‚“ã˜ã‚‡ã†ã®ã€€ã‚«ãƒ©ãŒã€€ãŠãŠãã\n",
-                                                       "ãªã‚Šã™ãŽãŸã“ã¨ãŒã€€ã’ã‚“ã„ã‚“ã§\n",
-                                                       "ãœã¤ã‚ã¤ã—ãŸã¨ã€€ã‹ã‚“ãŒãˆã‚‰ã‚Œã¦ã„ã‚‹ã€‚"
+                                                       "らせんじょうの　カラが　おおきく\n",
+                                                       "なりすぎたことが　げんいんで\n",
+                                                       "ぜつめつしたと　かんがえられている。"
                                                    ]
                                 }
                      },

@@ -51,7 +51,7 @@
         "pokemon_pos_m": 22,
         "en": {
             "name": "SAWSBUCK-W",
-            "category": "Season PokÃ©mon",
+            "category": "Season Pokémon",
             "entry_text": [
                 "They migrate according to the\n",
                 "seasons, so some people call\n",
@@ -60,10 +60,10 @@
         },
         "fr": {
             "name": "BULBIZARRE",
-            "category": "PokÃ©mon Graine",
+            "category": "Pokémon Graine",
             "entry_text": [
                 "Au matin de sa vie, la graine sur\n",
-                "son dos lui fournit les Ã©lÃ©ments\n",
+                "son dos lui fournit les éléments\n",
                 "dont il a besoin pour grandir."
             ]
         },
@@ -71,14 +71,14 @@
             "name": "BISASAM",
             "category": "Samen",
             "entry_text": [
-                "Nach der Geburt nimmt es fÃ¼r eine\n",
-                "Weile NÃ¤hrstoffe Ã¼ber den Samen\n",
-                "auf seinem RÃ¼cken auf."
+                "Nach der Geburt nimmt es für eine\n",
+                "Weile Nährstoffe über den Samen\n",
+                "auf seinem Rücken auf."
             ]
         },
         "it": {
             "name": "BULBASAUR",
-            "category": "PokÃ©mon Seme",
+            "category": "Pokémon Seme",
             "entry_text": [
                 "Dopo la nascita, cresce traendo\n",
                 "nutrimento dal seme piantato\n",
@@ -87,20 +87,20 @@
         },
         "es": {
             "name": "BULBASAUR",
-            "category": "PokÃ©mon Semilla",
+            "category": "Pokémon Semilla",
             "entry_text": [
-                "DespuÃ©s de nacer, crece\n",
-                "alimentÃ¡ndose de las semillas\n",
+                "Después de nacer, crece\n",
+                "alimentándose de las semillas\n",
                 "de su lomo."
             ]
         },
         "jp": {
-            "name": "ãƒ•ã‚·ã‚®ãƒ€ãƒ",
-            "category": "ãŸã­ãƒã‚±ãƒ¢ãƒ³",
+            "name": "フシギダネ",
+            "category": "たねポケモン",
             "entry_text": [
-                "ã†ã¾ã‚Œã¦ã‹ã‚‰ã€€ã—ã°ã‚‰ãã®ã€€ã‚ã„ã ã¯\n",
-                "ã›ãªã‹ã®ã€€ã‚¿ãƒã‹ã‚‰ã€€ãˆã„ã‚ˆã†ã‚’\n",
-                "ã‚‚ã‚‰ã£ã¦ã€€ãŠãŠããã€€ãã ã¤ã€‚"
+                "うまれてから　しばらくの　あいだは\n",
+                "せなかの　タネから　えいようを\n",
+                "もらって　おおきく　そだつ。"
             ]
         }
     }

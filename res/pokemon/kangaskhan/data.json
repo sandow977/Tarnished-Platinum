@@ -34,9 +34,9 @@
                        "EGG_GROUP_MONSTER"
                    ],
     "abilities":  [
-                       "ABILITY_BERSERK",
-                       "ABILITY_BERSERK"
-                   ],
+                      "ABILITY_BERSERK",
+                      "ABILITY_POISON_TOUCH"
+                  ],
     "safari_flee_rate":  150,
     "body_color":  "MON_COLOR_BROWN",
     "flip_sprite":  false,

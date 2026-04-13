@@ -10,10 +10,10 @@
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_ABSOL",
+            "species": "SPECIES_SANDSLASH",
             "form": 0,
-            "level": 8,
-            "item": "ITEM_WHITE_HERB",
+            "level": 20,
+            "item": "ITEM_EJECT_BUTTON",
             "moves": [
                 "MOVE_NIGHT_SLASH",
                 "MOVE_NONE",
@@ -26,25 +26,11 @@
         {
             "species": "SPECIES_HYPNO",
             "form": 0,
-            "level": 20,
-            "item": "ITEM_LUM_BERRY",
-            "moves": [
-                "MOVE_LEER",
-                "MOVE_STICKY_WEB",
-                "MOVE_NONE",
-                "MOVE_NONE"
-            ],
-            "iv_scale": 50,
-            "ball_seal": 0
-        },
-        {
-            "species": "SPECIES_DUSCLOPS",
-            "form": 0,
             "level": 30,
-            "item": "ITEM_LUM_BERRY",
+            "item": "ITEM_RED_CARD",
             "moves": [
-                "MOVE_SPLASH",
-                "MOVE_NONE",
+                "MOVE_FALSE_SWIPE",
+                "MOVE_LEER",
                 "MOVE_NONE",
                 "MOVE_NONE"
             ],

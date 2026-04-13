@@ -181,7 +181,7 @@
                          "pokemon_pos_m":  16,
                          "en":  {
                                     "name":  "NOSEPASS",
-                                    "category":  "Compass PokÃ©mon",
+                                    "category":  "Compass Pokémon",
                                     "entry_text":  [
                                                        "When endangered, it may protect\n",
                                                        "itself by raising its magnetism and\n",
@@ -190,10 +190,10 @@
                                 },
                          "fr":  {
                                     "name":  "TARINOR",
-                                    "category":  "PokÃ©mon Boussole",
+                                    "category":  "Pokémon Boussole",
                                     "entry_text":  [
-                                                       "Son nez est un aimant, câ€™est\n",
-                                                       "pourquoi ce PokÃ©mon fait toujours\n",
+                                                       "Son nez est un aimant, c’est\n",
+                                                       "pourquoi ce Pokémon fait toujours\n",
                                                        "face au nord."
                                                    ]
                                 },
@@ -207,29 +207,29 @@
                                 },
                          "it":  {
                                     "name":  "NOSEPASS",
-                                    "category":  "PokÃ©mon Bussola",
+                                    "category":  "Pokémon Bussola",
                                     "entry_text":  [
-                                                       "Il suo naso Ã¨ magnetico. Per questo\n",
+                                                       "Il suo naso è magnetico. Per questo\n",
                                                        "motivo lo tiene sempre puntato\n",
                                                        "verso nord."
                                                    ]
                                 },
                          "es":  {
                                     "name":  "NOSEPASS",
-                                    "category":  "PokÃ©mon BrÃºjula",
+                                    "category":  "Pokémon Brújula",
                                     "entry_text":  [
-                                                       "Su nariz es un imÃ¡n. Por eso el\n",
-                                                       "rostro de este PokÃ©mon siempre\n",
+                                                       "Su nariz es un imán. Por eso el\n",
+                                                       "rostro de este Pokémon siempre\n",
                                                        "se orienta al norte."
                                                    ]
                                 },
                          "jp":  {
-                                    "name":  "ãƒŽã‚ºãƒ‘ã‚¹",
-                                    "category":  "ã‚³ãƒ³ãƒ‘ã‚¹ãƒã‚±ãƒ¢ãƒ³",
+                                    "name":  "ノズパス",
+                                    "category":  "コンパスポケモン",
                                     "entry_text":  [
-                                                       "ã¯ãªãŒã€€ã˜ã—ã‚ƒãã«ã€€ãªã£ã¦ã„ã‚‹ã®ã§\n",
-                                                       "ã¤ã­ã«ã€€ã»ã£ãã‚‡ãã®ã€€ã»ã†ãŒãã«\n",
-                                                       "ã‹ãŠã‚’ã€€ã‚€ã‘ã¦ã„ã‚‹ã€€ãƒã‚±ãƒ¢ãƒ³ã€‚"
+                                                       "はなが　じしゃくに　なっているので\n",
+                                                       "つねに　ほっきょくの　ほうがくに\n",
+                                                       "かおを　むけている　ポケモン。"
                                                    ]
                                 }
                      },

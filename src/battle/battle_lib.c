@@ -89,6 +89,7 @@ static s8 BattleSystem_MovePriorityForBattler(BattleContext *battleCtx, int batt
 static int BattleSystem_PriorityBlocker(BattleSystem *battleSys, BattleContext *battleCtx, int attacker, int defender);
 static BOOL BattleSystem_IsUnnerved(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
 static void BattleSystem_RecordHarvestConsumption(BattleContext *battleCtx, int battler, u16 item, BOOL ateBerry);
+static BOOL BattleSystem_EffectIsSheerForceEligible(int effect, int effectChance);
 
 static const Fraction sStatStageBoosts[];
 
@@ -128,6 +129,80 @@ static void BattleSystem_RecordHarvestConsumption(BattleContext *battleCtx, int 
     } else if (item != ITEM_NONE) {
         battleCtx->battleMons[battler].moveEffectsData.harvestedBerry = ITEM_NONE;
     }
+}
+
+static BOOL BattleSystem_EffectIsSheerForceEligible(int effect, int effectChance)
+{
+    switch (effect) {
+    case BATTLE_EFFECT_TRI_ATTACK:
+    case BATTLE_EFFECT_POISON_HIT:
+    case BATTLE_EFFECT_BURN_HIT:
+    case BATTLE_EFFECT_FREEZE_HIT:
+    case BATTLE_EFFECT_PARALYZE_HIT:
+    case BATTLE_EFFECT_FLINCH_HIT:
+    case BATTLE_EFFECT_LOWER_ATTACK_HIT:
+    case BATTLE_EFFECT_LOWER_DEFENSE_HIT:
+    case BATTLE_EFFECT_LOWER_SP_ATK_HIT:
+    case BATTLE_EFFECT_LOWER_SP_DEF_HIT:
+    case BATTLE_EFFECT_LOWER_ACCURACY_HIT:
+    case BATTLE_EFFECT_LOWER_SPEED_HIT:
+    case BATTLE_EFFECT_CONFUSE_HIT:
+    case BATTLE_EFFECT_POISON_MULTI_HIT:
+    case BATTLE_EFFECT_DAMAGE_WHILE_ASLEEP:
+    case BATTLE_EFFECT_THAW_AND_BURN_HIT:
+    case BATTLE_EFFECT_RAISE_DEF_HIT:
+    case BATTLE_EFFECT_RAISE_ALL_STATS_HIT:
+    case BATTLE_EFFECT_RAISE_ATTACK_HIT:
+    case BATTLE_EFFECT_FLINCH_MINIMIZE_DOUBLE_HIT:
+    case BATTLE_EFFECT_FLINCH_DOUBLE_DAMAGE_FLY_OR_BOUNCE:
+    case BATTLE_EFFECT_THUNDER:
+    case BATTLE_EFFECT_BOUNCE:
+    case BATTLE_EFFECT_RECOIL_BURN_HIT:
+    case BATTLE_EFFECT_BLIZZARD:
+    case BATTLE_EFFECT_BADLY_POISON_HIT:
+    case BATTLE_EFFECT_HIGH_CRITICAL_BURN_HIT:
+    case BATTLE_EFFECT_SECRET_POWER:
+    case BATTLE_EFFECT_RECOIL_PARALYZE_HIT:
+    case BATTLE_EFFECT_CHARGE_TURN_HIGH_CRIT_FLINCH:
+    case BATTLE_EFFECT_HURRICANE:
+    case BATTLE_EFFECT_FLINCH_BURN_HIT:
+    case BATTLE_EFFECT_FLINCH_FREEZE_HIT:
+    case BATTLE_EFFECT_FLINCH_PARALYZE_HIT:
+    case BATTLE_EFFECT_LOWER_SP_DEF_2_HIT:
+    case BATTLE_EFFECT_RAISE_SP_ATK_HIT:
+    case BATTLE_EFFECT_PSYCHIC_NOISE:
+    case BATTLE_EFFECT_TRAILBLAZE:
+    case BATTLE_EFFECT_DIRE_CLAW:
+    case BATTLE_EFFECT_DIAMOND_STORM:
+        return TRUE;
+
+    case BATTLE_EFFECT_ALWAYS_FLINCH_FIRST_TURN_ONLY:
+    case BATTLE_EFFECT_HIGH_CRITICAL:
+        return effectChance > 0;
+
+    default:
+        return FALSE;
+    }
+}
+
+BOOL BattleSystem_MoveIsSheerForceBoosted(BattleContext *battleCtx, int attacker, int move)
+{
+    int effect;
+    int effectChance;
+
+    if (attacker == BATTLER_NONE
+        || move == MOVE_NONE
+        || move == MOVE_STRUGGLE
+        || Battler_Ability(battleCtx, attacker) != ABILITY_SHEER_FORCE
+        || MoveTable_LoadParam(move, MOVEATTRIBUTE_CLASS) == CLASS_STATUS
+        || MoveTable_LoadParam(move, MOVEATTRIBUTE_POWER) == 0) {
+        return FALSE;
+    }
+
+    effect = MoveTable_LoadParam(move, MOVEATTRIBUTE_EFFECT);
+    effectChance = MoveTable_LoadParam(move, MOVEATTRIBUTE_EFFECT_CHANCE);
+
+    return BattleSystem_EffectIsSheerForceEligible(effect, effectChance);
 }
 
 static int BattleSystem_AteAbilityType(int ability)
@@ -1781,6 +1856,11 @@ BOOL BattleSystem_TriggerPrimaryEffect(BattleSystem *battleSys, BattleContext *b
 {
     BOOL result = FALSE;
 
+    if (battleCtx->sheerForceActive == TRUE) {
+        battleCtx->sideEffectDirectFlags = 0;
+        return FALSE;
+    }
+
     if (battleCtx->sideEffectDirectFlags & MOVE_SIDE_EFFECT_ON_HIT) {
         *effect = MapSideEffectToSubscript(battleCtx, 1, battleCtx->sideEffectDirectFlags);
         battleCtx->sideEffectDirectFlags = 0;
@@ -1821,6 +1901,10 @@ BOOL BattleSystem_TriggerSecondaryEffect(BattleSystem *battleSys, BattleContext 
 {
     BOOL result = FALSE;
     u16 effectChance;
+
+    if (battleCtx->sheerForceActive == TRUE) {
+        battleCtx->sideEffectIndirectFlags = 0;
+    }
 
     if (battleCtx->sideEffectIndirectFlags & MOVE_SIDE_EFFECT_ON_HIT) {
         SetupSideEffect(battleCtx, effect, SIDE_EFFECT_TYPE_INDIRECT);
@@ -2291,6 +2375,7 @@ void BattleContext_Init(BattleContext *battleCtx)
     battleCtx->powerMul = 10;
     battleCtx->moveType = TYPE_NORMAL;
     battleCtx->moveEffectChance = 0;
+    battleCtx->sheerForceActive = FALSE;
     battleCtx->moveStatusFlags = 0;
     battleCtx->faintedMon = BATTLER_NONE;
     battleCtx->sideEffectDirectFlags = MOVE_SUBSCRIPT_PTR_NONE;
@@ -4992,6 +5077,7 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
             && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
             && (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN) == FALSE
             && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
+            && battleCtx->sheerForceActive == FALSE
             && DEFENDER_SELF_TURN_FLAGS.berserkTriggered) {
             DEFENDER_SELF_TURN_FLAGS.berserkTriggered = FALSE;
             battleCtx->sideEffectType = SIDE_EFFECT_TYPE_ABILITY;
@@ -5107,6 +5193,7 @@ BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *ba
 
         if (DEFENDING_MON.curHP
             && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
+            && battleCtx->sheerForceActive == FALSE
             && battleCtx->moveCur != MOVE_STRUGGLE
             && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
             && (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE
@@ -5348,6 +5435,7 @@ BOOL BattleSystem_TriggerParadoxAbility(BattleSystem *battleSys, BattleContext *
         battleCtx->battleMons[battler].paradoxBoostSourceItem = TRUE;
         battleCtx->battleMons[battler].paradoxBoostStat = BattleSystem_ParadoxBestStat(battleCtx, battler);
         battleCtx->battleMons[battler].paradoxAbilityAnnounced = TRUE;
+        battleCtx->msgTemp = battleCtx->battleMons[battler].paradoxBoostStat;
         battleCtx->msgBattlerTemp = battler;
         battleCtx->msgItemTemp = battleCtx->battleMons[battler].heldItem;
         battleCtx->msgAbilityTemp = ability;
@@ -5365,6 +5453,7 @@ BOOL BattleSystem_TriggerParadoxAbility(BattleSystem *battleSys, BattleContext *
     }
 
     battleCtx->battleMons[battler].paradoxAbilityAnnounced = TRUE;
+    battleCtx->msgTemp = BattleSystem_ParadoxBoostedStat(battleCtx, battler);
     battleCtx->msgBattlerTemp = battler;
     battleCtx->msgAbilityTemp = ability;
     *subscript = subscript_paradox_ability;
@@ -6603,6 +6692,7 @@ BOOL BattleSystem_TriggerHeldItemOnHit(BattleSystem *battleSys, BattleContext *b
       case HOLD_EFFECT_SWITCH_OUT_WHEN_HIT:
           if (DEFENDING_MON.curHP
               && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
+              && battleCtx->sheerForceActive == FALSE
               && (battleCtx->multiHitNumHits == 0 || battleCtx->multiHitCounter == 1)
               && BattleSystem_AnyReplacementMons(battleSys, battleCtx, battleCtx->defender) == TRUE) {
               *subscript = subscript_eject_button;
@@ -6617,6 +6707,7 @@ BOOL BattleSystem_TriggerHeldItemOnHit(BattleSystem *battleSys, BattleContext *b
               && ATTACKING_MON.curHP
               && battleCtx->attacker != battleCtx->defender
               && (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken || DEFENDER_SELF_TURN_FLAGS.specialDamageTaken)
+              && battleCtx->sheerForceActive == FALSE
               && (battleCtx->multiHitNumHits == 0 || battleCtx->multiHitCounter == 1)
               && Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_SUCTION_CUPS
               && (ATTACKING_MON.moveEffectsMask & MOVE_EFFECT_INGRAIN) == FALSE
@@ -8350,6 +8441,10 @@ int BattleSystem_CalcMoveDamage(BattleSystem *battleSys,
     if (attackerParams.ability == ABILITY_WATER_BUBBLE
         && moveType == TYPE_WATER) {
         movePower *= 2;
+    }
+
+    if (BattleSystem_MoveIsSheerForceBoosted(battleCtx, attacker, move) == TRUE) {
+        movePower = movePower * 13 / 10;
     }
 
     if (NO_CLOUD_NINE

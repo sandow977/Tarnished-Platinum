@@ -198,7 +198,7 @@
                          "pokemon_pos_m":  1,
                          "en":  {
                                     "name":  "ONIX",
-                                    "category":  "Rock Snake PokÃ©mon",
+                                    "category":  "Rock Snake Pokémon",
                                     "entry_text":  [
                                                        "It burrows through the ground\n",
                                                        "at a speed of 50 mph while\n",
@@ -207,7 +207,7 @@
                                 },
                          "fr":  {
                                     "name":  "ONIX",
-                                    "category":  "PokÃ©mon Serpenroc",
+                                    "category":  "Pokémon Serpenroc",
                                     "entry_text":  [
                                                        "Il provoque des secousses\n",
                                                        "sismiques en creusant.\n",
@@ -220,21 +220,21 @@
                                     "entry_text":  [
                                                        "Wenn es sich unter dem Boden mit\n",
                                                        "bis zu 80 km/h bewegt, verursacht\n",
-                                                       "es ErschÃ¼tterungen."
+                                                       "es Erschütterungen."
                                                    ]
                                 },
                          "it":  {
                                     "name":  "ONIX",
-                                    "category":  "PokÃ©mon Serpesasso",
+                                    "category":  "Pokémon Serpesasso",
                                     "entry_text":  [
                                                        "Si muove sottoterra provocando\n",
-                                                       "scosse e boati. PuÃ² raggiungere\n",
-                                                       "anche la velocitÃ  di 80 km/h."
+                                                       "scosse e boati. Può raggiungere\n",
+                                                       "anche la velocità di 80 km/h."
                                                    ]
                                 },
                          "es":  {
                                     "name":  "ONIX",
-                                    "category":  "PokÃ©mon Serp. Roca",
+                                    "category":  "Pokémon Serp. Roca",
                                     "entry_text":  [
                                                        "Cuando viaja bajo tierra causa\n",
                                                        "temblores y estruendo. Se puede\n",
@@ -242,12 +242,12 @@
                                                    ]
                                 },
                          "jp":  {
-                                    "name":  "ã‚¤ãƒ¯ï¼ã‚¯",
-                                    "category":  "ã„ã‚ã¸ã³ãƒã‚±ãƒ¢ãƒ³",
+                                    "name":  "イワ－ク",
+                                    "category":  "いわへびポケモン",
                                     "entry_text":  [
-                                                       "ã‚¤ãƒ¯ï¼ã‚¯ãŒã€€ã¡ã¡ã‚…ã†ã‚’ã€€ã»ã‚Šã™ã™ã‚€ã¨\n",
-                                                       "ã˜ãªã‚ŠãŒã€€ãã“ãˆã€€ã˜ã‚ã‚“ãŒã€€ã‚†ã‚Œã‚‹ã€‚\n",
-                                                       "ã„ã©ã†ããã©ã¯ã€€ã˜ããï¼˜ï¼ã‚­ãƒ­ã€‚"
+                                                       "イワ－クが　ちちゅうを　ほりすすむと\n",
+                                                       "じなりが　きこえ　じめんが　ゆれる。\n",
+                                                       "いどうそくどは　じそく８０キロ。"
                                                    ]
                                 }
                      },

@@ -1684,6 +1684,8 @@ static void BattleScript_CalcMoveDamage(BattleSystem *battleSys, BattleContext *
 {
     int moveType;
 
+    battleCtx->sheerForceActive = BattleSystem_MoveIsSheerForceBoosted(battleCtx, battleCtx->attacker, battleCtx->moveCur);
+
     if (battleCtx->moveType) {
         moveType = battleCtx->moveType;
     } else {

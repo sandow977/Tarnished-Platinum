@@ -57,7 +57,7 @@
                      {
                          "id":  "pl_msg_00000612_00008",
                          "en_US":  [
-                                       "Boosts the Pokémon’s\n",
+                                       "Boosts the Pokemon’s\n",
                                        "evasion in a sandstorm."
                                    ]
                      },
@@ -232,14 +232,14 @@
                      {
                          "id":  "pl_msg_00000612_00033",
                          "en_US":  [
-                                       "Boosts the Pokémon’s\n",
+                                       "Boosts the Pokemon’s\n",
                                        "Speed in rain."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00034",
                          "en_US":  [
-                                       "Boosts the Pokémon’s\n",
+                                       "Boosts the Pokemon’s\n",
                                        "Speed in sunshine."
                                    ]
                      },
@@ -897,7 +897,7 @@
                      {
                          "id":  "pl_msg_00000612_00128",
                          "en_US":  [
-                                       "Dark, Ghost, and Bug-type\n",
+                                       "Dark, Ghost and Bug-type\n",
                                        "attacks raise Speed."
                                    ]
                      },
@@ -905,14 +905,14 @@
                          "id":  "pl_msg_00000612_00129",
                          "en_US":  [
                                        "May disable a move used\n",
-                                       "on the Pokemon."
+                                       "on the Pokémon."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00130",
                          "en_US":  [
                                        "May poison targets when\n",
-                                       "the Pokemon makes contact."
+                                       "making contact."
                                    ]
                      },
                      {
@@ -933,7 +933,7 @@
                          "id":  "pl_msg_00000612_00133",
                          "en_US":  [
                                        "Raises Defense when the\n",
-                                       "Pokemon is hit."
+                                       "Pokémon is hit."
                                    ]
                      },
                      {
@@ -946,15 +946,15 @@
                      {
                          "id":  "pl_msg_00000612_00135",
                          "en_US":  [
-                                       "Surprises foes and blocks\n",
-                                       "priority moves."
+                                       "Protects itself and allies\n",
+                                       "from priority moves."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00136",
                          "en_US":  [
-                                       "A regal aura blocks\n",
-                                       "priority moves."
+                                       "Protects itself and allies\n",
+                                       "from priority moves."
                                    ]
                      },
                      {
@@ -967,21 +967,21 @@
                      {
                          "id":  "pl_msg_00000612_00138",
                          "en_US":  [
-                                       "Makes enemy Pokemon too\n",
+                                       "Makes enemy Pokémon too\n",
                                        "nervous to eat Berries."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00139",
                          "en_US":  [
-                                       "Powers up biting\n",
-                                       "moves."
+                                       "Increases the power of\n",
+                                       "biting moves."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00140",
                          "en_US":  [
-                                       "Powers up pulse\n",
+                                       "Powers up aura and pulse\n",
                                        "moves."
                                    ]
                      },
@@ -1002,22 +1002,22 @@
                      {
                          "id":  "pl_msg_00000612_00143",
                          "en_US":  [
-                                       "Halves damage taken\n",
-                                       "at full HP."
+                                       "Halves damage taken at\n",
+                                       "full HP."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00144",
                          "en_US":  [
-                                       "Boosts Speed in a\n",
-                                       "sandstorm."
+                                       "Boosts the Pokemon’s\n",
+                                       "speed in a sandstorm."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00145",
                          "en_US":  [
-                                       "Boosts some moves in\n",
-                                       "a sandstorm."
+                                       "Boosts certain moves’\n",
+                                       "power in a sandstorm."
                                    ]
                      },
                      {
@@ -1037,8 +1037,8 @@
                      {
                          "id":  "pl_msg_00000612_00148",
                          "en_US":  [
-                                       "Contact spreads this\n",
-                                       "ability to the attacker."
+                                       "Gives this ability to\n",
+                                       "foes that make contact."
                                    ]
                      },
                      {
@@ -1052,30 +1052,30 @@
                          "id":  "pl_msg_00000612_00150",
                          "en_US":  [
                                        "Normal-type moves become\n",
-                                       "Fairy-type and power up."
+                                       "Fairy-type."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00151",
                          "en_US":  [
                                        "Normal-type moves become\n",
-                                       "Ice-type and power up."
+                                       "Ice-type."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00152",
                          "en_US":  [
                                        "Normal-type moves become\n",
-                                       "Flying-type and power up."
+                                       "Flying-type."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00153",
                          "en_US":  [
                                        "Normal-type moves become\n",
-                                       "Electric-type and power up."
+                                       "Electric-type."
                                    ]
-                     },
+                      },
                      {
                          "id":  "pl_msg_00000612_00154",
                          "en_US":  [
@@ -1101,36 +1101,43 @@
                          "id":  "pl_msg_00000612_00157",
                          "en_US":  [
                                       "Reflects certain status\n",
-                                       "moves back at the user."
+                                      "moves back at the user."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00158",
                          "en_US":  [
                                       "Reduces damage taken\n",
-                                       "by allies."
+                                      "by allies."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00159",
                          "en_US":  [
                                       "Boosts the highest stat\n",
-                                       "in harsh sunlight."
+                                      "in harsh sunlight."
                                    ]
                      },
                      {
                          "id":  "pl_msg_00000612_00160",
                          "en_US":  [
                                       "Boosts the highest stat\n",
-                                       "with Booster Energy."
+                                      "with Booster Energy."
                                   ]
                      },
                      {
                          "id":  "pl_msg_00000612_00161",
                          "en_US":  [
-                                      "Raises Speed in a\n",
-                                       "hailstorm."
+                                       "Boosts the Pokemon’s\n",
+                                       "speed in a hailstorm."
                                   ]
+                     },
+                     {
+                         "id":  "pl_msg_00000612_00162",
+                         "en_US":  [
+                                      "Removes added effects to\n",
+                                      "increase move damage."
+                                 ]
                      }
                  ]
 }

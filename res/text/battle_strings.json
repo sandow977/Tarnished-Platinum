@@ -8800,6 +8800,76 @@
                                        "The opposing {STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0} makes\n",
                                        "your team too nervous to eat Berries!"
                                    ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonUsedItsBoosterEnergy_Ally",
+                         "en_US":  [
+                                       "{STRVAR_1 1, 0, 0} used\n",
+                                       "its {STRVAR_1 8, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonUsedItsBoosterEnergy_Wild",
+                         "en_US":  [
+                                       "The wild {STRVAR_1 1, 0, 0} used\n",
+                                       "its {STRVAR_1 8, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonUsedItsBoosterEnergy_Foe",
+                         "en_US":  [
+                                       "The foe’s {STRVAR_1 1, 0, 0} used\n",
+                                       "its {STRVAR_1 8, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_HarshSunlightActivatedPokemonsAbility_Ally",
+                         "en_US":  [
+                                       "The harsh sunlight activated\n",
+                                       "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_HarshSunlightActivatedPokemonsAbility_Wild",
+                         "en_US":  [
+                                       "The harsh sunlight activated the wild\n",
+                                       "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_HarshSunlightActivatedPokemonsAbility_Foe",
+                         "en_US":  [
+                                       "The harsh sunlight activated the foe’s\n",
+                                       "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_TheItemWasUsedUp",
+                         "en_US":  [
+                                       "The {STRVAR_1 8, 0, 0} was\n",
+                                       "used up..."
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonActivatedItsAbilityUsingItsItem_Ally",
+                         "en_US":  [
+                                       "{STRVAR_1 1, 0, 0} activated its\n",
+                                       "{STRVAR_1 5, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonActivatedItsAbilityUsingItsItem_Wild",
+                         "en_US":  [
+                                       "The wild {STRVAR_1 1, 0, 0} activated its\n",
+                                       "{STRVAR_1 5, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonActivatedItsAbilityUsingItsItem_Foe",
+                         "en_US":  [
+                                       "The opposing {STRVAR_1 1, 0, 0} activated its\n",
+                                       "{STRVAR_1 5, 1, 0}!"
+                                   ]
                      }
                  ]
 }

@@ -34,9 +34,9 @@
                        "EGG_GROUP_AMORPHOUS"
                    ],
     "abilities":  [
-                       "ABILITY_TELEPATHY",
-                       "ABILITY_TELEPATHY"
-                   ],
+                      "ABILITY_TELEPATHY",
+                      "ABILITY_MEGA_LAUNCHER"
+                  ],
     "safari_flee_rate":  0,
     "body_color":  "MON_COLOR_WHITE",
     "flip_sprite":  false,
