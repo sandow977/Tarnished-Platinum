@@ -3472,6 +3472,8 @@ return damage;
 static int TrainerAI_MoveType(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int move)
 {
     int result;
+    int adjustedType;
+    int baseType;
 
     switch (move) {
     case MOVE_NATURAL_GIFT:
@@ -3596,7 +3598,18 @@ static int TrainerAI_MoveType(BattleSystem *battleSys, BattleContext *battleCtx,
         break;
     }
 
-    return result;
+    if (move == MOVE_NONE) {
+        return result;
+    }
+
+    baseType = (result == TYPE_NORMAL) ? MOVE_DATA(move).type : result;
+    adjustedType = BattleSystem_GetMoveType(battleSys, battleCtx, battler, move);
+
+    if (adjustedType == baseType) {
+        return result;
+    }
+
+    return adjustedType;
 }
 
 /**

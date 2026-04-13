@@ -122,6 +122,7 @@ static BOOL BattleControllerPlayer_TriggerAfterMoveHitEffects(BattleSystem *batt
 static BOOL BattleControllerPlayer_CriticalMessage(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BattleControllerPlayer_FollowupMessage(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BattleControllerPlayer_RageBuilding(BattleSystem *battleSys, BattleContext *battleCtx);
+static BOOL BattleControllerPlayer_TriggerAttackerAbilityOnHit(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BattleControllerPlayer_CheckExtraFlinch(BattleSystem *battleSys, BattleContext *battleCtx);
 static BOOL BattleControllerPlayer_ToggleSemiInvulnMons(BattleSystem *battleSys, BattleContext *battleCtx);
 static void BattleControllerPlayer_MarkCustapForMixedActions(BattleContext *battleCtx, int maxBattlers);
@@ -923,6 +924,7 @@ enum FieldCondCheckState {
     FIELD_COND_CHECK_STATE_RAINING,
     FIELD_COND_CHECK_STATE_SANDSTORM,
     FIELD_COND_CHECK_STATE_SUNNY,
+    FIELD_COND_CHECK_STATE_PARADOX_ABILITIES,
     FIELD_COND_CHECK_STATE_HAILING,
     FIELD_COND_CHECK_STATE_DEEP_FOG,
     FIELD_COND_CHECK_STATE_GRAVITY,
@@ -949,6 +951,8 @@ static void BattleControllerPlayer_CheckFieldConditions(BattleSystem *battleSys,
 {
     int state = STATE_PROCESSING;
     int maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+    int battler;
+    int subscript;
     int side;
 
     do {
@@ -1196,6 +1200,22 @@ static void BattleControllerPlayer_CheckFieldConditions(BattleSystem *battleSys,
 
                 battleCtx->scriptTemp = BATTLE_ANIMATION_WEATHER_SUN;
                 state = STATE_BREAK_OUT;
+            }
+
+            battleCtx->fieldConditionCheckState++;
+            break;
+
+        case FIELD_COND_CHECK_STATE_PARADOX_ABILITIES:
+            while (battleCtx->fieldConditionCheckTemp < maxBattlers) {
+                battler = battleCtx->monSpeedOrder[battleCtx->fieldConditionCheckTemp];
+
+                if (BattleSystem_TriggerParadoxAbility(battleSys, battleCtx, battler, &subscript) == TRUE) {
+                    PrepareSubroutineSequence(battleCtx, subscript);
+                    state = STATE_BREAK_OUT;
+                    break;
+                }
+
+                battleCtx->fieldConditionCheckTemp++;
             }
 
             battleCtx->fieldConditionCheckState++;
@@ -2911,7 +2931,7 @@ static BOOL BattleControllerPlayer_TriggerImmunityAbilities(BattleSystem *battle
                 break;
             }
 
-            int nextSeq = BattleSystem_TriggerImmunityAbility(battleCtx, battleCtx->attacker, battleCtx->defender);
+            int nextSeq = BattleSystem_TriggerImmunityAbility(battleSys, battleCtx, battleCtx->attacker, battleCtx->defender);
 
             if ((nextSeq && (battleCtx->moveStatusFlags & MOVE_STATUS_DID_NOT_HIT) == FALSE)
                 || nextSeq == subscript_blocked_by_soundproof) {
@@ -3035,17 +3055,6 @@ static BOOL BattleControllerPlayer_ShouldDeferGemBoostSubscript(BattleContext *b
 
 #include "data/hit_rate_stages.h"
 
-static inline int CalcMoveType(BattleContext *battleCtx, int attacker, int move)
-{
-    if (Battler_Ability(battleCtx, attacker) == ABILITY_NORMALIZE) {
-        return TYPE_NORMAL;
-    } else if (battleCtx->moveType) {
-        return battleCtx->moveType;
-    }
-
-    return MOVE_DATA(move).type;
-}
-
 /**
  * @brief Check if an attacker's specified move will hit a defender.
  *
@@ -3071,7 +3080,7 @@ static int BattleControllerPlayer_CheckMoveHitAccuracy(BattleSystem *battleSys, 
         return 0;
     }
 
-    u8 moveType = CalcMoveType(battleCtx, attacker, move);
+    u8 moveType = BattleSystem_GetMoveType(battleSys, battleCtx, attacker, move);
     u8 moveClass = MOVE_DATA(move).class;
     s8 accStages = battleCtx->battleMons[attacker].statBoosts[BATTLE_STAT_ACCURACY] - 6;
     s8 evaStages = 6 - battleCtx->battleMons[defender].statBoosts[BATTLE_STAT_EVASION];
@@ -3268,12 +3277,27 @@ static BOOL BattleControllerPlayer_MoveStolen(BattleSystem *battleSys, BattleCon
 {
     int i, battler; // must declare up here to match
     int maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+    int magicBounceBattler = battleCtx->defender;
 
     if (battleCtx->defender == BATTLER_NONE) {
         return FALSE;
     }
 
-    if ((battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
+    if (CURRENT_MOVE_DATA.range == RANGE_OPPONENT_SIDE
+        && (BattleSystem_GetBattleType(battleSys) & BATTLE_TYPE_DOUBLES)) {
+        int partner = BattleSystem_GetPartner(battleSys, battleCtx->defender);
+
+        if (battleCtx->battleMons[magicBounceBattler].curHP == 0
+            || Battler_IgnorableAbility(battleCtx, battleCtx->attacker, magicBounceBattler, ABILITY_MAGIC_BOUNCE) == FALSE) {
+            if (battleCtx->battleMons[partner].curHP
+                && Battler_IgnorableAbility(battleCtx, battleCtx->attacker, partner, ABILITY_MAGIC_BOUNCE) == TRUE) {
+                magicBounceBattler = partner;
+            }
+        }
+    }
+
+    if ((battleCtx->battleStatusMask2 & SYSCTL_MAGIC_COAT_REFLECTED) == FALSE
+        && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
         && DEFENDER_TURN_FLAGS.magicCoat
         && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_CAN_MAGIC_COAT)) {
         DEFENDER_TURN_FLAGS.magicCoat = FALSE;
@@ -3285,6 +3309,31 @@ static BOOL BattleControllerPlayer_MoveStolen(BattleSystem *battleSys, BattleCon
         battleCtx->battleStatusMask |= SYSCTL_REUSE_LAST_MOVE;
 
         LOAD_SUBSEQ(subscript_magic_coat);
+        battleCtx->commandNext = battleCtx->command;
+        battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
+
+        BattleSystem_DecPPForPressure(battleCtx, battleCtx->defender, battleCtx->attacker);
+        return TRUE;
+    }
+
+    if ((battleCtx->battleStatusMask2 & SYSCTL_MAGIC_COAT_REFLECTED) == FALSE
+        && (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS) == FALSE
+        && (battleCtx->turnFlags[magicBounceBattler].protecting == FALSE
+            || (MOVE_DATA(battleCtx->moveCur).flags & MOVE_FLAG_CAN_PROTECT) == FALSE
+            || (battleCtx->moveCur == MOVE_CURSE && Move_IsGhostCurse(battleCtx, battleCtx->moveCur, battleCtx->attacker) == FALSE)
+            || (Move_IsMultiTurn(battleCtx, battleCtx->moveCur) == TRUE
+                && (battleCtx->battleStatusMask & SYSCTL_LAST_OF_MULTI_TURN) == FALSE))
+        && BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker) != BattleSystem_GetBattlerSide(battleSys, battleCtx->defender)
+        && Battler_IgnorableAbility(battleCtx, battleCtx->attacker, magicBounceBattler, ABILITY_MAGIC_BOUNCE) == TRUE
+        && (CURRENT_MOVE_DATA.flags & MOVE_FLAG_CAN_MAGIC_COAT)) {
+        battleCtx->moveProtect[battleCtx->attacker] = FALSE;
+        battleCtx->movePrevByBattler[battleCtx->attacker] = battleCtx->moveTemp;
+        battleCtx->movePrev = battleCtx->moveTemp;
+        battleCtx->battleStatusMask |= SYSCTL_REUSE_LAST_MOVE;
+        battleCtx->defender = magicBounceBattler;
+        battleCtx->msgBattlerTemp = magicBounceBattler;
+
+        LOAD_SUBSEQ(subscript_magic_bounce);
         battleCtx->commandNext = battleCtx->command;
         battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
 
@@ -3346,6 +3395,7 @@ static void BattleControllerPlayer_BeforeMove(BattleSystem *battleSys, BattleCon
 {
     switch (battleCtx->beforeMoveCheckState) {
     case BEFORE_MOVE_STATE_QUICK_CLAW:
+        battleCtx->pranksterBoosted = BattleSystem_MoveGetsPranksterBoost(battleCtx, battleCtx->attacker, battleCtx->moveCur);
         BattleControllerPlayer_LoadQuickClawCheck(battleSys, battleCtx);
         battleCtx->beforeMoveCheckState++;
         return;
@@ -3624,6 +3674,14 @@ static void BattleControllerPlayer_CheckMoveFailure(BattleSystem *battleSys, Bat
 
 static void BattleControllerPlayer_UseMove(BattleSystem *battleSys, BattleContext *battleCtx)
 {
+    if (BattleControllerPlayer_ShouldTriggerProtean(battleSys, battleCtx) == TRUE) {
+        battleCtx->msgTemp = BattleSystem_GetMoveType(battleSys, battleCtx, battleCtx->attacker, battleCtx->moveCur);
+        LOAD_SUBSEQ(subscript_protean);
+        battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
+        battleCtx->commandNext = BATTLE_CONTROL_USE_MOVE;
+        return;
+    }
+
     if (BattleSystem_ShouldConsumeGem(battleCtx, battleCtx->attacker, Battler_HeldItemEffect(battleCtx, battleCtx->attacker)) == TRUE) {
         battleCtx->gemBoostBattler = battleCtx->attacker;
         battleCtx->gemBoostMove = battleCtx->moveCur;
@@ -3653,6 +3711,7 @@ static void BattleControllerPlayer_UpdateHP(BattleSystem *battleSys, BattleConte
     if (battleCtx->damage) {
         int itemEffect = Battler_HeldItemEffect(battleCtx, battleCtx->defender);
         int itemPower = Battler_HeldItemPower(battleCtx, battleCtx->defender, 0);
+        int hpBefore = DEFENDING_MON.curHP;
 
         GF_ASSERT(battleCtx->damage < 0);
 
@@ -3703,7 +3762,12 @@ static void BattleControllerPlayer_UpdateHP(BattleSystem *battleSys, BattleConte
             }
         }
 
-        if ((DEFENDER_TURN_FLAGS.enduring || focusItemActivated)
+        if (DEFENDING_MON.curHP == DEFENDING_MON.maxHP
+            && Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->defender, ABILITY_STURDY) == TRUE
+            && DEFENDING_MON.curHP + battleCtx->damage <= 0) {
+            battleCtx->damage = (DEFENDING_MON.curHP - 1) * -1;
+            battleCtx->moveStatusFlags |= MOVE_STATUS_STURDY;
+        } else if ((DEFENDER_TURN_FLAGS.enduring || focusItemActivated)
             && DEFENDING_MON.curHP + battleCtx->damage <= 0) {
             battleCtx->damage = (DEFENDING_MON.curHP - 1) * -1;
 
@@ -3712,6 +3776,13 @@ static void BattleControllerPlayer_UpdateHP(BattleSystem *battleSys, BattleConte
             } else {
                 battleCtx->moveStatusFlags |= MOVE_STATUS_ENDURED_ITEM;
             }
+        }
+
+        if (CURRENT_MOVE_DATA.class != CLASS_STATUS
+            && battleCtx->attacker != battleCtx->defender
+            && hpBefore > DEFENDING_MON.maxHP / 2
+            && hpBefore + battleCtx->damage <= DEFENDING_MON.maxHP / 2) {
+            DEFENDER_SELF_TURN_FLAGS.berserkTriggered = TRUE;
         }
 
         battleCtx->storedDamage[battleCtx->defender] += battleCtx->damage;
@@ -3763,6 +3834,7 @@ enum AfterMoveMessageState {
     ONE_HIT_FORM_CHANGE,
     ONE_HIT_RAGE,
     ONE_HIT_TRIGGER_ABILITY,
+    ONE_HIT_TRIGGER_ATTACKER_ABILITY,
     ONE_HIT_EXTRA_FLINCH,
 
     MULTI_HIT_CRITICAL = 0,
@@ -3770,6 +3842,7 @@ enum AfterMoveMessageState {
     MULTI_HIT_FORM_CHANGE,
     MULTI_HIT_RAGE,
     MULTI_HIT_TRIGGER_ABILITY,
+    MULTI_HIT_TRIGGER_ATTACKER_ABILITY,
     MULTI_HIT_STATUS,
     MULTI_HIT_EXTRA_FLINCH,
 };
@@ -3829,6 +3902,12 @@ static void BattleControllerPlayer_AfterMoveMessage(BattleSystem *battleSys, Bat
                 battleCtx->commandNext = battleCtx->command;
                 battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
 
+                return;
+            }
+
+        case ONE_HIT_TRIGGER_ATTACKER_ABILITY:
+            battleCtx->afterMoveMessageState++;
+            if (BattleControllerPlayer_TriggerAttackerAbilityOnHit(battleSys, battleCtx) == TRUE) {
                 return;
             }
 
@@ -3892,6 +3971,12 @@ static void BattleControllerPlayer_AfterMoveMessage(BattleSystem *battleSys, Bat
                 return;
             }
 
+        case MULTI_HIT_TRIGGER_ATTACKER_ABILITY:
+            battleCtx->afterMoveMessageState++;
+            if (BattleControllerPlayer_TriggerAttackerAbilityOnHit(battleSys, battleCtx) == TRUE) {
+                return;
+            }
+
         case MULTI_HIT_STATUS:
             battleCtx->afterMoveMessageState++;
             if (BattleControllerPlayer_FollowupMessage(battleSys, battleCtx) == TRUE) {
@@ -3919,15 +4004,17 @@ static void BattleControllerPlayer_LeftoverState29(BattleSystem *battleSys, Batt
     return;
 }
 
-static inline int CalcCurrentMoveType(BattleContext *battleCtx)
+static BOOL BattleControllerPlayer_ShouldTriggerProtean(BattleSystem *battleSys, BattleContext *battleCtx)
 {
-    if (Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_NORMALIZE) {
-        return TYPE_NORMAL;
-    } else if (battleCtx->moveType) {
-        return battleCtx->moveType;
+    int moveType;
+
+    if (Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_PROTEAN
+        || battleCtx->moveCur == MOVE_STRUGGLE) {
+        return FALSE;
     }
 
-    return CURRENT_MOVE_DATA.type;
+    moveType = BattleSystem_GetMoveType(battleSys, battleCtx, battleCtx->attacker, battleCtx->moveCur);
+    return ATTACKING_MON.type1 != moveType || ATTACKING_MON.type2 != moveType;
 }
 
 enum AfterMoveEffectState {
@@ -3941,6 +4028,8 @@ enum AfterMoveEffectState {
     AFTER_MOVE_EFFECT_DEFENDER_ITEM,
     AFTER_MOVE_EFFECT_TRIGGER_ITEMS_ON_HIT,
     AFTER_MOVE_EFFECT_THAW_DEFENDER,
+    AFTER_MOVE_EFFECT_STAT_DROP_ABILITIES,
+    AFTER_MOVE_EFFECT_BERSERK,
     AFTER_MOVE_EFFECT_HELD_ITEM_STATUS,
 
     AFTER_MOVE_EFFECT_END
@@ -3948,6 +4037,10 @@ enum AfterMoveEffectState {
 
 static void BattleControllerPlayer_AfterMoveEffects(BattleSystem *battleSys, BattleContext *battleCtx)
 {
+    int battler;
+    BOOL result;
+    int nextSeq;
+
     if (battleCtx->restorePostSwitchContext == TRUE) {
         battleCtx->attacker = battleCtx->postSwitchSavedAttacker;
         battleCtx->defender = battleCtx->postSwitchSavedDefender;
@@ -4051,7 +4144,7 @@ static void BattleControllerPlayer_AfterMoveEffects(BattleSystem *battleSys, Bat
         }
 
     case AFTER_MOVE_EFFECT_THAW_DEFENDER:
-        int moveType = CalcCurrentMoveType(battleCtx);
+        int moveType = BattleSystem_CurrentMoveType(battleCtx);
         battleCtx->afterMoveEffectState++;
 
         if (battleCtx->defender != BATTLER_NONE
@@ -4070,10 +4163,70 @@ static void BattleControllerPlayer_AfterMoveEffects(BattleSystem *battleSys, Bat
             return;
         }
 
+    case AFTER_MOVE_EFFECT_STAT_DROP_ABILITIES:
+        battler = 0;
+        result = FALSE;
+        nextSeq = 0;
+
+        while (battleCtx->afterMoveEffectTemp < BattleSystem_GetMaxBattlers(battleSys)) {
+            battler = battleCtx->monSpeedOrder[battleCtx->afterMoveEffectTemp];
+
+            if (battleCtx->battlersSwitchingMask & FlagIndex(battler)) {
+                battleCtx->afterMoveEffectTemp++;
+                continue;
+            }
+
+            battleCtx->afterMoveEffectTemp++;
+
+            if (BattleSystem_TriggerReactiveStatDropAbility(battleSys, battleCtx, battler, &nextSeq) == TRUE) {
+                LOAD_SUBSEQ(nextSeq);
+                battleCtx->commandNext = battleCtx->command;
+                battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
+
+                result = TRUE;
+                break;
+            }
+        }
+
+        if (result == FALSE) {
+            battleCtx->afterMoveEffectState++;
+            battleCtx->afterMoveEffectTemp = 0;
+        }
+        break;
+
+    case AFTER_MOVE_EFFECT_BERSERK:
+        battler = 0;
+        result = FALSE;
+        nextSeq = 0;
+
+        while (battleCtx->afterMoveEffectTemp < BattleSystem_GetMaxBattlers(battleSys)) {
+            battler = battleCtx->monSpeedOrder[battleCtx->afterMoveEffectTemp];
+
+            if (battleCtx->battlersSwitchingMask & FlagIndex(battler)) {
+                battleCtx->afterMoveEffectTemp++;
+                continue;
+            }
+
+            battleCtx->afterMoveEffectTemp++;
+
+            if (BattleSystem_TriggerBerserk(battleSys, battleCtx, battler, &nextSeq) == TRUE) {
+                LOAD_SUBSEQ(nextSeq);
+                battleCtx->commandNext = battleCtx->command;
+                battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
+
+                result = TRUE;
+                break;
+            }
+        }
+
+        if (result == FALSE) {
+            battleCtx->afterMoveEffectState++;
+            battleCtx->afterMoveEffectTemp = 0;
+        }
+        break;
+
     case AFTER_MOVE_EFFECT_HELD_ITEM_STATUS:
-        int battler;
-        BOOL result = FALSE;
-        int nextSeq;
+        result = FALSE;
 
         while (battleCtx->afterMoveEffectTemp < BattleSystem_GetMaxBattlers(battleSys)) {
             battler = battleCtx->monSpeedOrder[battleCtx->afterMoveEffectTemp];
@@ -4834,7 +4987,7 @@ static BOOL BattleControllerPlayer_AnyExpPayout(BattleContext *battleCtx, int ne
  */
 static void BattleControllerPlayer_UpdateFlagsWhenHit(BattleSystem *battleSys, BattleContext *battleCtx)
 {
-    int moveType = CalcCurrentMoveType(battleCtx);
+    int moveType = BattleSystem_CurrentMoveType(battleCtx);
     if ((MOVE_DATA(battleCtx->moveTemp).flags & MOVE_FLAG_CAN_MIRROR_MOVE)
         && (battleCtx->battleStatusMask & SYSCTL_REUSE_LAST_MOVE) == FALSE
         && battleCtx->defender != BATTLER_NONE
@@ -4975,6 +5128,59 @@ static BOOL BattleControllerPlayer_RageBuilding(BattleSystem *battleSys, BattleC
     }
 
     return result;
+}
+
+static BOOL BattleControllerPlayer_TriggerAttackerAbilityOnHit(BattleSystem *battleSys, BattleContext *battleCtx)
+{
+    if (battleCtx->defender == BATTLER_NONE
+        || ATTACKING_MON.curHP == 0
+        || DEFENDING_MON.curHP == 0
+        || (battleCtx->moveStatusFlags & MOVE_STATUS_NO_EFFECTS)
+        || (battleCtx->battleStatusMask & SYSCTL_FIRST_OF_MULTI_TURN)
+        || (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE)
+        || (DEFENDER_SELF_TURN_FLAGS.physicalDamageTaken == 0 && DEFENDER_SELF_TURN_FLAGS.specialDamageTaken == 0)
+        || BattleSystem_MoveMakesContact(battleCtx, battleCtx->attacker, battleCtx->moveCur) == FALSE
+        || Battler_HeldItemEffect(battleCtx, battleCtx->defender) == HOLD_EFFECT_PREVENT_SECONDARY_EFFECTS
+        || Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->defender, ABILITY_SHIELD_DUST) == TRUE
+        || Battler_SubstituteWasHit(battleCtx, battleCtx->defender) == TRUE) {
+        return FALSE;
+    }
+
+    if (Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_POISON_TOUCH
+        && BattleSystem_RandNext(battleSys) % 10 < 3) {
+        battleCtx->sideEffectType = SIDE_EFFECT_TYPE_ABILITY;
+        battleCtx->sideEffectMon = battleCtx->defender;
+        battleCtx->msgBattlerTemp = battleCtx->attacker;
+
+        if (BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker) == BattleSystem_GetBattlerSide(battleSys, battleCtx->defender)) {
+            LOAD_SUBSEQ(subscript_poison);
+        } else {
+            int side = BattleSystem_GetBattlerSide(battleSys, battleCtx->defender);
+            int source = BATTLER_NONE;
+
+            for (int i = 0; i < MAX_BATTLERS; i++) {
+                if (BattleSystem_GetBattlerSide(battleSys, i) == side
+                    && battleCtx->battleMons[i].curHP
+                    && Battler_Ability(battleCtx, i) == ABILITY_PASTEL_VEIL) {
+                    source = i;
+                    break;
+                }
+            }
+
+            if (source != BATTLER_NONE && source != battleCtx->defender) {
+                battleCtx->msgBattlerTemp = source;
+                battleCtx->msgAbilityTemp = ABILITY_PASTEL_VEIL;
+                LOAD_SUBSEQ(subscript_pastel_veil_prevents_poison);
+            } else {
+                LOAD_SUBSEQ(subscript_poison);
+            }
+        }
+        battleCtx->commandNext = battleCtx->command;
+        battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 /**

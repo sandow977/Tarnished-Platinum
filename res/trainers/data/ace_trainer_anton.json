@@ -10,12 +10,12 @@
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_MAGIKARP",
+            "species": "SPECIES_SUDOWOODO",
             "form": 0,
-            "level": 2,
-            "item": "ITEM_FOCUS_SASH",
+            "level": 13,
+            "item": "ITEM_LUM_BERRY",
             "moves": [
-                "MOVE_SHED_TAIL",
+                "MOVE_REST",
                 "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"
@@ -29,7 +29,7 @@
             "level": 2,
             "item": "ITEM_LUM_BERRY",
             "moves": [
-                "MOVE_SHED_TAIL",
+                "MOVE_TOXIC",
                 "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"

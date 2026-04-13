@@ -8712,6 +8712,94 @@
                                        "{STRVAR_1 1, 0, 0} cured its status\n",
                                        "using its {STRVAR_1 8, 1, 0}!"
                                    ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonHungOnWithAbility_Ally",
+                         "en_US":  [
+                                       "{STRVAR_1 1, 0, 0} hung on\n",
+                                       "with {STRVAR_1 5, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonHungOnWithAbility_Wild",
+                         "en_US":  [
+                                       "The wild {STRVAR_1 1, 0, 0} hung on\n",
+                                       "with {STRVAR_1 5, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonHungOnWithAbility_Foe",
+                         "en_US":  [
+                                       "The foe’s {STRVAR_1 1, 0, 0} hung on\n",
+                                       "with {STRVAR_1 5, 1, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonsAbilityBouncedBackMove_Ally",
+                         "en_US":  [
+                                       "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0}\n",
+                                       "bounced back {STRVAR_1 6, 2, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonsAbilityBouncedBackMove_Wild",
+                         "en_US":  [
+                                       "The wild {STRVAR_1 1, 0, 0}’s\n",
+                                       "{STRVAR_1 5, 1, 0} bounced back\f",
+                                       "{STRVAR_1 6, 2, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonsAbilityBouncedBackMove_Foe",
+                         "en_US":  [
+                                       "The foe’s {STRVAR_1 1, 0, 0}’s\n",
+                                       "{STRVAR_1 5, 1, 0} bounced back\f",
+                                       "{STRVAR_1 6, 2, 0}!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonsMoveWasDisabledByCursedBody_Ally",
+                         "en_US":  [
+                                       "{STRVAR_1 1, 0, 0}’s {STRVAR_1 6, 1, 0}\n",
+                                       "was disabled by Cursed Body!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonsMoveWasDisabledByCursedBody_Wild",
+                         "en_US":  [
+                                       "The wild {STRVAR_1 1, 0, 0}’s\n",
+                                       "{STRVAR_1 6, 1, 0} was disabled\f",
+                                       "by Cursed Body!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonsMoveWasDisabledByCursedBody_Foe",
+                         "en_US":  [
+                                       "The foe’s {STRVAR_1 1, 0, 0}’s\n",
+                                       "{STRVAR_1 6, 1, 0} was disabled\f",
+                                       "by Cursed Body!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonsAbilityMakesOpposingTeamTooNervousToEatBerries_Ally",
+                         "en_US":  [
+                                       "{STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0} makes the opposing\n",
+                                       "team too nervous to eat Berries!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonsAbilityMakesOpposingTeamTooNervousToEatBerries_Wild",
+                         "en_US":  [
+                                       "The wild {STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0} makes\n",
+                                       "your team too nervous to eat Berries!"
+                                   ]
+                     },
+                     {
+                         "id":  "BattleStrings_Text_PokemonsAbilityMakesOpposingTeamTooNervousToEatBerries_Foe",
+                         "en_US":  [
+                                       "The opposing {STRVAR_1 1, 0, 0}’s {STRVAR_1 5, 1, 0} makes\n",
+                                       "your team too nervous to eat Berries!"
+                                   ]
                      }
                  ]
 }

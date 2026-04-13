@@ -10,12 +10,12 @@
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_CRADILY",
+            "species": "SPECIES_ABSOL",
             "form": 0,
-            "level": 3,
-            "item": "ITEM_LIFE_ORB",
+            "level": 8,
+            "item": "ITEM_WHITE_HERB",
             "moves": [
-                "MOVE_TACKLE",
+                "MOVE_NIGHT_SLASH",
                 "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"
@@ -24,13 +24,13 @@
             "ball_seal": 0
         },
         {
-            "species": "SPECIES_CRADILY",
+            "species": "SPECIES_HYPNO",
             "form": 0,
-            "level": 3,
-            "item": "ITEM_FOCUS_BAND",
+            "level": 20,
+            "item": "ITEM_LUM_BERRY",
             "moves": [
-                "MOVE_TORMENT",
-                "MOVE_NONE",
+                "MOVE_LEER",
+                "MOVE_STICKY_WEB",
                 "MOVE_NONE",
                 "MOVE_NONE"
             ],
@@ -38,54 +38,12 @@
             "ball_seal": 0
         },
         {
-            "species": "SPECIES_CRADILY",
+            "species": "SPECIES_DUSCLOPS",
             "form": 0,
-            "level": 1,
-            "item": "ITEM_FOCUS_BAND",
+            "level": 30,
+            "item": "ITEM_LUM_BERRY",
             "moves": [
-                "MOVE_ENCORE",
-                "MOVE_NONE",
-                "MOVE_NONE",
-                "MOVE_NONE"
-            ],
-            "iv_scale": 50,
-            "ball_seal": 0
-        },
-        {
-            "species": "SPECIES_CRADILY",
-            "form": 0,
-            "level": 1,
-              "item": "ITEM_FOCUS_BAND",
-            "moves": [
-                "MOVE_HEAL_BLOCK",
-                "MOVE_NONE",
-                "MOVE_NONE",
-                "MOVE_NONE"
-            ],
-            "iv_scale": 50,
-            "ball_seal": 0
-        },
-        {
-            "species": "SPECIES_CRADILY",
-            "form": 0,
-            "level": 1,
-            "item": "ITEM_FOCUS_BAND",
-            "moves": [
-                "MOVE_DISABLE",
-                "MOVE_NONE",
-                "MOVE_NONE",
-                "MOVE_NONE"
-            ],
-            "iv_scale": 50,
-            "ball_seal": 0
-        },
-        {
-            "species": "SPECIES_CRADILY",
-            "form": 0,
-            "level": 1,
-            "item": "ITEM_FOCUS_BAND",
-            "moves": [
-                "MOVE_THROAT_CHOP",
+                "MOVE_SPLASH",
                 "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"

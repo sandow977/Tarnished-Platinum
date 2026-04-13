@@ -978,13 +978,35 @@ TwinleafTown_MapSign:
     End
 
 TwinleafTown_LandmarkSignPlayerMailbox:
-    BufferPlayerName 0
-    ShowLandmarkSign TwinleafTown_Text_PlayerMailbox
+    PlayFanfare SEQ_SE_CONFIRM
+    LockAll
+    GoToIfSet FLAG_OBTAINED_OREBURGH_MINE_B2F_ESCAPE_ROPE, TwinleafTown_MailboxAlreadyRead
+    Message TwinleafTown_Text_MailboxScale
+    ShowYesNoMenu VAR_RESULT
+    GoToIfEq VAR_RESULT, MENU_NO, TwinleafTown_MailboxCancel
+    Message TwinleafTown_Text_LetterEnd
+    WaitABXPadPress
+    SetVar VAR_0x8004, ITEM_HEART_SCALE
+    SetVar VAR_0x8005, 1
+    CallCommonScript 0x7FC
+    CloseMessage
+    SetFlag FLAG_OBTAINED_OREBURGH_MINE_B2F_ESCAPE_ROPE
+    ReleaseAll
     End
 
 TwinleafTown_LandmarkSignRivalMailbox:
     BufferRivalName 0
     ShowLandmarkSign TwinleafTown_Text_RivalMailbox
+    End
+
+TwinleafTown_MailboxCancel:
+    CloseMessage 
+    ReleaseAll
+    End
+
+TwinleafTown_MailboxAlreadyRead:
+    BufferPlayerName 0
+    ShowLandmarkSign TwinleafTown_Text_PlayerMailbox
     End
 
     .balign 4, 0

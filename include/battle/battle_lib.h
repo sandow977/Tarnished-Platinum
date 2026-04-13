@@ -196,6 +196,7 @@ void BattleMon_AddVal(BattleMon *mon, enum BattleMonParam paramID, int val);
  * relative to the first of the two. See COMPARE_SPEED constants.
  */
 u8 BattleSystem_CompareBattlerSpeed(BattleSystem *battleSys, BattleContext *battleCtx, int battler1, int battler2, BOOL ignoreQuickClaw);
+BOOL BattleSystem_MoveGetsPranksterBoost(BattleContext *battleCtx, int battler, int move);
 
 /**
  * @brief Clear the flag denoting that a battler (or its partner) are due to
@@ -240,6 +241,8 @@ BOOL BattleSystem_TriggerPrimaryEffect(BattleSystem *battleSys, BattleContext *b
  */
 BOOL BattleSystem_TriggerSecondaryEffect(BattleSystem *battleSys, BattleContext *battleCtx, int *effect);
 BOOL BattleSystem_MoveMakesContact(BattleContext *battleCtx, int attacker, int move);
+int BattleSystem_GetMoveType(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int move);
+int BattleSystem_CurrentMoveType(BattleContext *battleCtx);
 
 /**
  * @brief Find the defender for the move.
@@ -833,7 +836,7 @@ int Battler_CountMoves(BattleSystem *battleSys, BattleContext *battleCtx, int ba
  * @param defender
  * @return A subscript to be loaded for any triggered effect.
  */
-int BattleSystem_TriggerImmunityAbility(BattleContext *battleCtx, int attacker, int defender);
+int BattleSystem_TriggerImmunityAbility(BattleSystem *battleSys, BattleContext *battleCtx, int attacker, int defender);
 
 /**
  * @brief Trigger an end-of-turn ability for the battler.
@@ -898,6 +901,9 @@ int BattleSystem_RandomOpponent(BattleSystem *battleSys, BattleContext *battleCt
  * triggered effect.
  */
 BOOL BattleSystem_TriggerAbilityOnHit(BattleSystem *battleSys, BattleContext *battleCtx, int *subscript);
+BOOL BattleSystem_TriggerReactiveStatDropAbility(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int *subscript);
+BOOL BattleSystem_TriggerBerserk(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int *subscript);
+BOOL BattleSystem_TriggerParadoxAbility(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int *subscript);
 
 /**
  * @brief Triggers a battler's ability which prevents an illegal status

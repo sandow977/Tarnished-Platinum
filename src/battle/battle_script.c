@@ -1683,9 +1683,8 @@ static BOOL BtlCmd_Wait(BattleSystem *battleSys, BattleContext *battleCtx)
 static void BattleScript_CalcMoveDamage(BattleSystem *battleSys, BattleContext *battleCtx)
 {
     int moveType;
-    if (Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_NORMALIZE) {
-        moveType = TYPE_NORMAL;
-    } else if (battleCtx->moveType) {
+
+    if (battleCtx->moveType) {
         moveType = battleCtx->moveType;
     } else {
         moveType = CURRENT_MOVE_DATA.type;
@@ -2870,6 +2869,9 @@ static BOOL BtlCmd_SwitchAndUpdateMon(BattleSystem *battleSys, BattleContext *ba
     battleCtx->battlersSwitchingMask &= FLAG_NEGATE(FlagIndex(battler));
     battleCtx->selectedPartySlot[battler] = battleCtx->switchedPartySlot[battler];
     battleCtx->switchedPartySlot[battler] = MAX_PARTY_SIZE;
+    battleCtx->selfTurnFlags[battler].competitiveTriggers = 0;
+    battleCtx->selfTurnFlags[battler].rattledTriggers = 0;
+    battleCtx->selfTurnFlags[battler].berserkTriggered = FALSE;
 
     BattleSystem_InitBattleMon(battleSys, battleCtx, battler, battleCtx->selectedPartySlot[battler]);
     BattleSystem_SwitchSlots(battleSys, battleCtx, battler, battleCtx->selectedPartySlot[battler]);
@@ -3177,6 +3179,7 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
     int statOffset;
     int stageChange;
     int result;
+    BOOL contraryActive = FALSE;
     BattleMon *mon = &battleCtx->battleMons[battleCtx->sideEffectMon];
 
     BattleScript_Iter(battleCtx, 1);
@@ -3206,6 +3209,14 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
         battleCtx->scriptTemp = BATTLE_ANIMATION_STAT_BOOST;
     }
 
+    if (Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon, ABILITY_CONTRARY) == TRUE) {
+        contraryActive = TRUE;
+        stageChange *= -1;
+        battleCtx->scriptTemp = (stageChange > 0)
+            ? BATTLE_ANIMATION_STAT_BOOST
+            : BATTLE_ANIMATION_STAT_DROP;
+    }
+
     if (Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon, ABILITY_SIMPLE) == TRUE) {
         stageChange *= 2;
     }
@@ -3222,7 +3233,7 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
                 BattleScript_Iter(battleCtx, jumpNoChange);
             }
         } else {
-            if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_ABILITY) {
+            if (contraryActive || battleCtx->sideEffectType == SIDE_EFFECT_TYPE_ABILITY) {
                 SetupNicknameAbilityStatMsg(battleCtx, BattleStrings_Text_PokemonsAbilityRaisedItsStat_Ally, statOffset); // "{0}'s {1} raised its {2}!"
             } else if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_HELD_ITEM) {
                 battleCtx->msgBuffer.id = BattleStrings_Text_TheItemRaisedPokemonsStat_Ally; // "The {0} raised {1}'s {2}!"
@@ -3346,6 +3357,21 @@ static BOOL BtlCmd_ChangeStatStage(BattleSystem *battleSys, BattleContext *battl
         }
 
         battleCtx->selfTurnFlags[battleCtx->sideEffectMon].statusFlags |= SELF_TURN_FLAG_STAT_LOWERED;
+
+        if (battleCtx->attacker != battleCtx->sideEffectMon
+            && BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker) != BattleSystem_GetBattlerSide(battleSys, battleCtx->sideEffectMon)) {
+            if (Battler_Ability(battleCtx, battleCtx->sideEffectMon) == ABILITY_COMPETITIVE) {
+                battleCtx->selfTurnFlags[battleCtx->sideEffectMon].competitiveTriggers = TRUE;
+            }
+
+            if (Battler_Ability(battleCtx, battleCtx->sideEffectMon) == ABILITY_RATTLED
+                && BATTLE_STAT_ATTACK + statOffset == BATTLE_STAT_ATTACK
+                && Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_INTIMIDATE) {
+                if (battleCtx->selfTurnFlags[battleCtx->sideEffectMon].rattledTriggers < 7) {
+                    battleCtx->selfTurnFlags[battleCtx->sideEffectMon].rattledTriggers++;
+                }
+            }
+        }
     }
 
     return FALSE;
@@ -5744,6 +5770,7 @@ static BOOL BtlCmd_Transform(BattleSystem *battleSys, BattleContext *battleCtx)
     ATTACKING_MON.friskAnnounced = FALSE;
     ATTACKING_MON.moldBreakerAnnounced = FALSE;
     ATTACKING_MON.pressureAnnounced = FALSE;
+    ATTACKING_MON.unnerveAnnounced = FALSE;
     ATTACKING_MON.moveEffectsData.truant = battleCtx->totalTurns & 1;
     ATTACKING_MON.moveEffectsData.slowStartTurnNumber = battleCtx->totalTurns + 1;
     ATTACKING_MON.slowStartAnnounced = FALSE;
@@ -5983,6 +6010,7 @@ static BOOL BtlCmd_EndOfTurnWeatherEffect(BattleSystem *battleSys, BattleContext
             && type1 != TYPE_GROUND && type2 != TYPE_GROUND
             && battleCtx->battleMons[battler].curHP
             && Battler_Ability(battleCtx, battler) != ABILITY_SAND_VEIL
+            && Battler_Ability(battleCtx, battler) != ABILITY_SAND_FORCE
             && Battler_HeldItemEffect(battleCtx, battler) != HOLD_EFFECT_SPORE_POWDER_IMMUNITY
             && (battleCtx->battleMons[battler].moveEffectsMask & MOVE_EFFECT_NO_WEATHER_DAMAGE) == FALSE) {
             battleCtx->msgMoveTemp = MOVE_SANDSTORM;
@@ -6905,6 +6933,7 @@ static BOOL BtlCmd_MagicCoat(BattleSystem *battleSys, BattleContext *battleCtx)
     }
 
     battleCtx->battleStatusMask2 |= SYSCTL_MAGIC_COAT_REFLECTED;
+    battleCtx->pranksterBoosted = BattleSystem_MoveGetsPranksterBoost(battleCtx, battleCtx->attacker, battleCtx->moveCur);
 
     return FALSE;
 }
@@ -7020,6 +7049,10 @@ static BOOL BtlCmd_TryKnockOff(BattleSystem *battleSys, BattleContext *battleCtx
         battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->attacker);
         battleCtx->msgBuffer.params[1] = BattleSystem_NicknameTag(battleCtx, battleCtx->defender);
         battleCtx->msgBuffer.params[2] = DEFENDING_MON.heldItem;
+
+        if (DEFENDING_MON.heldItem == DEFENDING_MON.moveEffectsData.harvestedBerry) {
+            DEFENDING_MON.moveEffectsData.harvestedBerry = ITEM_NONE;
+        }
 
         DEFENDING_MON.heldItem = ITEM_NONE;
         battleCtx->sideConditions[defending].knockedOffItemsMask |= FlagIndex(battleCtx->selectedPartySlot[battleCtx->defender]);
@@ -9545,6 +9578,23 @@ static BOOL BtlCmd_RemoveItem(BattleSystem *battleSys, BattleContext *battleCtx)
     int inBattler = BattleScript_Read(battleCtx);
 
     int battler = BattleScript_Battler(battleSys, battleCtx, inBattler);
+    u16 item = battleCtx->battleMons[battler].heldItem;
+
+    if (battler == battleCtx->attacker
+        && (battleCtx->moveCur == MOVE_FLING || battleCtx->moveCur == MOVE_NATURAL_GIFT)) {
+        if (Item_IsBerry(item) == TRUE) {
+            battleCtx->battleMons[battler].moveEffectsData.harvestedBerry = item;
+        } else if (item != ITEM_NONE) {
+            battleCtx->battleMons[battler].moveEffectsData.harvestedBerry = ITEM_NONE;
+        }
+    }
+
+    if (battler == battleCtx->defender
+        && (ATTACKER_SELF_TURN_FLAGS.statusFlags & SELF_TURN_FLAG_PLUCK_BERRY)
+        && item == battleCtx->battleMons[battler].moveEffectsData.harvestedBerry) {
+        battleCtx->battleMons[battler].moveEffectsData.harvestedBerry = ITEM_NONE;
+    }
+
     battleCtx->recycleItem[battler] = battleCtx->battleMons[battler].heldItem;
     battleCtx->battleMons[battler].heldItem = ITEM_NONE;
 
@@ -9686,9 +9736,18 @@ static BOOL BtlCmd_CheckHoldOnWith1HP(BattleSystem *battleSys, BattleContext *ba
         endure = TRUE;
     }
 
+    if (battleCtx->battleMons[battler].curHP == battleCtx->battleMons[battler].maxHP
+        && Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battler, ABILITY_STURDY) == TRUE) {
+        endure = TRUE;
+    }
+
     if (endure && battleCtx->battleMons[battler].curHP + battleCtx->hpCalcTemp <= 0) {
         battleCtx->hpCalcTemp = (battleCtx->battleMons[battler].curHP - 1) * -1;
-        battleCtx->moveStatusFlags |= MOVE_STATUS_ENDURED_ITEM;
+        if (Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battler, ABILITY_STURDY) == TRUE) {
+            battleCtx->moveStatusFlags |= MOVE_STATUS_STURDY;
+        } else {
+            battleCtx->moveStatusFlags |= MOVE_STATUS_ENDURED_ITEM;
+        }
     }
 
     return FALSE;

@@ -7,29 +7,29 @@
         "AI_FLAG_EVAL_ATTACK",
         "AI_FLAG_EXPERT"
     ],
-    "double_battle": false,
+    "double_battle": true,
     "party": [
         {
             "species": "SPECIES_MAGIKARP",
             "form": 0,
-            "level": 13,
-            "item": null,
+            "level": 3,
+            "item": "ITEM_WHITE_HERB",
             "moves": [
-                "MOVE_BULK_UP",
-                "MOVE_NONE",
-                "MOVE_NONE",
+                "MOVE_LOW_SWEEP",
+                "MOVE_X_SCISSOR",
+                "MOVE_TOXIC",
                 "MOVE_NONE"
             ],
             "iv_scale": 255,
             "ball_seal": 0
         },
         {
-            "species": "SPECIES_SNORLAX",
+            "species": "SPECIES_ABSOL",
             "form": 0,
-            "level": 13,
-            "item": null,
+            "level": 3,
+            "item": "ITEM_WHITE_HERB",
             "moves": [
-                "MOVE_SUBSTITUTE",
+                "MOVE_SPIKES",
                 "MOVE_NONE",
                 "MOVE_NONE",
                 "MOVE_NONE"

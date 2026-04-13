@@ -170,6 +170,27 @@
     {
       "id": "TwinleafTown_Text_RivalMailbox",
       "en_US": "{STRVAR_1 3, 0, 0}’s House"
+    },
+    {
+      "id": "TwinleafTown_Text_NoMail",
+      "en_US": [
+        "The Mailbox is empty!"
+      ]
+    },
+    {
+      "id": "TwinleafTown_Text_LetterEnd",
+      "en_US": [
+        "You opened the Mailbox.\r",
+        "As you sorted through the pile of junk\n",
+        "mail, something shiny slipped out!"
+      ]
+    },
+    {
+      "id": "TwinleafTown_Text_MailboxScale",
+      "en_US": [
+        "The Mailbox appears to be full.\n",
+        "Open it?"
+      ]
     }
   ]
 }

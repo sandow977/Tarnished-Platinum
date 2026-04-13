@@ -81,7 +81,10 @@ typedef struct SelfTurnFlags {
     u32 trickRoomActivated : 1;
     u32 focusItemActivated : 1;
     u32 repeatedMoveCount : 3;
-    u32 padding00_09 : 23;
+    u32 competitiveTriggers : 3;
+    u32 rattledTriggers : 3;
+    u32 berserkTriggered : 1;
+    u32 padding00_10 : 16;
 
     int physicalDamageTaken;
     int physicalDamageLastAttacker;
@@ -189,6 +192,7 @@ struct BattleContext {
     int msgItemTemp;
     int msgAbilityTemp;
     int msgTemp;
+    int pranksterBoosted;
     int calcTemp;
     int scriptTemp;
     int postSwitchSavedAttacker;

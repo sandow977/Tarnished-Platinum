@@ -51,6 +51,7 @@ typedef struct MoveEffectsData {
     u16 lastResortMoves[4];
     u16 choiceLockedMove;
     u16 transformedGender;
+    u16 harvestedBerry;
 
     int itemHPRecovery;
 } MoveEffectsData;
@@ -95,7 +96,11 @@ typedef struct BattleMon {
     u32 friskAnnounced : 1;
     u32 moldBreakerAnnounced : 1;
     u32 pressureAnnounced : 1;
-    u32 padding0028_0B : 2;
+    u32 unnerveAnnounced : 1;
+    u32 paradoxBoostSourceItem : 1;
+    u32 paradoxAbilityAnnounced : 1;
+    u32 paradoxBoostStat : 3;
+    u32 padding0028_10 : 15;
 
     u8 ppCur[LEARNED_MOVES_MAX];
     u8 ppUps[LEARNED_MOVES_MAX];

@@ -8,8 +8,8 @@
         "special_defense": 105
     },
     "types": [
-        "TYPE_FAIRY",
-        "TYPE_STEEL"
+        "TYPE_DARK",
+        "TYPE_DARK"
     ],
     "catch_rate": 45,
     "base_exp_reward": 253,

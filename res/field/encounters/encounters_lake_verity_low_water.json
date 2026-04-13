@@ -3,51 +3,51 @@
     "land_encounters": [
         {
             "level": 2,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_MILOTIC"
         },
         {
             "level": 2,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_TOXICROAK"
         },
         {
             "level": 3,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_KANGASKHAN"
         },
         {
             "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_KANGASKHAN"
         },
         {
             "level": 3,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_TSAREENA"
         },
         {
             "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_RAPIDASH"
         },
         {
             "level": 4,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_RAPIDASH"
         },
         {
             "level": 4,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_STEELIX"
         },
         {
             "level": 4,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_STEELIX"
         },
         {
             "level": 4,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_STEELIX"
         },
         {
             "level": 4,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_STEELIX"
         },
         {
             "level": 4,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_STEELIX"
         }
     ],
     "swarms": [
@@ -55,12 +55,12 @@
         "SPECIES_BIDOOF"
     ],
     "day": [
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_KANGASKHAN",
+        "SPECIES_RAPIDASH"
     ],
     "night": [
-        "SPECIES_BIDOOF",
-        "SPECIES_BIDOOF"
+        "SPECIES_KANGASKHAN",
+        "SPECIES_RAPIDASH"
     ],
     "radar": [
         "SPECIES_WOBBUFFET",

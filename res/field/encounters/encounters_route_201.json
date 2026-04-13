@@ -3,51 +3,51 @@
     "land_encounters": [
         {
             "level": 2,
-            "species": "SPECIES_STEENEE"
+            "species": "SPECIES_GARDEVOIR"
         },
         {
             "level": 2,
-            "species": "SPECIES_STEENEE"
+            "species": "SPECIES_SKARMORY"
         },
         {
             "level": 3,
-            "species": "SPECIES_STEENEE"
+            "species": "SPECIES_ABSOL"
         },
         {
             "level": 3,
-            "species": "SPECIES_STEENEE"
+            "species": "SPECIES_TROPIUS"
         },
         {
             "level": 3,
-            "species": "SPECIES_STEENEE"
+            "species": "SPECIES_SANDSLASH"
         },
         {
             "level": 3,
-            "species": "SPECIES_STEENEE"
+            "species": "SPECIES_DUNSPARCE"
         },
         {
             "level": 3,
-            "species": "SPECIES_FIDOUGH"
+            "species": "SPECIES_DUNSPARCE"
         },
         {
             "level": 3,
-            "species": "SPECIES_FIDOUGH"
+            "species": "SPECIES_DUNSPARCE"
         },
         {
             "level": 2,
-            "species": "SPECIES_FIDOUGH"
+            "species": "SPECIES_MEOWTH"
         },
         {
             "level": 2,
-            "species": "SPECIES_FIDOUGH"
+            "species": "SPECIES_MEOWTH"
         },
         {
             "level": 2,
-            "species": "SPECIES_FIDOUGH"
+            "species": "SPECIES_MEOWTH"
         },
         {
             "level": 2,
-            "species": "SPECIES_FIDOUGH"
+            "species": "SPECIES_MEOWTH"
         }
     ],
     "swarms": [
@@ -55,12 +55,12 @@
         "SPECIES_DODUO"
     ],
     "day": [
-        "SPECIES_STEENEE",
-        "SPECIES_TINKATON"
+        "SPECIES_TROPIUS",
+        "SPECIES_SANDSLASH"
     ],
     "night": [
-        "SPECIES_FIDOUGH",
-        "SPECIES_TINKATON"
+        "SPECIES_TROPIUS",
+        "SPECIES_SANDSLASH"
     ],
     "radar": [
         "SPECIES_NIDORAN_M",
