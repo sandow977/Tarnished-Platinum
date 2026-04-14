@@ -39,12 +39,14 @@ TwinleafTown_Guitarist:
     MakePartyMonShiny 0, VAR_RESULT
     GivePokedex
     AddItem ITEM_ABILITY_CAPSULE, 999, VAR_RESULT
-    AddItem ITEM_IRON_BALL, 999, VAR_RESULT
-    AddItem ITEM_LIFE_ORB, 999, VAR_RESULT
-    AddItem ITEM_LIGHT_BALL, 999, VAR_RESULT
-    AddItem ITEM_METRONOME, 999, VAR_RESULT
-    AddItem ITEM_FIGY_BERRY, 999, VAR_RESULT
     FillSinnohDexCaught
+    GetPartyCount VAR_0x8000
+    GoToIfGe VAR_0x8000, 5, TwinleafTown_GuitaristNeedRotomRoom
+    GivePokemon SPECIES_ROTOM, 20, ITEM_NONE, VAR_RESULT
+    GivePokemon SPECIES_ROTOM, 20, ITEM_NONE, VAR_RESULT
+    SetVar VAR_0x8001, VAR_0x8000
+    AddVar VAR_0x8001, 1
+    SetRotomForm VAR_0x8001, 0, MOVE_OVERHEAT, ROTOM_FORM_HEAT
     GoTo _TwinleafTown_Guitarist_AfterDexFill
     SetSpeciesSeen SPECIES_SQUIRTLE
     SetSpeciesSeen SPECIES_WARTORTLE
@@ -508,6 +510,12 @@ TwinleafTown_GuitaristCheckResult:
     CloseMessage
     ReleaseAll
     End
+
+TwinleafTown_GuitaristNeedRotomRoom:
+    Message TwinleafTown_Text_NeedRoomForRotomGifts
+    WaitABXPadPress
+    CloseMessage
+    GoTo _TwinleafTown_Guitarist_AfterDexFill
 
 TwinleafTown_GuitaristAlreadyPerfect:
     CloseMessage

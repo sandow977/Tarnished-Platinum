@@ -615,7 +615,13 @@ BOOL ScrCmd_2F1(ScriptContext *param0)
     u16 v3 = ScriptContext_GetVar(param0);
 
     v0 = Party_GetPokemonBySlotIndex(SaveData_GetParty(fieldSystem->saveData), v2);
-    Pokemon_SetValue(v0, MON_DATA_FORM, &v3);
+    if (Pokemon_GetValue(v0, MON_DATA_SPECIES, NULL) == SPECIES_ROTOM) {
+        Pokemon_SetRotomForm(v0, v3, 0);
+    } else {
+        Pokemon_SetValue(v0, MON_DATA_FORM, &v3);
+        Pokemon_CalcAbility(v0);
+        Pokemon_CalcLevelAndStats(v0);
+    }
 
     return 0;
 }

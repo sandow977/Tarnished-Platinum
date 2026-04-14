@@ -133,6 +133,7 @@ static void ParseMovesAndPack(const rapidjson::Value &member, TrainerMonBase &ba
     withMoves.level = base.level;
     withMoves.species = base.species;
     withMoves.cbSeal = base.cbSeal;
+    withMoves.abilitySlot = base.abilitySlot;
 
     int i = 0;
     for (const auto &move : member["moves"].GetArray()) {
@@ -149,6 +150,7 @@ static void ParseItemAndPack(const rapidjson::Value &member, TrainerMonBase &bas
     withItem.level = base.level;
     withItem.species = base.species;
     withItem.cbSeal = base.cbSeal;
+    withItem.abilitySlot = base.abilitySlot;
 
     withItem.item = LookupConst(member["item"].GetString(), Item);
 
@@ -162,6 +164,7 @@ static void ParseMovesAndItemAndPack(const rapidjson::Value &member, TrainerMonB
     withMovesAndItem.level = base.level;
     withMovesAndItem.species = base.species;
     withMovesAndItem.cbSeal = base.cbSeal;
+    withMovesAndItem.abilitySlot = base.abilitySlot;
 
     int i = 0;
     for (const auto &move : member["moves"].GetArray()) {
@@ -197,6 +200,11 @@ static void ParseAndPackParty(const rapidjson::Document &doc, TrainerDataType mo
         base.species = LookupConst(member["species"].GetString(), Species);
         base.species |= (member["form"].GetUint() << TRAINER_MON_FORM_SHIFT);
         base.cbSeal = member["ball_seal"].GetUint();
+        if (member.HasMember("ability_slot") && !member["ability_slot"].IsNull()) {
+            base.abilitySlot = member["ability_slot"].GetUint();
+        } else {
+            base.abilitySlot = 0;
+        }
 
         subparser(member, base, partyBufp);
         partyBufp += monSize;

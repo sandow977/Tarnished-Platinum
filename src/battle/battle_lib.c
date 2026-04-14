@@ -466,6 +466,12 @@ void BattleSystem_InitBattleMon(BattleSystem *battleSys, BattleContext *battleCt
         battleCtx->battleMons[battler].ability = Pokemon_GetValue(mon, MON_DATA_ABILITY, NULL);
         battleCtx->battleMons[battler].status = Pokemon_GetValue(mon, MON_DATA_STATUS, NULL);
         battleCtx->battleMons[battler].heldItem = Pokemon_GetValue(mon, MON_DATA_HELD_ITEM, NULL);
+
+        if (battleCtx->battleMons[battler].status & MON_CONDITION_SLEEP) {
+            int sleepTurns = (BattleSystem_RandNext(battleSys) % 4) + 2;
+            battleCtx->battleMons[battler].status &= ~MON_CONDITION_SLEEP;
+            battleCtx->battleMons[battler].status |= sleepTurns;
+        }
     }
 
     if ((BattleSystem_GetBattleType(battleSys) & BATTLE_TYPE_NO_ABILITIES) && BattleSystem_GetBattlerSide(battleSys, battler) == BATTLER_US) {

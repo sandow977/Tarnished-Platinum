@@ -34,8 +34,8 @@
                        "EGG_GROUP_FIELD"
                    ],
     "abilities":  [
-                      "ABILITY_SHEER_FORCE",
-                      "ABILITY_FRIEND_GUARD"
+                      "ABILITY_PASTEL_VEIL",
+                      "ABILITY_INSOMNIA"
                   ],
     "safari_flee_rate":  0,
     "body_color":  "MON_COLOR_YELLOW",
@@ -45,15 +45,15 @@
                      "by_level":  [
                                       [
                                           1,
-                                          "MOVE_FLAME_CHARGE"
+                                          "MOVE_REST"
                                       ],
                                       [
                                           1,
-                                          "MOVE_SECRET_POWER"
+                                          "MOVE_WATER_GUN"
                                       ],
                                       [
                                           1,
-                                          "MOVE_POISON_JAB"
+                                          "MOVE_ICE_BEAM"
                                       ],
                                       [
                                           1,

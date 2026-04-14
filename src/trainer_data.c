@@ -2,6 +2,7 @@
 
 #include "constants/battle.h"
 #include "constants/pokemon.h"
+#include "generated/abilities.h"
 #include "generated/trainer_message_types.h"
 
 #include "struct_defs/trainer.h"
@@ -21,6 +22,7 @@
 #include "string_gf.h"
 
 static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID heapID);
+static void TrainerData_ApplyAbilitySlot(Pokemon *mon, u16 species, u8 form, u16 abilitySlot);
 
 void Trainer_Encounter(FieldBattleDTO *dto, const SaveData *saveData, enum HeapID heapID)
 {
@@ -166,6 +168,27 @@ u8 TrainerClass_Gender(int trclass)
     return sTrainerClassGender[trclass];
 }
 
+static void TrainerData_ApplyAbilitySlot(Pokemon *mon, u16 species, u8 form, u16 abilitySlot)
+{
+    int ability;
+
+    if (abilitySlot == 0) {
+        return;
+    }
+
+    ability = SpeciesData_GetFormValue(species, form, SPECIES_DATA_ABILITY_1);
+
+    if (abilitySlot == 2) {
+        int ability2 = SpeciesData_GetFormValue(species, form, SPECIES_DATA_ABILITY_2);
+
+        if (ability2 != ABILITY_NONE) {
+            ability = ability2;
+        }
+    }
+
+    Pokemon_SetValue(mon, MON_DATA_ABILITY, &ability);
+}
+
 /**
  * @brief Build the party for a trainer as loaded in the FieldBattleDTO struct.
  *
@@ -216,6 +239,9 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
             Pokemon_InitWith(mon, species, trmon[i].level, ivs, TRUE, rnd, OTID_NOT_SHINY, 0);
             Pokemon_SetBallSeal(trmon[i].cbSeal, mon, heapID);
             Pokemon_SetValue(mon, MON_DATA_FORM, &form);
+            Pokemon_CalcAbility(mon);
+            TrainerData_ApplyAbilitySlot(mon, species, form, trmon[i].abilitySlot);
+            Pokemon_CalcLevelAndStats(mon);
             Party_AddPokemon(dto->parties[battler], mon);
         }
 
@@ -246,6 +272,9 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
 
             Pokemon_SetBallSeal(trmon[i].cbSeal, mon, heapID);
             Pokemon_SetValue(mon, MON_DATA_FORM, &form);
+            Pokemon_CalcAbility(mon);
+            TrainerData_ApplyAbilitySlot(mon, species, form, trmon[i].abilitySlot);
+            Pokemon_CalcLevelAndStats(mon);
             Party_AddPokemon(dto->parties[battler], mon);
         }
 
@@ -272,6 +301,9 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
             Pokemon_SetValue(mon, MON_DATA_HELD_ITEM, &trmon[i].item);
             Pokemon_SetBallSeal(trmon[i].cbSeal, mon, heapID);
             Pokemon_SetValue(mon, MON_DATA_FORM, &form);
+            Pokemon_CalcAbility(mon);
+            TrainerData_ApplyAbilitySlot(mon, species, form, trmon[i].abilitySlot);
+            Pokemon_CalcLevelAndStats(mon);
             Party_AddPokemon(dto->parties[battler], mon);
         }
 
@@ -303,6 +335,9 @@ static void TrainerData_BuildParty(FieldBattleDTO *dto, int battler, enum HeapID
 
             Pokemon_SetBallSeal(trmon[i].cbSeal, mon, heapID);
             Pokemon_SetValue(mon, MON_DATA_FORM, &form);
+            Pokemon_CalcAbility(mon);
+            TrainerData_ApplyAbilitySlot(mon, species, form, trmon[i].abilitySlot);
+            Pokemon_CalcLevelAndStats(mon);
             Party_AddPokemon(dto->parties[battler], mon);
         }
 

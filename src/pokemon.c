@@ -18,6 +18,7 @@
 #include "generated/gender_ratios.h"
 #include "generated/genders.h"
 #include "generated/natures.h"
+#include "generated/species.h"
 #include "generated/species_data_params.h"
 
 #include "struct_defs/chatot_cry.h"
@@ -4968,31 +4969,32 @@ static void *BoxPokemon_GetDataBlock(BoxPokemon *boxMon, u32 personality, enum P
 
 static int Pokemon_GetFormNarcIndex(int monSpecies, int monForm)
 {
-    // TODO enum values?
+    const int formDataBaseIndex = SPECIES_BAD_EGG + 1;
+
     switch (monSpecies) {
     case SPECIES_DEOXYS:
         if (monForm && monForm <= DEOXYS_FORM_COUNT - 1) {
-            monSpecies = (496 - 1) + monForm;
+            monSpecies = formDataBaseIndex + (monForm - 1);
         }
         break;
     case SPECIES_WORMADAM:
         if (monForm && monForm <= WORMADAM_FORM_COUNT - 1) {
-            monSpecies = (499 - 1) + monForm;
+            monSpecies = formDataBaseIndex + 3 + (monForm - 1);
         }
         break;
     case SPECIES_GIRATINA:
         if (monForm && monForm <= GIRATINA_FORM_COUNT - 1) {
-            monSpecies = (501 - 1) + monForm;
+            monSpecies = formDataBaseIndex + 5 + (monForm - 1);
         }
         break;
     case SPECIES_SHAYMIN:
         if (monForm && monForm <= SHAYMIN_FORM_COUNT - 1) {
-            monSpecies = (502 - 1) + monForm;
+            monSpecies = formDataBaseIndex + 6 + (monForm - 1);
         }
         break;
     case SPECIES_ROTOM:
         if (monForm && monForm <= ROTOM_FORM_COUNT - 1) {
-            monSpecies = (503 - 1) + monForm;
+            monSpecies = formDataBaseIndex + 7 + (monForm - 1);
         }
         break;
     default:

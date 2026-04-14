@@ -191,6 +191,13 @@
         "The Mailbox appears to be full.\n",
         "Open it?"
       ]
+    },
+    {
+      "id": "TwinleafTown_Text_NeedRoomForRotomGifts",
+      "en_US": [
+        "Please leave two open slots in your\n",
+        "party for the Rotom gifts."
+      ]
     }
   ]
 }
